@@ -38,7 +38,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           image: AssetImage('assets/Logo/logo.png'))),
                 ),
                 InputDecoratorWidget(
-                  title: "Login",
+                  title: "Forgot Password",
                   child: Column(
                     children: [
                       const SizedBox(
