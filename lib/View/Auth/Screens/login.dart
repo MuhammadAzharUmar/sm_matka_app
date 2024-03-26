@@ -4,6 +4,7 @@ import 'package:sm_matka/Utilities/gradient.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
 import 'package:sm_matka/View/Auth/Screens/forgot_password.dart';
 import 'package:sm_matka/View/Auth/Screens/signup.dart';
+import 'package:sm_matka/View/Auth/ViewModel/auth_http_requests.dart';
 import 'package:sm_matka/View/Auth/Widgets/admin_help_button_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_decorator_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_textfield_widget.dart';
@@ -62,10 +63,11 @@ class _LoginPageState extends State<LoginPage> {
                         child: TextButton(
                             onPressed: () {
                               Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const ForgotPasswordPage(),
-                              ),
-                            );
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ForgotPasswordPage(),
+                                ),
+                              );
                             },
                             style: TextButton.styleFrom(
                               minimumSize: const Size(double.maxFinite, 24),
@@ -84,7 +86,13 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       KLoginButton(
                         title: "Login",
-                        onPressed: () {},
+                        onPressed: () async {
+                          await AuthHttpRequests.loginRequest(
+                            mobile: mobileController.text.trim(),
+                            password: passwordController.text.trim(),
+                            context: context,
+                          );
+                        },
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10.0, bottom: 3),
@@ -95,13 +103,15 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      KLoginButton(title: "Signup", onPressed: () {
-                         Navigator.of(context).pushReplacement(
+                      KLoginButton(
+                          title: "Signup",
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                 builder: (context) => const SignupPage(),
                               ),
                             );
-                      })
+                          })
                     ],
                   ),
                 ),

@@ -19,18 +19,21 @@ class InputDecoratorWidget extends StatelessWidget {
         decoration: InputDecoration(
           label: Container(
             height: 56,
-            width: 130,
+            width: 150,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               gradient: klightGreyGradient,
               border: Border.all(color: kWhiteColor, width: 1.5),
             ),
-            child: Text(
-              title,
-              style: kMediumTextStyle.copyWith(
-                color: kBlueColor,
-                fontWeight: FontWeight.w700,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                title,
+                style: kMediumTextStyle.copyWith(
+                  color: kBlueColor,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ),

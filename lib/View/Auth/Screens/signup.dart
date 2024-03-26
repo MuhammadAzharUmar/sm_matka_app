@@ -3,6 +3,7 @@ import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
 import 'package:sm_matka/View/Auth/Screens/login.dart';
+import 'package:sm_matka/View/Auth/ViewModel/auth_http_requests.dart';
 import 'package:sm_matka/View/Auth/Widgets/admin_help_button_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_decorator_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_textfield_widget.dart';
@@ -67,7 +68,16 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                       KLoginButton(
                         title: "Signup",
-                        onPressed: () {},
+                        onPressed: ()async {
+                        await AuthHttpRequests.signupRequest(name: nameController.text, mobile: mobileController.text, password: passwordController.text, pin: pinController.text,
+                        context: context,
+                        );
+                          // Navigator.of(context).push(
+                          //     MaterialPageRoute(
+                          //       builder: (context) => const OtpVerificationPage(),
+                          //     ),
+                          //   );
+                        },
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10.0, bottom: 3),

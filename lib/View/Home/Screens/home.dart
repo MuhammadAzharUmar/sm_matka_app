@@ -10,8 +10,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
+    return  Scaffold(
+      appBar: AppBar(title:const Text("Welcome Home"),),
+      body:const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
         ],

@@ -7,14 +7,14 @@ import 'package:sm_matka/View/Auth/Widgets/input_decorator_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_textfield_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/klogin_button.dart';
 
-class ForgotPasswordPage extends StatefulWidget {
-  const ForgotPasswordPage({super.key});
+class ForgotPinPage extends StatefulWidget {
+  const ForgotPinPage({super.key});
 
   @override
-  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
+  State<ForgotPinPage> createState() => _ForgotPinPageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+class _ForgotPinPageState extends State<ForgotPinPage> {
   final TextEditingController mobileController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           image: AssetImage('assets/Logo/logo.png'))),
                 ),
                 InputDecoratorWidget(
-                  title: "Forgot Password",
+                  title: "Forgot Pin",
                   child: Column(
                     children: [
                       const SizedBox(
@@ -50,7 +50,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       KLoginButton(
                         title: "Submit",
                         onPressed: () async {
-                          await AuthHttpRequests.forgotPasswordRequest(
+                          await AuthHttpRequests.forgotPinRequest(
                               mobile: mobileController.text, context: context);
                         },
                       ),
