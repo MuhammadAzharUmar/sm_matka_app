@@ -3,14 +3,17 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sm_matka/Utilities/snackbar_messages.dart';
 import 'package:sm_matka/View/Auth/Screens/change_password.dart';
 import 'package:sm_matka/View/Auth/Screens/login.dart';
 import 'package:sm_matka/View/Auth/Screens/login_pin.dart';
 import 'package:sm_matka/View/Auth/Screens/otp_verification.dart';
 import 'package:sm_matka/View/Home/Screens/home.dart';
+import 'package:sm_matka/View/Home/Screens/main_screen.dart';
 
 class AuthHttpRequests {
+
   static String baseUrl = "https://smweb.demo-snp.com/api/Api";
   static signupRequest(
       {required String name,
@@ -272,6 +275,7 @@ class AuthHttpRequests {
       {required String token,
       required String pin,
       required BuildContext context}) async {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
     try {
       var headers = {'token': token};
       var request =
@@ -290,6 +294,10 @@ class AuthHttpRequests {
             // ignore: use_build_context_synchronously
             context: context,
           );
+          String token =jsonData["data"]["token"];
+          if (token!=""&&token.isNotEmpty) {
+            
+          preferences.setString("userToken", jsonData["data"]["token"]);
           // ignore: use_build_context_synchronously
           Navigator.of(context).popUntil(
             (route) => route.isFirst,
@@ -297,9 +305,10 @@ class AuthHttpRequests {
           // ignore: use_build_context_synchronously
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-              builder: (context) => const Home(),
+              builder: (context) => const  MainPage(currentIndex: 0,),
             ),
           );
+          } 
         } else {
           SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
