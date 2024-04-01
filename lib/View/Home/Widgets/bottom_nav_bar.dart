@@ -60,7 +60,7 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
            BottomBarItem(
             inActiveItem:  Icon(Icons.money,color: kBlue1Color,),
             activeItem: Icon(Icons.money,color: kWhiteColor,),
-            itemLabel: 'Money',
+            itemLabel: 'Funds',
           ),
            BottomBarItem(
             inActiveItem:  Icon(Icons.settings,color: kBlue1Color,),

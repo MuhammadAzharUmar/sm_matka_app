@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
-import 'package:sm_matka/Utilities/textstyles.dart';
 import 'package:sm_matka/View/Auth/Screens/login.dart';
-import 'package:sm_matka/View/Auth/ViewModel/auth_http_requests.dart';
+import 'package:sm_matka/ViewModel/http_requests.dart';
 import 'package:sm_matka/View/Auth/Widgets/admin_help_button_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_decorator_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_textfield_widget.dart';
@@ -24,6 +24,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+  
       backgroundColor: kWhiteColor,
       body: Container(
         decoration: const BoxDecoration(gradient: kCustomGradient),
@@ -53,6 +54,9 @@ class _SignupPageState extends State<SignupPage> {
                         labelText: 'Enter Your Name',
                       ),
                       InputTextFieldWidget(
+                        inputFormatter: [
+                          LengthLimitingTextInputFormatter(10),
+                        ],
                         controller: mobileController,
                         labelText: 'Mobile',
                       ),
@@ -62,41 +66,55 @@ class _SignupPageState extends State<SignupPage> {
                         isPassword: true,
                       ),
                       InputTextFieldWidget(
+                        inputFormatter: [
+                          LengthLimitingTextInputFormatter(10),
+                        ],
                         controller: pinController,
                         labelText: 'Enter Security Pin',
                         isPassword: true,
                       ),
-                      KLoginButton(
-                        title: "Signup",
-                        onPressed: ()async {
-                        await AuthHttpRequests.signupRequest(name: nameController.text, mobile: mobileController.text, password: passwordController.text, pin: pinController.text,
-                        context: context,
-                        );
-                          // Navigator.of(context).push(
-                          //     MaterialPageRoute(
-                          //       builder: (context) => const OtpVerificationPage(),
-                          //     ),
-                          //   );
-                        },
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0, bottom: 3),
-                        child: Text(
-                          "Already have an account?",
-                          style: kSmallTextStyle.copyWith(
-                            color: kWhiteColor,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(
+                            child: KLoginButton(
+                              gradient: kblueGradient,
+                              title: "Signup",
+                              onPressed: () async {
+                                await HttpRequests.signupRequest(
+                                  name: nameController.text,
+                                  mobile: mobileController.text,
+                                  password: passwordController.text,
+                                  pin: pinController.text,
+                                  context: context,
+                                );
+                              },
+                            ),
                           ),
-                        ),
+                          const Text("  \t\tor\t\t  "),
+                          Expanded(
+                            child: KLoginButton(
+                                title: "Login",
+                                gradient: null,
+                                onPressed: () {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) => const LoginPage(),
+                                    ),
+                                  );
+                                }),
+                          ),
+                        ],
                       ),
-                      KLoginButton(
-                          title: "Login",
-                          onPressed: () {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => const LoginPage(),
-                              ),
-                            );
-                          })
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 10.0, bottom: 3),
+                      //   child: Text(
+                      //     "Already have an account?",
+                      //     style: kSmallTextStyle.copyWith(
+                      //       color: kWhiteColor,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

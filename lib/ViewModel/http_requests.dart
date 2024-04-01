@@ -4,16 +4,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sm_matka/Models/app_details_model.dart';
 import 'package:sm_matka/Utilities/snackbar_messages.dart';
 import 'package:sm_matka/View/Auth/Screens/change_password.dart';
 import 'package:sm_matka/View/Auth/Screens/login.dart';
 import 'package:sm_matka/View/Auth/Screens/login_pin.dart';
 import 'package:sm_matka/View/Auth/Screens/otp_verification.dart';
-import 'package:sm_matka/View/Home/Screens/home.dart';
 import 'package:sm_matka/View/Home/Screens/main_screen.dart';
 
-class AuthHttpRequests {
-
+class HttpRequests {
   static String baseUrl = "https://smweb.demo-snp.com/api/Api";
   static signupRequest(
       {required String name,
@@ -141,7 +140,7 @@ class AuthHttpRequests {
           // ignore: use_build_context_synchronously
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => const Home(),
+              builder: (context) => const LoginPage(),
             ),
           );
         } else {
@@ -166,12 +165,12 @@ class AuthHttpRequests {
     }
   }
 
-  static verifyUserRequest(
-      {required String mobile,
-      required String otp,
-      required String caller,
-      required BuildContext context,
-      }) async {
+  static verifyUserRequest({
+    required String mobile,
+    required String otp,
+    required String caller,
+    required BuildContext context,
+  }) async {
     try {
       var request =
           http.MultipartRequest('POST', Uri.parse('$baseUrl/verify_user'));
@@ -202,6 +201,7 @@ class AuthHttpRequests {
             // ignore: use_build_context_synchronously
             context: context,
           );
+
           // just for testing purpose
           // Navigator.of(context).push(
           //   MaterialPageRoute(
@@ -236,11 +236,6 @@ class AuthHttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          // SnackBarMessage.simpleSnackBar(
-          //   text: jsonData["message"],
-          //   // ignore: use_build_context_synchronously
-          //   context: context,
-          // );
           // ignore: use_build_context_synchronously
           Navigator.of(context).push(
             MaterialPageRoute(
@@ -275,7 +270,7 @@ class AuthHttpRequests {
       {required String token,
       required String pin,
       required BuildContext context}) async {
-          SharedPreferences preferences = await SharedPreferences.getInstance();
+    SharedPreferences preferences = await SharedPreferences.getInstance();
     try {
       var headers = {'token': token};
       var request =
@@ -294,21 +289,26 @@ class AuthHttpRequests {
             // ignore: use_build_context_synchronously
             context: context,
           );
-          String token =jsonData["data"]["token"];
-          if (token!=""&&token.isNotEmpty) {
-            
-          preferences.setString("userToken", jsonData["data"]["token"]);
-          // ignore: use_build_context_synchronously
-          Navigator.of(context).popUntil(
-            (route) => route.isFirst,
-          );
-          // ignore: use_build_context_synchronously
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => const  MainPage(currentIndex: 0,),
-            ),
-          );
-          } 
+          String token = jsonData["data"]["token"];
+          if (token != "" && token.isNotEmpty) {
+            await preferences.setString("userToken", jsonData["data"]["token"]);
+            await HttpRequests.getUserDetailsRequest(
+                // ignore: use_build_context_synchronously
+                context: context, token: token);
+
+            // ignore: use_build_context_synchronously
+            Navigator.of(context).popUntil(
+              (route) => route.isFirst,
+            );
+            // ignore: use_build_context_synchronously
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => const MainPage(
+                  currentIndex: 0,
+                ),
+              ),
+            );
+          }
         } else {
           SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
@@ -522,6 +522,188 @@ class AuthHttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
+        // ignore: use_build_context_synchronously
+        text: "Error!", context: context,
+      );
+    }
+  }
+
+  static Future<AppDetailsModel> appDetialsRequest(
+      {required BuildContext context}) async {
+    try {
+      var request = http.Request('POST', Uri.parse('$baseUrl/app_details'));
+
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        var jsonData = json.decode(responseBody);
+        AppDetailsModel appDetailsModel = AppDetailsModel.fromJson(jsonData);
+        if (jsonData["status"] == "success") {
+          return appDetailsModel;
+        } else {
+          return SnackBarMessage.centeredSnackbar(
+            text: jsonData["message"].toString(),
+            // ignore: use_build_context_synchronously
+            context: context,
+          );
+        }
+      } else {
+        return SnackBarMessage.centeredSnackbar(
+          text: response.reasonPhrase.toString(),
+          // ignore: use_build_context_synchronously
+          context: context,
+        );
+      }
+    } catch (e) {
+      return SnackBarMessage.centeredSnackbar(
+        // ignore: use_build_context_synchronously
+        text: "Error!", context: context,
+      );
+    }
+  }
+
+  static Future<Map<String, dynamic>> gameRatesRequest(
+      {required BuildContext context, required String token}) async {
+    try {
+      var headers = {'token': token};
+      var request = http.Request('POST', Uri.parse('$baseUrl/game_rate_list'));
+
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        var jsonData = json.decode(responseBody);
+        if (jsonData["status"] == "success") {
+          return jsonData;
+        } else {
+          return SnackBarMessage.centeredSnackbar(
+            text: jsonData["message"].toString(),
+            // ignore: use_build_context_synchronously
+            context: context,
+          );
+        }
+      } else {
+        return SnackBarMessage.centeredSnackbar(
+          text: response.reasonPhrase.toString(),
+          // ignore: use_build_context_synchronously
+          context: context,
+        );
+      }
+    } catch (e) {
+      return SnackBarMessage.centeredSnackbar(
+        // ignore: use_build_context_synchronously
+        text: "Error!", context: context,
+      );
+    }
+  }
+
+  static Future<Map<String, dynamic>> howToPlayRequest(
+      {required BuildContext context, required String token}) async {
+    try {
+      var headers = {'token': token};
+      var request = http.Request('POST', Uri.parse('$baseUrl/how_to_play'));
+
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        var jsonData = json.decode(responseBody);
+        if (jsonData["status"] == "success") {
+          return jsonData;
+        } else {
+          return SnackBarMessage.centeredSnackbar(
+            text: jsonData["message"].toString(),
+            // ignore: use_build_context_synchronously
+            context: context,
+          );
+
+          // return jsonData;
+        }
+      } else {
+        return SnackBarMessage.centeredSnackbar(
+          text: response.reasonPhrase.toString(),
+          // ignore: use_build_context_synchronously
+          context: context,
+        );
+      }
+    } catch (e) {
+      return SnackBarMessage.centeredSnackbar(
+        // ignore: use_build_context_synchronously
+        text: "Error!", context: context,
+      );
+    }
+  }
+
+  static Future<Map<String, dynamic>> getUserDetailsRequest(
+      {required BuildContext context, required String token}) async {
+    try {
+      var headers = {'token': token};
+      var request =
+          http.Request('POST', Uri.parse('$baseUrl/get_user_details'));
+
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        var jsonData = json.decode(responseBody);
+        if (jsonData["status"] == "success") {
+          return jsonData;
+        } else {
+          return SnackBarMessage.centeredSnackbar(
+            text: jsonData["message"].toString(),
+            // ignore: use_build_context_synchronously
+            context: context,
+          );
+        }
+      } else {
+        return SnackBarMessage.centeredSnackbar(
+          text: response.reasonPhrase.toString(),
+          // ignore: use_build_context_synchronously
+          context: context,
+        );
+      }
+    } catch (e) {
+      return SnackBarMessage.centeredSnackbar(
+        // ignore: use_build_context_synchronously
+        text: "Error!", context: context,
+      );
+    }
+  }
+  static Future<Map<String, dynamic>> getUserStatusRequest(
+      {required BuildContext context, required String token}) async {
+    try {
+      var headers = {'token': token};
+      var request =
+          http.Request('POST', Uri.parse('$baseUrl/user_status'));
+
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        var jsonData = json.decode(responseBody);
+        if (jsonData["status"] == "success") {
+          print(jsonData);
+          return jsonData;
+        } else {
+          return SnackBarMessage.centeredSnackbar(
+            text: jsonData["message"].toString(),
+            // ignore: use_build_context_synchronously
+            context: context,
+          );
+        }
+      } else {
+        return SnackBarMessage.centeredSnackbar(
+          text: response.reasonPhrase.toString(),
+          // ignore: use_build_context_synchronously
+          context: context,
+        );
+      }
+    } catch (e) {
+      return SnackBarMessage.centeredSnackbar(
         // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );

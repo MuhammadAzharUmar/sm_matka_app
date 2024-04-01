@@ -7,13 +7,16 @@ import 'package:sm_matka/Utilities/border_radius.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
-import 'package:sm_matka/View/Auth/ViewModel/auth_http_requests.dart';
+import 'package:sm_matka/ViewModel/http_requests.dart';
 import 'package:sm_matka/View/Auth/Widgets/admin_help_button_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_decorator_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/klogin_button.dart';
 
 class OtpVerificationPage extends StatefulWidget {
-  const OtpVerificationPage({super.key, required this.phoneNumber, required this.forgotPasswordcaller});
+  const OtpVerificationPage(
+      {super.key,
+      required this.phoneNumber,
+      required this.forgotPasswordcaller});
   final String phoneNumber;
   final String forgotPasswordcaller;
   @override
@@ -31,7 +34,8 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
 
     _startTimer();
   }
- void _startTimer() {
+
+  void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         if (_secondsLeft > 0) {
@@ -42,6 +46,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
       });
     });
   }
+
   @override
   void dispose() {
     _timer.cancel();
@@ -108,42 +113,59 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                         height: 10,
                       ),
                       _secondsLeft == 0
-                          ? KLoginButton(
-                              title: "Resend",
-                              onPressed: () async {
-                                setState(() {
-                                  
-                                _secondsLeft=30;
-                                });
-                                _startTimer();
-                                await AuthHttpRequests.resendOtpRequest(
-                                    mobile: widget.phoneNumber,
-                                    context: context);
-                              })
-                          : KLoginButton(
-                              title: "Verify",
-                              onPressed: () async {
-                               
-                                if (widget.forgotPasswordcaller=="password") {
-                                   await AuthHttpRequests.verifyUserRequest(
-                                    mobile: widget.phoneNumber,
-                                    otp: otpController.text,
-                                    caller: "Password",
-                                    context: context,);
-                                }else if (widget.forgotPasswordcaller=="pin"){
-                                    await AuthHttpRequests.verifyUserRequest(
-                                    mobile: widget.phoneNumber,
-                                    otp: otpController.text,
-                                    caller: "Pin",
-                                    context: context,); 
-                                } else {
-                                   await AuthHttpRequests.verifyOtpRequest(
-                                    mobile: widget.phoneNumber,
-                                    otp: otpController.text,
-                                    context: context);
-                                }
-                               
-                              },
+                          ? Row(
+                              children: [
+                                Expanded(
+                                  child: KLoginButton(
+                                      gradient: kblueGradient,
+                                      title: "Resend",
+                                      onPressed: () async {
+                                        setState(() {
+                                          _secondsLeft = 30;
+                                        });
+                                        _startTimer();
+                                        await HttpRequests.resendOtpRequest(
+                                            mobile: widget.phoneNumber,
+                                            context: context);
+                                      }),
+                                ),
+                              ],
+                            )
+                          : Row(
+                              children: [
+                                Expanded(
+                                  child: KLoginButton(
+                                    gradient: kblueGradient,
+                                    title: "Verify",
+                                    onPressed: () async {
+                                      if (widget.forgotPasswordcaller ==
+                                          "password") {
+                                        await HttpRequests
+                                            .verifyUserRequest(
+                                          mobile: widget.phoneNumber,
+                                          otp: otpController.text,
+                                          caller: "Password",
+                                          context: context,
+                                        );
+                                      } else if (widget.forgotPasswordcaller ==
+                                          "pin") {
+                                        await HttpRequests
+                                            .verifyUserRequest(
+                                          mobile: widget.phoneNumber,
+                                          otp: otpController.text,
+                                          caller: "Pin",
+                                          context: context,
+                                        );
+                                      } else {
+                                        await HttpRequests.verifyOtpRequest(
+                                            mobile: widget.phoneNumber,
+                                            otp: otpController.text,
+                                            context: context);
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
                       const AdminHelpButtonWidget(),
                     ],

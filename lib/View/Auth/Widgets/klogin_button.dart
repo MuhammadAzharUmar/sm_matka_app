@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:sm_matka/Utilities/colors.dart';
-import 'package:sm_matka/Utilities/gradient.dart';
 
 class KLoginButton extends StatelessWidget {
   const KLoginButton({
     super.key,
     required this.title,
-    required this.onPressed,
+    required this.onPressed, this.gradient,
   });
   final String title;
   final VoidCallback onPressed;
+  final Gradient? gradient;
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          gradient: kblueGradient, borderRadius: BorderRadius.circular(30)),
+          gradient: gradient, borderRadius: BorderRadius.circular(30),border: Border.all(color: k2ndColor,width: 2)),
       height: 36,
       child: ElevatedButton(
           onPressed: onPressed,

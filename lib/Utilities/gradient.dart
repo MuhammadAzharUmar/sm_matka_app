@@ -5,8 +5,14 @@ const kCustomGradient = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
   colors: [
+    kBlue3Color,
+    kBlue2Color,
+    kBlue1Color,
     kBlueColor,
     kDarkGredientColor,
+    kLightGradientColor,
+    k1stColor,
+    k2ndColor
     // kDarkGredientColor,
     // kLightGradientColor,
   ],

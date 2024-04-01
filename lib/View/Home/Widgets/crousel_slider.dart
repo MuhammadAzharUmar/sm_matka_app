@@ -6,8 +6,9 @@ import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
 
 class CustomSliderWidget extends StatelessWidget {
-  const CustomSliderWidget({super.key});
-
+  const CustomSliderWidget({super.key, required this.crouselImages, required this.marqueeText});
+final List<String> crouselImages; 
+final String marqueeText;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -17,18 +18,12 @@ class CustomSliderWidget extends StatelessWidget {
         height: 150,
         width: double.maxFinite,
         decoration: const BoxDecoration(
-          color: kWhiteColor,
+          color: k2ndColor,
         ),
         child: Stack(
           children: [
             CarouselSlider(
-              items: [
-                "https://i.pinimg.com/736x/86/42/90/8642904161bc3964032f66d569e3937f.jpg",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThIJj70HduRKpnhBfxLMyD1gt7Wp558EP8uLy-ERieJtDvpN6mVcJgQ85QU5Vj-fAxXEM&usqp=CAU",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQC6EzCemijWUzMhioIQ8B-S-vMTagfJmyF0g&usqp=CAU",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLpHwNzDsyZ0p2K1I-W3j1dQkulD2qwuek4w&usqp=CAU",
-                "https://c4.wallpaperflare.com/wallpaper/739/262/425/movies-hollywood-movies-wallpaper-preview.jpg",
-              ].map((img) {
+              items: crouselImages.map((img) {
                 return Builder(
                   builder: (BuildContext context) {
                     return Container(
@@ -37,11 +32,11 @@ class CustomSliderWidget extends StatelessWidget {
                       // margin:const EdgeInsets.symmetric(horizontal: 5.0),
                       decoration: BoxDecoration(
                         color: kWhiteColor,
-                        image: DecorationImage(
+                        image:img!=""? DecorationImage(
                             image: NetworkImage(
                               img,
                             ),
-                            fit: BoxFit.cover),
+                            fit: BoxFit.cover):null,
                       ),
                     );
                   },
@@ -72,7 +67,7 @@ class CustomSliderWidget extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 // color: k2ndColor,
                 child: Marquee(
-                  text: "Welcome to SM MATKA...\t\t  \t \t",
+                  text: "$marqueeText\t\t  \t \t",
                   style: kMediumCaptionTextStyle.copyWith(color: kWhiteColor),
                   scrollAxis: Axis.horizontal,
                 ),

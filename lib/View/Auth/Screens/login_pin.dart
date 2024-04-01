@@ -6,7 +6,7 @@ import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
 import 'package:sm_matka/View/Auth/Screens/forgot_pin.dart';
-import 'package:sm_matka/View/Auth/ViewModel/auth_http_requests.dart';
+import 'package:sm_matka/ViewModel/http_requests.dart';
 import 'package:sm_matka/View/Auth/Widgets/admin_help_button_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_decorator_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/klogin_button.dart';
@@ -20,9 +20,6 @@ class LoginPin extends StatefulWidget {
 
 class _LoginPinState extends State<LoginPin> {
   final TextEditingController pinController = TextEditingController();
-
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +39,9 @@ class _LoginPinState extends State<LoginPin> {
                   decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                          image: AssetImage('assets/Logo/logo.png'))),
+                          image: AssetImage('assets/Logo/logo.png'),),),
                 ),
+
                 InputDecoratorWidget(
                   title: "Enter Pin Code",
                   child: Column(
@@ -70,31 +68,52 @@ class _LoginPinState extends State<LoginPin> {
                           }
                         },
                       ),
-                      const SizedBox(height: 10),
-                      
-                      
-                       KLoginButton(
+                      const SizedBox(height: 30),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: KLoginButton(
+                              gradient: kblueGradient,
                               title: "Proceed",
                               onPressed: () async {
-                                await AuthHttpRequests.loginPinRequest(
+                                await HttpRequests.loginPinRequest(
                                     token: widget.token,
                                     pin: pinController.text,
                                     context: context);
                               },
                             ),
-                        Container(
-                          width: double.maxFinite,
-                          alignment: Alignment.center,
-                          height: 56,
-                          child: InkWell(
-                            onTap: ()async {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ForgotPinPage(),),);
-                            },
-                            child: Text("Reset Pin",style: kMediumTextStyle.copyWith(color: kWhiteColor),)))
+                          ),
+                        ],
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 8.0),
+                        child: Text("or"),
+                      ),
+                      Container(
+                        width: double.maxFinite,
+                        alignment: Alignment.center,
+                        height: 46,
+                        child: InkWell(
+                          onTap: () async {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const ForgotPinPage(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "Reset Pin",
+                            style: kMediumTextStyle.copyWith(
+                              color: k2ndColor,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                      const AdminHelpButtonWidget(),
+                const AdminHelpButtonWidget(),
               ],
             ),
           ),

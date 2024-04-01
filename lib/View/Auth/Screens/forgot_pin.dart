@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
-import 'package:sm_matka/View/Auth/ViewModel/auth_http_requests.dart';
+import 'package:sm_matka/ViewModel/http_requests.dart';
 import 'package:sm_matka/View/Auth/Widgets/admin_help_button_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_decorator_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_textfield_widget.dart';
@@ -47,12 +47,18 @@ class _ForgotPinPageState extends State<ForgotPinPage> {
                         controller: mobileController,
                         labelText: 'Mobile',
                       ),
-                      KLoginButton(
-                        title: "Submit",
-                        onPressed: () async {
-                          await AuthHttpRequests.forgotPinRequest(
-                              mobile: mobileController.text, context: context);
-                        },
+                      Row(
+                        children: [
+                          Expanded(
+                            child: KLoginButton(gradient: kblueGradient,
+                              title: "Submit",
+                              onPressed: () async {
+                                await HttpRequests.forgotPinRequest(
+                                    mobile: mobileController.text, context: context);
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       const AdminHelpButtonWidget(),
                     ],

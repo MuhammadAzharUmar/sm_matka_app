@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
 import 'package:sm_matka/View/Auth/Screens/forgot_password.dart';
 import 'package:sm_matka/View/Auth/Screens/signup.dart';
-import 'package:sm_matka/View/Auth/ViewModel/auth_http_requests.dart';
+import 'package:sm_matka/ViewModel/http_requests.dart';
 import 'package:sm_matka/View/Auth/Widgets/admin_help_button_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_decorator_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_textfield_widget.dart';
@@ -48,6 +49,9 @@ class _LoginPageState extends State<LoginPage> {
                         height: 20,
                       ),
                       InputTextFieldWidget(
+                        inputFormatter: [
+                          LengthLimitingTextInputFormatter(10),
+                        ],
                         controller: mobileController,
                         labelText: 'Mobile',
                       ),
@@ -84,34 +88,50 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             )),
                       ),
-                      KLoginButton(
-                        title: "Login",
-                        onPressed: () async {
-                          await AuthHttpRequests.loginRequest(
-                            mobile: mobileController.text.trim(),
-                            password: passwordController.text.trim(),
-                            context: context,
-                          );
-                        },
+                      const SizedBox(
+                        height: 10,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0, bottom: 3),
-                        child: Text(
-                          "Don't have an account yet?",
-                          style: kSmallTextStyle.copyWith(
-                            color: kWhiteColor,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(
+                            child: KLoginButton(
+                              gradient: kblueGradient,
+                              title: "Login",
+                              onPressed: () async {
+                                await HttpRequests.loginRequest(
+                                  mobile: mobileController.text.trim(),
+                                  password: passwordController.text.trim(),
+                                  context: context,
+                                );
+                              },
+                            ),
                           ),
-                        ),
+                          const Text("  \t\tor\t\t  "),
+                          Expanded(
+                            child: KLoginButton(
+                                gradient: null,
+                                title: "Signup",
+                                onPressed: () {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) => const SignupPage(),
+                                    ),
+                                  );
+                                }),
+                          ),
+                        ],
                       ),
-                      KLoginButton(
-                          title: "Signup",
-                          onPressed: () {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => const SignupPage(),
-                              ),
-                            );
-                          })
+
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 10.0, bottom: 3),
+                      //   child: Text(
+                      //     "Don't have an account yet?",
+                      //     style: kSmallTextStyle.copyWith(
+                      //       color: kWhiteColor,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

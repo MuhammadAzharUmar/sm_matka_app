@@ -19,7 +19,7 @@ class AdminHelpButtonWidget extends StatelessWidget {
           child: Text(
             "Need Help?",
             style: kSmallTextStyle.copyWith(
-              color: k2ndColor,
+              color: kBlackColor,
             ),
           ),
         ),
@@ -35,14 +35,14 @@ class AdminHelpButtonWidget extends StatelessWidget {
                   maximumSize: const Size(130, 40),
                   shape: RoundedRectangleBorder(
                       side: const BorderSide(
-                        color: kWhiteColor,
-                        width: 1,
+                        color: k2ndColor,
+                        width: 2,
                       ),
-                      borderRadius: BorderRadius.circular(30)),
+                      borderRadius: BorderRadius.circular(30),),
                   padding: const EdgeInsets.symmetric(
                       vertical: 0, horizontal: 10)),
               icon: Image.asset(
-                "assets/Auth/whatsapp.png",
+                "assets/General/whatsapp.png",
                 width: 24,
                 height: 24,
                 alignment: Alignment.center,

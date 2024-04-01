@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
 import 'package:sm_matka/Utilities/snackbar_messages.dart';
-import 'package:sm_matka/View/Auth/ViewModel/auth_http_requests.dart';
+import 'package:sm_matka/ViewModel/http_requests.dart';
 import 'package:sm_matka/View/Auth/Widgets/admin_help_button_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_decorator_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_textfield_widget.dart';
@@ -60,33 +60,39 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         controller: confirmPasswordController,
                         labelText: 'Enter Confirm ${widget.caller}',
                       ),
-                      KLoginButton(
-                        title: "Submit",
-                        onPressed: () async {
-                          if (passwordController.text !=
-                              confirmPasswordController.text) {
-                            SnackBarMessage.centeredSnackbar(
-                                text: "${widget.caller} mismatch",
-                                context: context);
-                          } else {
-                            if (widget.caller == "Password") {
-                              await AuthHttpRequests
-                                  .forgotPasswordVerifyRequest(
-                                mobile: widget.mobile,
-                                token: widget.token,
-                                password: passwordController.text,
-                                context: context,
-                              );
-                            } else {
-                              await AuthHttpRequests.createPinRequest(
-                                mobile: widget.mobile,
-                                token: widget.token,
-                                pin: passwordController.text,
-                                context: context,
-                              );
-                            }
-                          }
-                        },
+                      Row(
+                        children: [
+                          Expanded(
+                            child: KLoginButton(gradient: kblueGradient,
+                              title: "Submit",
+                              onPressed: () async {
+                                if (passwordController.text !=
+                                    confirmPasswordController.text) {
+                                  SnackBarMessage.centeredSnackbar(
+                                      text: "${widget.caller} mismatch",
+                                      context: context);
+                                } else {
+                                  if (widget.caller == "Password") {
+                                    await HttpRequests
+                                        .forgotPasswordVerifyRequest(
+                                      mobile: widget.mobile,
+                                      token: widget.token,
+                                      password: passwordController.text,
+                                      context: context,
+                                    );
+                                  } else {
+                                    await HttpRequests.createPinRequest(
+                                      mobile: widget.mobile,
+                                      token: widget.token,
+                                      pin: passwordController.text,
+                                      context: context,
+                                    );
+                                  }
+                                }
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       const AdminHelpButtonWidget(),
                     ],
