@@ -28,7 +28,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kWhiteColor,
+      backgroundColor: kblue1color,
       body: Container(
         decoration: const BoxDecoration(gradient: kCustomGradient),
         child: SafeArea(

@@ -93,7 +93,7 @@ class _ContactUsState extends State<ContactUs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kWhiteColor,
+      backgroundColor: kblue1color,
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
@@ -102,7 +102,7 @@ class _ContactUsState extends State<ContactUs> {
             icon: const Icon(
               Icons.arrow_back_ios_new_rounded,
               size: 18,
-              color: kWhiteColor,
+              color: kblue1color,
             )),
         backgroundColor: kBlue1Color,
         elevation: 0,
@@ -111,7 +111,7 @@ class _ContactUsState extends State<ContactUs> {
         title: Text(
           "Contact Us",
           style: kMediumTextStyle.copyWith(
-              color: kWhiteColor, fontWeight: FontWeight.w700),
+              color: kblue1color, fontWeight: FontWeight.w700),
         ),
       ),
       body: ListView.builder(
@@ -126,7 +126,7 @@ class _ContactUsState extends State<ContactUs> {
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 decoration: const BoxDecoration(
-                    color: kWhiteColor, borderRadius: kMediumBorderRadius),
+                    color: kblue1color, borderRadius: kMediumBorderRadius),
                 child: ListTile(
                   onTap: () async {
                     await contactDetails[index]["onTap"](context);

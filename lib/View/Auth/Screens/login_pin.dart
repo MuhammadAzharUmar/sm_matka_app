@@ -24,7 +24,7 @@ class _LoginPinState extends State<LoginPin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kWhiteColor,
+      backgroundColor: kblue1color,
       body: Container(
         decoration: const BoxDecoration(gradient: kCustomGradient),
         child: SafeArea(
@@ -52,11 +52,11 @@ class _LoginPinState extends State<LoginPin> {
                       Pinput(
                         defaultPinTheme: PinTheme(
                           textStyle:
-                              kMediumTextStyle.copyWith(color: kWhiteColor),
+                              kMediumTextStyle.copyWith(color: kblue1color),
                           height: 46,
                           width: 40,
                           decoration: BoxDecoration(
-                            border: Border.all(color: kWhiteColor),
+                            border: Border.all(color: kblue1color),
                             borderRadius: kSmallBorderRadius,
                           ),
                         ),

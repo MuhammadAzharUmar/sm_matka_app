@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kWhiteColor,
+      backgroundColor: kblue1color,
       body: Container(
         decoration: const BoxDecoration(gradient: kCustomGradient),
         child: SafeArea(
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: Text(
                               "Forgot Password?",
                               style: kSmallTextStyle.copyWith(
-                                color: kWhiteColor,
+                                color: kblue1color,
                                 fontWeight: FontWeight.w700,
                               ),
                             )),

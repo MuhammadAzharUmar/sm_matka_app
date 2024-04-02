@@ -29,11 +29,11 @@ final ContactDetails contactDetails;
               },
               style: ElevatedButton.styleFrom(
                   backgroundColor: kBlue1Color.withOpacity(.9),
-                  foregroundColor: kWhiteColor,
+                  foregroundColor: kblue1color,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                       side: const BorderSide(
-                        color: kWhiteColor,
+                        color: kblue1color,
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(30)),

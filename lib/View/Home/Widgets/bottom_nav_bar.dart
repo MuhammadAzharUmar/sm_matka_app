@@ -31,7 +31,7 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
     return SizedBox(
       height: 90,
       child: AnimatedNotchBottomBar(
-        color: kWhiteColor,
+        color: kblue1color,
         notchColor: kBlue1Color,
         notchBottomBarController: widget.notchController,
         kBottomRadius: 40,
@@ -44,27 +44,27 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
           
            BottomBarItem(
             inActiveItem:  Icon(Icons.home_outlined,color: kBlue1Color,),
-            activeItem: Icon(Icons.home_outlined,color: kWhiteColor,),
+            activeItem: Icon(Icons.home_outlined,color: kblue1color,),
             itemLabel: 'Home',
           ),
            BottomBarItem(
             inActiveItem:  Icon(Icons.history,color: kBlue1Color,),
-            activeItem: Icon(Icons.history,color: kWhiteColor,),
+            activeItem: Icon(Icons.history,color: kblue1color,),
             itemLabel: 'History',
           ),
            BottomBarItem(
             inActiveItem:  Icon(Icons.person_3_outlined,color: kBlue1Color,),
-            activeItem: Icon(Icons.person_3_outlined,color: kWhiteColor,),
+            activeItem: Icon(Icons.person_3_outlined,color: kblue1color,),
             itemLabel: 'Profile',
           ),
            BottomBarItem(
             inActiveItem:  Icon(Icons.money,color: kBlue1Color,),
-            activeItem: Icon(Icons.money,color: kWhiteColor,),
+            activeItem: Icon(Icons.money,color: kblue1color,),
             itemLabel: 'Funds',
           ),
            BottomBarItem(
             inActiveItem:  Icon(Icons.settings,color: kBlue1Color,),
-            activeItem: Icon(Icons.settings,color: kWhiteColor,),
+            activeItem: Icon(Icons.settings,color: kblue1color,),
             itemLabel: 'Settings',
           ),
         ],

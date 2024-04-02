@@ -44,6 +44,8 @@ dependencies:
   carousel_slider: ^4.2.1
   flutter_bloc: ^8.1.5
   share_plus: ^8.0.2
+  vibration: ^1.8.4
+  webview_flutter: ^4.7.0
 
 dev_dependencies:
   flutter_test:

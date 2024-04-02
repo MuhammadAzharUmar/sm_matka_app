@@ -25,7 +25,7 @@ class _HowToPlayState extends State<HowToPlay> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kWhiteColor,
+      backgroundColor: kblue1color,
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
@@ -34,7 +34,7 @@ class _HowToPlayState extends State<HowToPlay> {
             icon: const Icon(
               Icons.arrow_back_ios_new_rounded,
               size: 18,
-              color: kWhiteColor,
+              color: kblue1color,
             )),
         backgroundColor: kBlue1Color,
         elevation: 0,
@@ -43,7 +43,7 @@ class _HowToPlayState extends State<HowToPlay> {
         title: Text(
           "How To Play",
           style: kMediumTextStyle.copyWith(
-              color: kWhiteColor, fontWeight: FontWeight.w700),
+              color: kblue1color, fontWeight: FontWeight.w700),
         ),
       ),
       body:  BlocBuilder<UserCubit, UserModel>(builder: (context, user) {return FutureBuilder(
@@ -174,7 +174,7 @@ class _HowToPlayState extends State<HowToPlay> {
                                 }
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: kWhiteColor,
+                                backgroundColor: kblue1color,
                                 elevation: 0,
                               ),
                               child: Image.asset(

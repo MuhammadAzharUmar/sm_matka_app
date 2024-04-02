@@ -21,7 +21,7 @@ class _FundsState extends State<Funds> {
         title: Text(
           "Funds",
           style: kMediumTextStyle.copyWith(
-              color: kWhiteColor, fontWeight: FontWeight.w700),
+              color: kblue1color, fontWeight: FontWeight.w700),
         )
       ),
       body: Center(child: Text("Comming soon",style: kMediumCaptionTextStyle.copyWith(color: kBlue1Color,),),),

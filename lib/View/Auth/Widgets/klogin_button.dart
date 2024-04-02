@@ -20,7 +20,7 @@ class KLoginButton extends StatelessWidget {
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,
-              foregroundColor: kWhiteColor,
+              foregroundColor: kblue1color,
               elevation: 0,
               minimumSize: const Size(100, 36),
               maximumSize: const Size(100, 36),

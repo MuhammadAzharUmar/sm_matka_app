@@ -34,7 +34,7 @@ class HomeAppBarWidget extends StatelessWidget {
           title: Text(
             "SM MATKA",
             style: kMediumTextStyle.copyWith(
-                color: kWhiteColor, fontWeight: FontWeight.w700),
+                color: kblue1color, fontWeight: FontWeight.w700),
           ),
           actions: [
             IconButton(
@@ -42,12 +42,12 @@ class HomeAppBarWidget extends StatelessWidget {
               icon: const Icon(
                 Icons.notifications_active_outlined,
                 size: 20,
-                color: kWhiteColor,
+                color: kblue1color,
               ),
             ),
             Text(
               userStatus.data.availablePoints,
-              style: kMediumCaptionTextStyle.copyWith(color: kWhiteColor),
+              style: kMediumCaptionTextStyle.copyWith(color: kblue1color),
             ),
             IconButton(
               onPressed: () {},

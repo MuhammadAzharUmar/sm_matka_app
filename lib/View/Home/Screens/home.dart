@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sm_matka/Models/user_status_model.dart';
 import 'package:sm_matka/Models/usermodel.dart';
-import 'package:sm_matka/Utilities/border_radius.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
 import 'package:sm_matka/View/Home/Widgets/crousel_slider.dart';
 import 'package:sm_matka/View/Home/Widgets/fund_withdraw_chat_call_button_widget.dart';
 import 'package:sm_matka/View/Home/Widgets/home_appbar_widget.dart';
+import 'package:sm_matka/View/Home/Widgets/main_gamelist_widget.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/app_details_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_status_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
@@ -31,6 +30,8 @@ class _HomeState extends State<Home> {
     Future.delayed(const Duration(seconds: 0)).then((value) async {
       user = context.read<UserCubit>().state;
       userStatus = context.read<UserStatusCubit>().state;
+      await HttpRequests.mainGameListRequest(context: context, token: user.token);
+
     });
   }
 
@@ -104,47 +105,28 @@ class _HomeState extends State<Home> {
                         borderRadius: BorderRadius.circular(
                           30,
                         ),
-                        gradient: kCustomGradient),
+                        gradient: kblueGradient,),
                     child: Row(
                       children: [
                         Expanded(
                             child: Text(
                           "GALI DISAWAR GAME",
                           style: kSmallTextStyle.copyWith(
-                            color: kWhiteColor,
+                            color: kblue1color,
                             fontWeight: FontWeight.w700,
                           ),
                         )),
                         const Icon(
                           Icons.arrow_circle_right,
-                          color: kWhiteColor,
+                          color: kblue1color,
                           size: 24,
                         )
                       ],
                     ),
                   ),
-                  Expanded(
-                      child: ListView.builder(
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        height: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: kSmallBorderRadius,
-                          border: Border.all(
-                            color: kBlue1Color,
-                            width: 2,
-                          ),
-                        ),
-                        child: const Row(
-                          children: [],
-                        ),
-                      );
-                    },
-                  ))
+                  const SizedBox(height: 10,),
+                  const Expanded(
+                      child: MainGameListWidget())
                 ],
               );
             }

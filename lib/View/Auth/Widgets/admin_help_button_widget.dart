@@ -29,7 +29,7 @@ class AdminHelpButtonWidget extends StatelessWidget {
               onPressed: () {},
               style: ElevatedButton.styleFrom(
                   backgroundColor: kBlackColor.withOpacity(.7),
-                  foregroundColor: kWhiteColor,
+                  foregroundColor: kblue1color,
                   elevation: 0,
                   minimumSize: const Size(130, 40),
                   maximumSize: const Size(130, 40),
