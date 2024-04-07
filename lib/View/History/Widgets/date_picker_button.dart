@@ -67,7 +67,7 @@ class DatePickerButtonState extends State<DatePickerButton> {
           onPressed: () => _selectDate(context),
           style: ElevatedButton.styleFrom(
               backgroundColor: kBlue1Color,
-              foregroundColor: kblue1color,
+              foregroundColor: kWhiteColor,
               minimumSize: const Size(double.maxFinite, 36)),
           child: Text(selectedDate),
         ),

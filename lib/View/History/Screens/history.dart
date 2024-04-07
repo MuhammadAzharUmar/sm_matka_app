@@ -15,7 +15,7 @@ class _HistoryState extends State<History> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kblue1color,
+      backgroundColor: kWhiteColor,
       appBar: AppBar(
           backgroundColor: kBlue1Color,
           elevation: 0,
@@ -24,7 +24,7 @@ class _HistoryState extends State<History> {
           title: Text(
             "History",
             style: kMediumTextStyle.copyWith(
-                color: kblue1color, fontWeight: FontWeight.w700),
+                color: kWhiteColor, fontWeight: FontWeight.w700),
           )),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
@@ -44,7 +44,7 @@ class _HistoryState extends State<History> {
                 shape:const RoundedRectangleBorder(borderRadius: kSmallBorderRadius),
                 child: Container(
                   decoration: const BoxDecoration(
-                      color: kblue1color, borderRadius: kSmallBorderRadius),
+                      color: kWhiteColor, borderRadius: kSmallBorderRadius),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

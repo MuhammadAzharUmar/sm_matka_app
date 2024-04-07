@@ -31,7 +31,7 @@ final String marqueeText;
                       height: 150,
                       // margin:const EdgeInsets.symmetric(horizontal: 5.0),
                       decoration: BoxDecoration(
-                        color: kblue1color,
+                        color: kWhiteColor,
                         image:img!=""? DecorationImage(
                             image: NetworkImage(
                               img,
@@ -68,7 +68,7 @@ final String marqueeText;
                 // color: k2ndColor,
                 child: Marquee(
                   text: "$marqueeText\t\t  \t \t",
-                  style: kMediumCaptionTextStyle.copyWith(color: kblue1color),
+                  style: kMediumCaptionTextStyle.copyWith(color: kWhiteColor),
                   scrollAxis: Axis.horizontal,
                 ),
               ),

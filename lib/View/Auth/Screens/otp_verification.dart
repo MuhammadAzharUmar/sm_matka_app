@@ -56,7 +56,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kblue1color,
+      backgroundColor: kWhiteColor,
       body: Container(
         decoration: const BoxDecoration(gradient: kCustomGradient),
         child: SafeArea(
@@ -83,11 +83,11 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                       Pinput(
                         defaultPinTheme: PinTheme(
                           textStyle:
-                              kMediumTextStyle.copyWith(color: kblue1color),
+                              kMediumTextStyle.copyWith(color: kWhiteColor),
                           height: 46,
                           width: 40,
                           decoration: BoxDecoration(
-                            border: Border.all(color: kblue1color),
+                            border: Border.all(color: kWhiteColor),
                             borderRadius: kSmallBorderRadius,
                           ),
                         ),
@@ -106,7 +106,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                             : Text(
                                 '$_secondsLeft seconds left',
                                 style: kMediumCaptionTextStyle.copyWith(
-                                    color: kblue1color),
+                                    color: kWhiteColor),
                               ),
                       ),
                       const SizedBox(

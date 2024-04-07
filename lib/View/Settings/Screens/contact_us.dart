@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sm_matka/Models/app_details_model.dart';
 import 'package:sm_matka/Utilities/border_radius.dart';
 import 'package:sm_matka/Utilities/colors.dart';
@@ -23,6 +24,7 @@ class _ContactUsState extends State<ContactUs> {
     contactDetails = [
       {
         "title": "Call Us",
+        "animation": "assets/General/call.json",
         "img": "assets/General/call.png",
         "contact": appDetailsModel.data.contactDetails.mobileNo1,
         "onTap": (BuildContext context) async {
@@ -34,6 +36,7 @@ class _ContactUsState extends State<ContactUs> {
       {
         "title": "Call Us",
         "img": "assets/General/call.png",
+        "animation": "assets/General/call.json",
         "contact": appDetailsModel.data.contactDetails.mobileNo2,
         "onTap": (BuildContext context) async {
           await LaunchCustomUrls.launchURL(
@@ -44,6 +47,7 @@ class _ContactUsState extends State<ContactUs> {
       {
         "title": "Chat Us",
         "img": "assets/General/whatsapp.png",
+        "animation": "assets/General/whatsapp.json",
         "contact": appDetailsModel.data.contactDetails.whatsappNo,
         "onTap": (BuildContext context) async {
           await LaunchCustomUrls.launchURL(
@@ -55,17 +59,18 @@ class _ContactUsState extends State<ContactUs> {
       {
         "title": "Mail Us",
         "img": "assets/General/email.png",
+        "animation": "assets/General/email.json",
         "contact": appDetailsModel.data.contactDetails.email1,
         "onTap": (BuildContext context) async {
           await LaunchCustomUrls.launchURL(
-            url:
-                'mailto:${appDetailsModel.data.contactDetails.email1}',
+            url: 'mailto:${appDetailsModel.data.contactDetails.email1}',
           );
         },
       },
       {
         "title": "Telegram",
         "img": "assets/General/telegram.png",
+        "animation": "assets/General/telegram.json",
         "contact": appDetailsModel.data.contactDetails.telegramNo,
         "onTap": (BuildContext context) async {
           await LaunchCustomUrls.launchURL(
@@ -77,11 +82,11 @@ class _ContactUsState extends State<ContactUs> {
       {
         "title": "Withdraw Proof",
         "img": "assets/General/withdraw.png",
+        "animation": "assets/General/withdraw.json",
         "contact": appDetailsModel.data.contactDetails.withdrawProof,
         "onTap": (BuildContext context) async {
           await LaunchCustomUrls.launchURL(
-            url:
-                appDetailsModel.data.contactDetails.withdrawProof,
+            url: appDetailsModel.data.contactDetails.withdrawProof,
           );
         },
       },
@@ -93,7 +98,7 @@ class _ContactUsState extends State<ContactUs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kblue1color,
+      backgroundColor: kWhiteColor,
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
@@ -102,7 +107,7 @@ class _ContactUsState extends State<ContactUs> {
             icon: const Icon(
               Icons.arrow_back_ios_new_rounded,
               size: 18,
-              color: kblue1color,
+              color: kWhiteColor,
             )),
         backgroundColor: kBlue1Color,
         elevation: 0,
@@ -111,7 +116,7 @@ class _ContactUsState extends State<ContactUs> {
         title: Text(
           "Contact Us",
           style: kMediumTextStyle.copyWith(
-              color: kblue1color, fontWeight: FontWeight.w700),
+              color: kWhiteColor, fontWeight: FontWeight.w700),
         ),
       ),
       body: ListView.builder(
@@ -126,21 +131,17 @@ class _ContactUsState extends State<ContactUs> {
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 decoration: const BoxDecoration(
-                    color: kblue1color, borderRadius: kMediumBorderRadius),
+                    color: kWhiteColor, borderRadius: kMediumBorderRadius),
                 child: ListTile(
                   onTap: () async {
                     await contactDetails[index]["onTap"](context);
                   },
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 10,
+                  contentPadding:  EdgeInsets.only(
+                    right:contactDetails[index]["animation"]=="assets/General/call.json"?1: 10,
+                    left: 20
                   ),
                   horizontalTitleGap: 20,
-                  leading: Image.asset(
-                    contactDetails[index]["img"],
-                    width: 24,
-                    height: 24,
-                    fit: BoxFit.contain,
-                  ),
+
                   title: Text(
                     contactDetails[index]["title"],
                     style: kMediumTextStyle.copyWith(
@@ -155,11 +156,24 @@ class _ContactUsState extends State<ContactUs> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  trailing: const Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    size: 14,
-                    color: kBlue1Color,
+                  trailing: Lottie.asset(
+                    contactDetails[index]["animation"],
+                    width:contactDetails[index]["animation"]=="assets/General/call.json"?56: 40,
+                    height:contactDetails[index]["animation"]=="assets/General/call.json"?56: 40,
+                    fit: BoxFit.cover,
                   ),
+
+                  // leading: Image.asset(
+                  //   contactDetails[index]["img"],
+                  //   width: 24,
+                  //   height: 24,
+                  //   fit: BoxFit.contain,
+                  // ),
+                  // trailing: const Icon(
+                  //   Icons.arrow_forward_ios_rounded,
+                  //   size: 14,
+                  //   color: kBlue1Color,
+                  // ),
                 ),
               ),
             ),

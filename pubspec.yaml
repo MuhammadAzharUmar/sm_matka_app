@@ -46,6 +46,8 @@ dependencies:
   share_plus: ^8.0.2
   vibration: ^1.8.4
   webview_flutter: ^4.7.0
+  lottie: ^3.1.0
+  autocomplete_textfield: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +76,8 @@ flutter:
     - assets/Logo/
     - assets/Auth/
     - assets/General/
+    - assets/Fund/
+    - assets/Games/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

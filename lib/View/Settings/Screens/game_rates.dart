@@ -34,7 +34,7 @@ class _GamesRatesState extends State<GamesRates> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kblue1color,
+      backgroundColor: kWhiteColor,
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
@@ -43,7 +43,7 @@ class _GamesRatesState extends State<GamesRates> {
             icon: const Icon(
               Icons.arrow_back_ios_new_rounded,
               size: 18,
-              color: kblue1color,
+              color: kWhiteColor,
             )),
         backgroundColor: kBlue1Color,
         elevation: 0,
@@ -52,7 +52,7 @@ class _GamesRatesState extends State<GamesRates> {
         title: Text(
           "Game Rates",
           style: kMediumTextStyle.copyWith(
-              color: kblue1color, fontWeight: FontWeight.w700),
+              color: kWhiteColor, fontWeight: FontWeight.w700),
         ),
       ),
       body: BlocBuilder<UserCubit, UserModel>(builder: (context, user) {
@@ -104,7 +104,7 @@ class _GamesRatesState extends State<GamesRates> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
                         decoration: const BoxDecoration(
-                            color: kblue1color,
+                            color: kWhiteColor,
                             borderRadius: kMediumBorderRadius),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -41,7 +43,6 @@ class HttpRequests {
           //   context: context,
           // );
 
-          // ignore: use_build_context_synchronously
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => OtpVerificationPage(
@@ -50,25 +51,22 @@ class HttpRequests {
               ),
             ),
           );
-          // ignore: use_build_context_synchronously
         } else {
           SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -89,29 +87,24 @@ class HttpRequests {
         if (jsonData["status"] == "success") {
           SnackBarMessage.simpleSnackBar(
             text: jsonData["message"],
-
-            // ignore: use_build_context_synchronously
             context: context,
           );
-          // ignore: use_build_context_synchronously
         } else {
           SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
       if (kDebugMode) {
         print("error $e");
@@ -137,7 +130,6 @@ class HttpRequests {
           //   // ignore: use_build_context_synchronously
           //   context: context,
           // );
-          // ignore: use_build_context_synchronously
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => const LoginPage(),
@@ -146,20 +138,17 @@ class HttpRequests {
         } else {
           SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -185,7 +174,6 @@ class HttpRequests {
           //   // ignore: use_build_context_synchronously
           //   context: context,
           // );
-          // ignore: use_build_context_synchronously
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => ChangePasswordPage(
@@ -198,7 +186,6 @@ class HttpRequests {
         } else {
           SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
 
@@ -212,13 +199,11 @@ class HttpRequests {
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -236,7 +221,6 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          // ignore: use_build_context_synchronously
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => LoginPin(
@@ -247,20 +231,17 @@ class HttpRequests {
         } else {
           SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -286,22 +267,18 @@ class HttpRequests {
         if (jsonData["status"] == "success") {
           SnackBarMessage.simpleSnackBar(
             text: jsonData["message"],
-            // ignore: use_build_context_synchronously
             context: context,
           );
           String token = jsonData["data"]["token"];
           if (token != "" && token.isNotEmpty) {
             await preferences.setString("userToken", jsonData["data"]["token"]);
             await HttpRequests.getUserDetailsRequest(
-                // ignore: use_build_context_synchronously
                 context: context,
                 token: token);
 
-            // ignore: use_build_context_synchronously
             Navigator.of(context).popUntil(
               (route) => route.isFirst,
             );
-            // ignore: use_build_context_synchronously
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) => const MainPage(
@@ -313,20 +290,17 @@ class HttpRequests {
         } else {
           SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -346,11 +320,9 @@ class HttpRequests {
         if (jsonData["status"] == "success") {
           SnackBarMessage.simpleSnackBar(
             text: jsonData["message"],
-            // ignore: use_build_context_synchronously
             context: context,
           );
 
-          // ignore: use_build_context_synchronously
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => OtpVerificationPage(
@@ -362,20 +334,17 @@ class HttpRequests {
         } else {
           SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -394,11 +363,9 @@ class HttpRequests {
         if (jsonData["status"] == "success") {
           SnackBarMessage.simpleSnackBar(
             text: jsonData["message"],
-            // ignore: use_build_context_synchronously
             context: context,
           );
 
-          // ignore: use_build_context_synchronously
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => OtpVerificationPage(
@@ -410,20 +377,17 @@ class HttpRequests {
         } else {
           SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -449,31 +413,26 @@ class HttpRequests {
         if (jsonData["status"] == "success") {
           SnackBarMessage.simpleSnackBar(
             text: jsonData["message"],
-            // ignore: use_build_context_synchronously
             context: context,
           );
 
-          // ignore: use_build_context_synchronously
           Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const LoginPage()),
           );
         } else {
           SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -499,31 +458,26 @@ class HttpRequests {
         if (jsonData["status"] == "success") {
           SnackBarMessage.simpleSnackBar(
             text: jsonData["message"],
-            // ignore: use_build_context_synchronously
             context: context,
           );
 
-          // ignore: use_build_context_synchronously
           Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const LoginPage()),
           );
         } else {
           SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -544,20 +498,17 @@ class HttpRequests {
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -580,20 +531,17 @@ class HttpRequests {
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -616,7 +564,6 @@ class HttpRequests {
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
 
@@ -625,13 +572,11 @@ class HttpRequests {
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -655,20 +600,17 @@ class HttpRequests {
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -687,25 +629,21 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -729,27 +667,21 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
-        
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
-      print("error $e");
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -775,25 +707,21 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -816,25 +744,21 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -867,25 +791,25 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
+          if (kDebugMode) {
+            print(jsonData);
+          }
           return jsonData;
         } else {
-          return SnackBarMessage.centeredSnackbar(
+          SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
+          return {};
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -910,25 +834,21 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -951,25 +871,21 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -996,25 +912,25 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
+          if (kDebugMode) {
+            print(jsonData);
+          }
           return jsonData;
         } else {
-          return SnackBarMessage.centeredSnackbar(
+          SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
+          return {};
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -1036,25 +952,21 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -1076,25 +988,25 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
+          if (kDebugMode) {
+            print(jsonData);
+          }
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
-        return SnackBarMessage.centeredSnackbar(
+        SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
+        return {};
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -1120,25 +1032,21 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -1166,25 +1074,25 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
+          if (kDebugMode) {
+            print(jsonData);
+          }
           return jsonData;
         } else {
-          return SnackBarMessage.centeredSnackbar(
+          SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
+          return {};
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -1212,25 +1120,21 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -1263,20 +1167,17 @@ class HttpRequests {
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -1297,42 +1198,39 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
   }
 
-  static Future<Map<String, dynamic>> placeBidRequest({
-    required BuildContext context,
-    required String token,
-  }) async {
+  static Future<Map<String, dynamic>> placeBidRequest(
+      {required BuildContext context,
+      required String token,
+      required List<Map<String, dynamic>> list}) async {
     try {
-      var headers = {'token': token};
+      var headers = {
+        'token': token,
+      };
+
       var request =
-          http.MultipartRequest('POST', Uri.parse('{{base_url}}/place_bid'));
-      request.fields.addAll({
-        'game_bids':
-            '{\n  "bids": [\n    {\n      "game_id": "3",\n      "game_type" : "single_digit",\n      "session" : "Open",\n      "bid_points" : "10",\n      "open_digit" : "9",\n      "close_digit" : "",\n      "open_panna" : "",\n      "close_panna" : ""\n    },\n    {\n      "game_id": "3",\n      "game_type" : "single_digit",\n      "session" : "Open",\n      "bid_points" : "10",\n      "open_digit" : "8",\n      "close_digit" : "",\n      "open_panna" : "",\n      "close_panna" : ""\n    },\n    {\n      "game_id": "3",\n      "game_type" : "single_digit",\n      "session" : "Open",\n      "bid_points" : "40",\n      "open_digit" : "5",\n      "close_digit" : "",\n      "open_panna" : "",\n      "close_panna" : ""\n    }\n  ]\n}'
-      });
+          http.MultipartRequest('POST', Uri.parse('$baseUrl/place_bid'));
+      request.fields.addAll({'game_bids': '{"bids": ${jsonEncode(list)}}'});
+
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
@@ -1340,26 +1238,26 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
+          SnackBarMessage.centeredSnackbar(
+              text: jsonData["message"], context: context);
           return jsonData;
         } else {
-          return SnackBarMessage.centeredSnackbar(
+          SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
+          return {};
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -1379,25 +1277,21 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -1406,15 +1300,14 @@ class HttpRequests {
   static Future<Map<String, dynamic>> starlinePlaceBidRequest({
     required BuildContext context,
     required String token,
+    required List<Map<String, dynamic>> list,
   }) async {
     try {
       var headers = {'token': token};
       var request = http.MultipartRequest(
           'POST', Uri.parse('$baseUrl/starline_place_bid'));
-      request.fields.addAll({
-        'game_bids':
-            '{\n  "bids": [\n    {\n      "game_id": "3",\n      "game_type" : "single_digit",\n      "session" : "Open",\n      "bid_points" : "10",\n      "digit" : "9",\n      "panna" : ""\n    },\n    {\n      "game_id": "3",\n      "game_type" : "single_digit",\n      "session" : "Open",\n      "bid_points" : "10",\n      "digit" : "8",\n      "panna" : ""\n    },\n    {\n      "game_id": "3",\n      "game_type" : "single_digit",\n      "session" : "Open",\n      "bid_points" : "40",\n      "digit" : "5",\n      "panna" : ""\n    }\n  ]\n}'
-      });
+      request.fields.addAll({'game_bids': '{"bids": ${jsonEncode(list)}}'});
+
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
@@ -1422,26 +1315,31 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
-          return jsonData;
-        } else {
-          return SnackBarMessage.centeredSnackbar(
+          if (kDebugMode) {
+            print(jsonData);
+          }
+          SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
+          return jsonData;
+        } else {
+          SnackBarMessage.centeredSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
+          return {};
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -1467,25 +1365,21 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -1512,25 +1406,21 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
         text: "Error!", context: context,
       );
     }
@@ -1551,26 +1441,24 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
           return jsonData;
         } else {
-          return SnackBarMessage.centeredSnackbar(
+           SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
+          return {};
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -1578,15 +1466,13 @@ class HttpRequests {
   static Future<Map<String, dynamic>> galiDisawarPlaceBidRequest({
     required BuildContext context,
     required String token,
+    required List<Map<String, dynamic>> list,
   }) async {
     try {
       var headers = {'token': token};
       var request = http.MultipartRequest(
           'POST', Uri.parse('$baseUrl/gali_disawar_place_bid'));
-      request.fields.addAll({
-        'game_bids':
-            '{\n  "bids": [\n    {\n      "game_id": "3",\n      "game_type" : "left_digit",\n      "session" : "Open",\n      "bid_points" : "10",\n      "left_digit" : "9",\n      "right_digit" : ""\n    },\n    {\n      "game_id": "3",\n      "game_type" : "left_digit",\n      "session" : "Open",\n      "bid_points" : "10",\n      "left_digit" : "8",\n      "right_digit" : ""\n    },\n    {\n      "game_id": "3",\n      "game_type" : "left_digit",\n      "session" : "Open",\n      "bid_points" : "40",\n      "left_digit" : "5",\n      "right_digit" : ""\n    }\n  ]\n}'
-      });
+      request.fields.addAll({'game_bids': '{"bids": ${jsonEncode(list)}}'});
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
@@ -1594,26 +1480,26 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
+          SnackBarMessage.centeredSnackbar(
+              text: jsonData["message"], context: context);
           return jsonData;
         } else {
-          return SnackBarMessage.centeredSnackbar(
+          SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
+          return {};
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -1639,26 +1525,23 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -1684,26 +1567,23 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -1724,26 +1604,23 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          print(jsonData);
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
-            // ignore: use_build_context_synchronously
             context: context,
           );
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
-          // ignore: use_build_context_synchronously
           context: context,
         );
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        // ignore: use_build_context_synchronously
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }

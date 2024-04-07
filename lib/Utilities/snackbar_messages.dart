@@ -9,7 +9,7 @@ class SnackBarMessage {
       SnackBar(
         content: Text(
           text,
-          style: kMediumTextStyle.copyWith(color: kblue1color),
+          style: kMediumTextStyle.copyWith(color: kWhiteColor),
           textAlign: TextAlign.center,
         ),
       ),

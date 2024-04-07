@@ -5,7 +5,9 @@ import 'package:sm_matka/Utilities/border_radius.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/snackbar_messages.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
-import 'package:sm_matka/View/Home/Screens/game_chat_screen.dart';
+import 'package:sm_matka/View/Home/Screens/game_chart_screen.dart';
+import 'package:sm_matka/View/Home/Screens/main_game_screen.dart';
+import 'package:sm_matka/View/Home/Widgets/main_game_list.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
 import 'package:vibration/vibration.dart';
@@ -67,9 +69,19 @@ class _MainGameListWidgetState extends State<MainGameListWidget> {
                     onTap: () {
                       if (isMarketOpen) {
                         //move to next page
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => MainGameScreen(
+                              gameList: MainGameList.mainGameList,
+                              title: snapshot.data!["data"][index]["name"],
+                              data: snapshot.data!["data"][index],
+                            ),
+                          ),
+                        );
                       } else {
-                        print("object");
-                        SnackBarMessage.centeredSnackbar(text: "Market Closed", context: context);
+                        
+                        SnackBarMessage.centeredSnackbar(
+                            text: "Market Closed", context: context);
                         Vibration.vibrate(duration: 1000);
                       }
                     },
@@ -83,12 +95,21 @@ class _MainGameListWidgetState extends State<MainGameListWidget> {
                         // height: 100,
                         decoration: const BoxDecoration(
                             borderRadius: kSmallBorderRadius,
-                            color: kblue1color),
+                            color: kWhiteColor),
                         child: Row(
                           children: [
                             InkWell(
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => GameChartScreen(title: snapshot.data!["data"][index]["name"], chatUrl: snapshot.data!["data"][index]["chart_url"],),),);
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => GameChartScreen(
+                                      title: snapshot.data!["data"][index]
+                                          ["name"],
+                                      chatUrl: snapshot.data!["data"][index]
+                                          ["chart_url"],
+                                    ),
+                                  ),
+                                );
                               },
                               child: Container(
                                 height: 56,
@@ -143,7 +164,7 @@ class _MainGameListWidgetState extends State<MainGameListWidget> {
                                         shape: BoxShape.circle),
                                     child: const Icon(
                                       Icons.play_arrow,
-                                      color: kblue1color,
+                                      color: kWhiteColor,
                                     ),
                                   ),
                                   Text(

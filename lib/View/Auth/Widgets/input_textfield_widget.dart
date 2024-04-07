@@ -35,14 +35,15 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: TextFormField(
+      child:
+       TextFormField(
         inputFormatters:widget.inputFormatter,
        
         obscureText: obsecureText,
         controller: widget.controller,
-        cursorColor: kblue1color,
+        cursorColor: kWhiteColor,
         cursorHeight: 26,
-        style: kMediumTextStyle.copyWith(color: kblue1color),
+        style: kMediumTextStyle.copyWith(color: kWhiteColor),
         decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
@@ -54,7 +55,7 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
           ),
           labelText: widget.labelText,
           labelStyle:
-              const TextStyle(color: kblue1color, fontWeight: FontWeight.w400),
+              const TextStyle(color: kWhiteColor, fontWeight: FontWeight.w400),
           suffixIcon: widget.isPassword
               ? IconButton(
                   onPressed: () {
@@ -64,20 +65,20 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
                   },
                   icon: Icon(
                     obsecureText ? Icons.visibility : Icons.visibility_off,
-                    color: kblue1color,
+                    color: kWhiteColor,
                   ))
               : null,
           border: UnderlineInputBorder(
-            borderSide: const BorderSide(color: kblue1color, width: 1),
+            borderSide: const BorderSide(color: kWhiteColor, width: 1),
             borderRadius: BorderRadius.circular(5),
           ),
           enabledBorder: UnderlineInputBorder(
-            borderSide: const BorderSide(width: 1, color: kblue1color),
+            borderSide: const BorderSide(width: 1, color: kWhiteColor),
             borderRadius: BorderRadius.circular(5),
           ),
           focusedBorder: UnderlineInputBorder(
             borderRadius: BorderRadius.circular(5),
-            borderSide: const BorderSide(width: 1, color: kblue1color),
+            borderSide: const BorderSide(width: 1, color: kWhiteColor),
           ),
         ),
       ),

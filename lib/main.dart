@@ -33,13 +33,25 @@ class _MyAppState extends State<MyApp> {
               UserCubit(UserModel.fromJson(json: {}, token: "")),
         ),
         BlocProvider(
-          create: (BuildContext context) =>
-              UserStatusCubit(UserStatusModel.fromJson({},),),
+          create: (BuildContext context) => UserStatusCubit(
+            UserStatusModel.fromJson(
+              {},
+            ),
+          ),
         ),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+        //fixed font size
+        builder: (BuildContext context, Widget? child) {
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaler: TextScaler.noScaling,
+            ),
+            child: child!,
+          );
+        },
+        home: const SplashScreen(),
       ),
     );
   }

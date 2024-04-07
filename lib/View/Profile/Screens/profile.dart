@@ -31,6 +31,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kWhiteColor,
       appBar: AppBar(
           backgroundColor: kBlue1Color,
           elevation: 0,
@@ -39,7 +40,7 @@ class _ProfileState extends State<Profile> {
           title: Text(
             "Profile",
             style: kMediumTextStyle.copyWith(
-                color: kblue1color, fontWeight: FontWeight.w700),
+                color: kWhiteColor, fontWeight: FontWeight.w700),
           )),
       body: BlocBuilder<UserCubit, UserModel>(builder: (context, user) {
         return BlocBuilder<UserStatusCubit, UserStatusModel>(
@@ -77,13 +78,13 @@ class _ProfileState extends State<Profile> {
                             ),
                             icon: const Icon(
                               Icons.edit_outlined,
-                              color: kblue1color,
+                              color: kWhiteColor,
                               size: 16,
                             ),
                             label: Text(
                               "EDIT",
                               style: kSmallCaptionTextStyle.copyWith(
-                                  color: kblue1color),
+                                  color: kWhiteColor),
                             )),
                       ),
                 Align(
@@ -99,7 +100,7 @@ class _ProfileState extends State<Profile> {
                     child: Text(
                       user.data.username[0].toUpperCase(),
                       style: kMediumTextStyle.copyWith(
-                        color: kblue1color,
+                        color: kWhiteColor,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -150,7 +151,7 @@ class _ProfileState extends State<Profile> {
                     child: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: const BoxDecoration(
-                        color: kblue1color,
+                        color: kWhiteColor,
                         borderRadius: kSmallBorderRadius,
                       ),
                       child: Column(

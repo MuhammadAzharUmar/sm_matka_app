@@ -22,7 +22,7 @@ class _SettingsState extends State<Settings> {
           title: Text(
             "Settings",
             style: kMediumTextStyle.copyWith(
-                color: kblue1color, fontWeight: FontWeight.w700),
+                color: kWhiteColor, fontWeight: FontWeight.w700),
           )),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
