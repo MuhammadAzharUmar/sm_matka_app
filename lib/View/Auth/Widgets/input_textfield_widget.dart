@@ -9,13 +9,14 @@ class InputTextFieldWidget extends StatefulWidget {
     required this.controller,
     required this.labelText,
     this.isPassword = false,
-    this.inputFormatter=const [],
+    this.inputFormatter=const [],  this.keyboardType=TextInputType.text,
   });
 
   final TextEditingController controller;
   final String labelText;
   final bool isPassword;
   final List<TextInputFormatter>? inputFormatter;
+  final TextInputType keyboardType;
 
   @override
   State<InputTextFieldWidget> createState() => _InputTextFieldWidgetState();
@@ -37,13 +38,15 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child:
        TextFormField(
+        keyboardType: widget.keyboardType,
         inputFormatters:widget.inputFormatter,
-       
+       autocorrect: false,
+       enableSuggestions: false,
         obscureText: obsecureText,
         controller: widget.controller,
         cursorColor: kWhiteColor,
         cursorHeight: 26,
-        style: kMediumTextStyle.copyWith(color: kWhiteColor),
+        style: kMediumTextStyle.copyWith(color: kWhiteColor,decoration: TextDecoration.none),
         decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 10, vertical: 0),

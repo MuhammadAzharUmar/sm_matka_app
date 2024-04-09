@@ -84,8 +84,8 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                         defaultPinTheme: PinTheme(
                           textStyle:
                               kMediumTextStyle.copyWith(color: kWhiteColor),
-                          height: 46,
-                          width: 40,
+                          height: 36,
+                          width: 30,
                           decoration: BoxDecoration(
                             border: Border.all(color: kWhiteColor),
                             borderRadius: kSmallBorderRadius,

@@ -44,6 +44,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         height: 20,
                       ),
                       InputTextFieldWidget(
+                        keyboardType: TextInputType.number,
                         controller: mobileController,
                         labelText: 'Mobile',
                       ),

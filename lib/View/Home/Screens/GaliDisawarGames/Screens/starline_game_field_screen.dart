@@ -142,6 +142,7 @@ class _StarlineGamesFieldScreenState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           InputSuggestionTextFieldWidget(
+                             keyboardType:TextInputType.number,
                             inputFormatter: GamesFieldsDataMap
                                     .gamesFieldsDataMap[widget.title]
                                 ["inputFormater"],
@@ -154,6 +155,7 @@ class _StarlineGamesFieldScreenState
                                 ["first_field_title"],
                           ),
                           InputTextFieldWidget(
+                             keyboardType:TextInputType.number,
                             controller: amountController,
                             labelText: GamesFieldsDataMap
                                     .gamesFieldsDataMap[widget.title]

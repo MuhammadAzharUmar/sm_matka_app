@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sm_matka/Models/usermodel.dart';
+import 'package:sm_matka/Utilities/snackbar_messages.dart';
 import 'package:sm_matka/View/Auth/Screens/change_password.dart';
 import 'package:sm_matka/View/Auth/Screens/signup.dart';
 import 'package:sm_matka/View/Settings/Screens/contact_us.dart';
@@ -64,7 +67,7 @@ class MenuItem {
       'icon': Icons.password,
       'title': 'Change Password',
       'onTap': (BuildContext context) async {
-        UserModel user=context.read<UserCubit>().state;
+        UserModel user = context.read<UserCubit>().state;
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => ChangePasswordPage(
@@ -82,9 +85,9 @@ class MenuItem {
       'onTap': (BuildContext context) async {
         SharedPreferences preferences = await SharedPreferences.getInstance();
         await preferences.setString("userToken", "");
-        // ignore: use_build_context_synchronously
+        SnackBarMessage.centeredSuccessSnackbar(
+            text: "Logout Successfully", context: context);
         Navigator.of(context).popUntil((route) => route.isFirst);
-        // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => const SignupPage(),

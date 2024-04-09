@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
@@ -52,6 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                         inputFormatter: [
                           LengthLimitingTextInputFormatter(10),
                         ],
+                        keyboardType: TextInputType.number,
                         controller: mobileController,
                         labelText: 'Mobile',
                       ),
@@ -63,7 +65,9 @@ class _LoginPageState extends State<LoginPage> {
                       Container(
                         // color: kWhiteColor,
                         height: 30,
-                        alignment: Alignment.topLeft,
+                        width: double.maxFinite,
+                        
+                        alignment: Alignment.topRight,
                         child: TextButton(
                             onPressed: () {
                               Navigator.of(context).push(
@@ -77,12 +81,12 @@ class _LoginPageState extends State<LoginPage> {
                               minimumSize: const Size(double.maxFinite, 24),
                               maximumSize: const Size(double.maxFinite, 24),
                               padding: const EdgeInsets.all(0),
-                              alignment: Alignment.centerLeft,
+                              alignment: Alignment.centerRight,
                               elevation: 0,
                             ),
                             child: Text(
                               "Forgot Password?",
-                              style: kSmallTextStyle.copyWith(
+                              style: kMediumCaptionTextStyle.copyWith(
                                 color: kWhiteColor,
                                 fontWeight: FontWeight.w700,
                               ),
@@ -91,36 +95,39 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Expanded(
-                            child: KLoginButton(
-                              gradient: kblueGradient,
-                              title: "Login",
-                              onPressed: () async {
-                                await HttpRequests.loginRequest(
-                                  mobile: mobileController.text.trim(),
-                                  password: passwordController.text.trim(),
-                                  context: context,
-                                );
-                              },
-                            ),
-                          ),
-                          const Text("  \t\tor\t\t  "),
-                          Expanded(
-                            child: KLoginButton(
-                                gradient: null,
-                                title: "Signup",
-                                onPressed: () {
-                                  Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                      builder: (context) => const SignupPage(),
-                                    ),
+                      SizedBox(height: 100,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Expanded(
+                              child: KLoginButton(
+                                gradient: kblueGradient,
+                                title: "Login",
+                                onPressed: () async {
+                                  await HttpRequests.loginRequest(
+                                    mobile: mobileController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                    context: context,
                                   );
-                                }),
-                          ),
-                        ],
+                                },
+                              ),
+                            ),
+                          const  Center(child: Text("  \t\tor\t\t  ")),
+                            Expanded(
+                              child: KLoginButton(
+                                  gradient: null,
+                                  title: "Signup",
+                                  onPressed: () {
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder: (context) => const SignupPage(),
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          ],
+                        ),
                       ),
 
                       // Padding(

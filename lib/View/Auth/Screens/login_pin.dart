@@ -37,11 +37,12 @@ class _LoginPinState extends State<LoginPin> {
                   alignment: Alignment.center,
                   height: 130,
                   decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: AssetImage('assets/Logo/logo.png'),),),
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: AssetImage('assets/Logo/logo.png'),
+                    ),
+                  ),
                 ),
-
                 InputDecoratorWidget(
                   title: "Enter Pin Code",
                   child: Column(
@@ -50,11 +51,24 @@ class _LoginPinState extends State<LoginPin> {
                         height: 20,
                       ),
                       Pinput(
+                        obscureText: true,
+                        obscuringWidget: Container(
+                          alignment: Alignment.center,
+                          decoration:const BoxDecoration(
+                            color: kWhiteColor,
+                            borderRadius: kSmallBorderRadius,
+                          ),
+                          child: const Icon(
+                            Icons.check,
+                            color: kBlue1Color,
+                            size: 14,
+                          ),
+                        ),
                         defaultPinTheme: PinTheme(
                           textStyle:
                               kMediumTextStyle.copyWith(color: kWhiteColor),
-                          height: 46,
-                          width: 40,
+                          height: 36,
+                          width: 30,
                           decoration: BoxDecoration(
                             border: Border.all(color: kWhiteColor),
                             borderRadius: kSmallBorderRadius,

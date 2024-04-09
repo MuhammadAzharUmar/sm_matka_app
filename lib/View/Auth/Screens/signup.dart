@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
 import 'package:sm_matka/View/Auth/Screens/login.dart';
@@ -54,6 +56,7 @@ class _SignupPageState extends State<SignupPage> {
                         labelText: 'Enter Your Name',
                       ),
                       InputTextFieldWidget(
+                        keyboardType: TextInputType.number,
                         inputFormatter: [
                           LengthLimitingTextInputFormatter(10),
                         ],
@@ -66,6 +69,7 @@ class _SignupPageState extends State<SignupPage> {
                         isPassword: true,
                       ),
                       InputTextFieldWidget(
+                        keyboardType: TextInputType.number,
                         inputFormatter: [
                           LengthLimitingTextInputFormatter(10),
                         ],
@@ -73,38 +77,41 @@ class _SignupPageState extends State<SignupPage> {
                         labelText: 'Enter Security Pin',
                         isPassword: true,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Expanded(
-                            child: KLoginButton(
-                              gradient: kblueGradient,
-                              title: "Signup",
-                              onPressed: () async {
-                                await HttpRequests.signupRequest(
-                                  name: nameController.text,
-                                  mobile: mobileController.text,
-                                  password: passwordController.text,
-                                  pin: pinController.text,
-                                  context: context,
-                                );
-                              },
-                            ),
-                          ),
-                          const Text("  \t\tor\t\t  "),
-                          Expanded(
-                            child: KLoginButton(
-                                title: "Login",
-                                gradient: null,
-                                onPressed: () {
-                                  Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                      builder: (context) => const LoginPage(),
-                                    ),
+                      SizedBox(height: 100,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Expanded(
+                              child: KLoginButton(
+                                gradient: kblueGradient,
+                                title: "Signup",
+                                onPressed: () async {
+                                  await HttpRequests.signupRequest(
+                                    name: nameController.text,
+                                    mobile: mobileController.text,
+                                    password: passwordController.text,
+                                    pin: pinController.text,
+                                    context: context,
                                   );
-                                }),
-                          ),
-                        ],
+                                },
+                              ),
+                            ),
+                            const Center(child: Text("  \t\tor\t\t  ")),
+                            Expanded(
+                              child: KLoginButton(
+                                  title: "Login",
+                                  gradient: null,
+                                  onPressed: () {
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder: (context) => const LoginPage(),
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          ],
+                        ),
                       ),
                       // Padding(
                       //   padding: const EdgeInsets.only(top: 10.0, bottom: 3),

@@ -37,11 +37,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          // SnackBarMessage.simpleSnackBar(
-          //   text: jsonData["message"],
-          //   // ignore: use_build_context_synchronously
-          //   context: context,
-          // );
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
 
           Navigator.of(context).push(
             MaterialPageRoute(
@@ -85,8 +84,8 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          SnackBarMessage.simpleSnackBar(
-            text: jsonData["message"],
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
             context: context,
           );
         } else {
@@ -125,11 +124,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          // SnackBarMessage.simpleSnackBar(
-          //   text: jsonData["message"],
-          //   // ignore: use_build_context_synchronously
-          //   context: context,
-          // );
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => const LoginPage(),
@@ -169,11 +167,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          // SnackBarMessage.simpleSnackBar(
-          //   text: jsonData["message"],
-          //   // ignore: use_build_context_synchronously
-          //   context: context,
-          // );
+         SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => ChangePasswordPage(
@@ -221,6 +218,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => LoginPin(
@@ -265,8 +266,8 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          SnackBarMessage.simpleSnackBar(
-            text: jsonData["message"],
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
             context: context,
           );
           String token = jsonData["data"]["token"];
@@ -318,8 +319,8 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          SnackBarMessage.simpleSnackBar(
-            text: jsonData["message"],
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
             context: context,
           );
 
@@ -361,8 +362,8 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          SnackBarMessage.simpleSnackBar(
-            text: jsonData["message"],
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
             context: context,
           );
 
@@ -411,8 +412,8 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          SnackBarMessage.simpleSnackBar(
-            text: jsonData["message"],
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
             context: context,
           );
 
@@ -456,8 +457,8 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          SnackBarMessage.simpleSnackBar(
-            text: jsonData["message"],
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
             context: context,
           );
 
@@ -494,6 +495,10 @@ class HttpRequests {
         var jsonData = json.decode(responseBody);
         AppDetailsModel appDetailsModel = AppDetailsModel.fromJson(jsonData);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return appDetailsModel;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -527,6 +532,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -560,6 +569,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -596,6 +609,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -629,6 +646,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -667,6 +688,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -707,6 +732,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -744,6 +773,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -791,9 +824,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          if (kDebugMode) {
-            print(jsonData);
-          }
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           SnackBarMessage.centeredSnackbar(
@@ -834,6 +868,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -871,6 +909,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -912,9 +954,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          if (kDebugMode) {
-            print(jsonData);
-          }
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           SnackBarMessage.centeredSnackbar(
@@ -952,6 +995,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -988,9 +1035,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          if (kDebugMode) {
-            print(jsonData);
-          }
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -1032,6 +1080,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -1074,9 +1126,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          if (kDebugMode) {
-            print(jsonData);
-          }
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           SnackBarMessage.centeredSnackbar(
@@ -1120,6 +1173,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -1163,6 +1220,10 @@ class HttpRequests {
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
           // print(jsonData);
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -1198,6 +1259,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -1238,8 +1303,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          SnackBarMessage.centeredSnackbar(
-              text: jsonData["message"], context: context);
+         SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           SnackBarMessage.centeredSnackbar(
@@ -1277,6 +1344,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -1315,10 +1386,7 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          if (kDebugMode) {
-            print(jsonData);
-          }
-          SnackBarMessage.centeredSnackbar(
+         SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
@@ -1365,6 +1433,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -1406,6 +1478,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -1441,6 +1517,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
            SnackBarMessage.centeredSnackbar(
@@ -1480,8 +1560,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          SnackBarMessage.centeredSnackbar(
-              text: jsonData["message"], context: context);
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           SnackBarMessage.centeredSnackbar(
@@ -1525,6 +1607,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -1567,12 +1653,17 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          return jsonData;
-        } else {
-          return SnackBarMessage.centeredSnackbar(
+           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
+          return jsonData;
+        } else {
+           SnackBarMessage.centeredSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
+          return {};
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
@@ -1582,7 +1673,7 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: e.toString(),
         context: context,
       );
     }
@@ -1604,6 +1695,10 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(

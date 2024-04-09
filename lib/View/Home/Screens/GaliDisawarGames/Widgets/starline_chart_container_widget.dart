@@ -49,7 +49,7 @@ class StarlineGameChartLink extends StatelessWidget {
               style: kMediumCaptionTextStyle.copyWith(
                   color: kWhiteColor,
                   fontWeight: FontWeight.w600,
-                  decoration: TextDecoration.underline,
+                  decoration: TextDecoration.none,
                   decorationThickness: 3,
                   decorationColor: kWhiteColor,
                   ),

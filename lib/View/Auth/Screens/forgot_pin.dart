@@ -46,6 +46,7 @@ class _ForgotPinPageState extends State<ForgotPinPage> {
                       InputTextFieldWidget(
                         controller: mobileController,
                         labelText: 'Mobile',
+                        keyboardType: TextInputType.number,
                       ),
                       Row(
                         children: [

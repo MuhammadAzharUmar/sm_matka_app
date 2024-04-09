@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
+import 'package:sm_matka/View/Settings/Widgets/launch_custom_urls.dart';
 
 class AdminHelpButtonWidget extends StatelessWidget {
   const AdminHelpButtonWidget({
@@ -26,7 +26,11 @@ class AdminHelpButtonWidget extends StatelessWidget {
         Container(
           alignment: Alignment.center,
           child: ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () async {
+                await LaunchCustomUrls.launchURL(
+                  url: 'https://wa.me/9983685627',
+                );
+              },
               style: ElevatedButton.styleFrom(
                   backgroundColor: kBlackColor.withOpacity(.7),
                   foregroundColor: kWhiteColor,
@@ -34,13 +38,14 @@ class AdminHelpButtonWidget extends StatelessWidget {
                   minimumSize: const Size(130, 40),
                   maximumSize: const Size(130, 40),
                   shape: RoundedRectangleBorder(
-                      side: const BorderSide(
-                        color: k2ndColor,
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(30),),
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 0, horizontal: 10)),
+                    side: const BorderSide(
+                      color: k2ndColor,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 0, horizontal: 10)),
               icon: Image.asset(
                 "assets/General/whatsapp.png",
                 width: 24,

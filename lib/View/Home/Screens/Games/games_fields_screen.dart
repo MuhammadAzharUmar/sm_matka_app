@@ -182,6 +182,7 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                                   ),
                                 ),
                           InputSuggestionTextFieldWidget(
+                            keyboardType:TextInputType.number,
                             inputFormatter: GamesFieldsDataMap
                                     .gamesFieldsDataMap[widget.title]
                                 ["inputFormater"],
@@ -200,6 +201,7 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                           (widget.title == "Half Sangam" ||
                                   widget.title == "Full Sangam")
                               ? InputSuggestionTextFieldWidget(
+                                 keyboardType:TextInputType.number,
                                   inputFormatter: GamesFieldsDataMap
                                           .gamesFieldsDataMap[widget.title]
                                       ["inputFormater"],
@@ -219,6 +221,7 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                                   height: 1,
                                 ),
                           InputTextFieldWidget(
+                             keyboardType:TextInputType.number,
                             controller: amountController,
                             labelText: GamesFieldsDataMap
                                     .gamesFieldsDataMap[widget.title]

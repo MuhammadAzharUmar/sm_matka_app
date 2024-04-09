@@ -40,17 +40,17 @@ class _CheckHistoryDetailsState extends State<CheckHistoryDetails> {
 
 //
 
-  DateTime fromDate=DateTime.now();
-  DateTime toDate=DateTime.now();
+  DateTime fromDate = DateTime.now();
+  DateTime toDate = DateTime.now();
   @override
   void initState() {
     super.initState();
     setState(() {
-    DateTime now = DateTime.now();
-    fromDate=DateTime(now.year, now.month, now.day, 0, 0, 0);
-      
+      DateTime now = DateTime.now();
+      fromDate = DateTime(now.year, now.month, now.day, 0, 0, 0);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,10 +79,12 @@ class _CheckHistoryDetailsState extends State<CheckHistoryDetails> {
         return Column(
           children: [
             Container(
-              padding: const EdgeInsets.only(top: 10, bottom: 10,left: 15,right: 15),
-              margin: const EdgeInsets.only( bottom: 10),
-              decoration:const BoxDecoration(gradient: klightGreyGradient),
-              child: Column(mainAxisSize: MainAxisSize.min,
+              padding: const EdgeInsets.only(
+                  top: 10, bottom: 10, left: 15, right: 15),
+              margin: const EdgeInsets.only(bottom: 10),
+              decoration: const BoxDecoration(gradient: klightGreyGradient),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
                     children: [
@@ -90,32 +92,35 @@ class _CheckHistoryDetailsState extends State<CheckHistoryDetails> {
                         child: DatePickerButton(
                           labelText: "From date",
                           onDateSelected: (date) {
-                            fromDate=date;
+                            fromDate = date;
                           },
                         ),
                       ),
-                      const SizedBox(width: 15,),
+                      const SizedBox(
+                        width: 15,
+                      ),
                       Expanded(
                         child: DatePickerButton(
                           labelText: "To date",
                           onDateSelected: (date) {
-                            toDate=date;
+                            toDate = date;
                           },
                         ),
                       ),
                     ],
                   ),
-                  ElevatedButton.icon(onPressed: (){
-                    setState(() {
-                      
-                    });
-                  },
-                  style: ElevatedButton.styleFrom(backgroundColor: kWhiteColor,foregroundColor: kBlue1Color,
-                  minimumSize:const Size(double.maxFinite, 36)
-                  ),
-                   label:const Text("submit"),icon:const Icon(Icons.check_rounded),)
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: kWhiteColor,
+                        foregroundColor: kBlue1Color,
+                        minimumSize: const Size(double.maxFinite, 36)),
+                    label: const Text("submit"),
+                    icon: const Icon(Icons.check_rounded),
+                  )
                 ],
-                
               ),
             ),
             Expanded(
@@ -150,7 +155,7 @@ class _CheckHistoryDetailsState extends State<CheckHistoryDetails> {
                               height: 30,
                               // width: 50,
                               child: Text(
-                                "No Date Found",
+                                "No Record Found",
                                 style: kMediumCaptionTextStyle.copyWith(
                                     color: kBlue1Color,
                                     fontWeight: FontWeight.w600),

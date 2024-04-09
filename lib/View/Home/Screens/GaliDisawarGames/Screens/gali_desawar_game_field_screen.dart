@@ -142,6 +142,7 @@ class _GaliDesawarGamesFieldScreenState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           InputSuggestionTextFieldWidget(
+                             keyboardType:TextInputType.number,
                             inputFormatter: GamesFieldsDataMap
                                     .gamesFieldsDataMap[widget.title]
                                 ["inputFormater"],
@@ -153,7 +154,7 @@ class _GaliDesawarGamesFieldScreenState
                                     .gamesFieldsDataMap[widget.title]
                                 ["first_field_title"],
                           ),
-                          InputTextFieldWidget(
+                          InputTextFieldWidget( keyboardType:TextInputType.number,
                             controller: amountController,
                             labelText: GamesFieldsDataMap
                                     .gamesFieldsDataMap[widget.title]
