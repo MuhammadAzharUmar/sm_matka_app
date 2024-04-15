@@ -88,7 +88,7 @@ class MenuItem {
       'title': 'Log Out',
       'onTap': (BuildContext context) async {
         SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.setString("userToken", "");
+        await preferences.clear();
         BlocProvider.of<UserCubit>(context)
             .updateAppUser(UserModel.fromJson(json: {}, token: ""));
         BlocProvider.of<UserStatusCubit>(context)

@@ -42,8 +42,7 @@ initFunctionHome()async{
         SharedPreferences preferences = await SharedPreferences.getInstance();
       String token = preferences.getString("userToken") ?? "";
       if (token != "") {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        String token = preferences.getString("userToken") ?? "";
+        
         final data = await HttpRequests.getUserDetailsRequest(
           context: context,
           token: token,

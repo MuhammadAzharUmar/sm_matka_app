@@ -25,8 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       String token = preferences.getString("userToken") ?? "";
       if (token != "") {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        String token = preferences.getString("userToken") ?? "";
+       
         final data = await HttpRequests.getUserDetailsRequest(
           // ignore: use_build_context_synchronously
           context: context,
