@@ -94,7 +94,11 @@ class _StarlineGamesFieldScreenState
             preferredSize: const Size(double.maxFinite, 56),
             child: FundAppBarWidget(
               title: widget.title,
-              points: userStatus.data.availablePoints,
+              points: (int.parse(userStatus.data.availablePoints) -
+                      gameBids
+                          .map((e) => int.parse(e.bidPoints))
+                          .fold(0, (prev, curr) => prev + curr))
+                  .toString(),
             ),
           ),
           body: Container(

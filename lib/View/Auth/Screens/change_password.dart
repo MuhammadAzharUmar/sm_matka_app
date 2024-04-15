@@ -53,10 +53,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         height: 20,
                       ),
                       InputTextFieldWidget(
+                        isPassword: true,
                         controller: passwordController,
                         labelText: 'Enter ${widget.caller}',
                       ),
                       InputTextFieldWidget(
+                        isPassword: true,
                         controller: confirmPasswordController,
                         labelText: 'Enter Confirm ${widget.caller}',
                       ),

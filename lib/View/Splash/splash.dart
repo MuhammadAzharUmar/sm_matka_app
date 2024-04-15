@@ -44,17 +44,22 @@ class _SplashScreenState extends State<SplashScreen> {
         // ignore: use_build_context_synchronously
         BlocProvider.of<UserStatusCubit>(context)
             .updateAppUserStatus(userStatus);
+        Navigator.pushReplacement(
+            // ignore: use_build_context_synchronously
+            context,
+            MaterialPageRoute(
+              builder: (context) => const MainPage(
+                currentIndex: 0,
+              ),
+            ));
+      } else {
+        Navigator.pushReplacement(
+            // ignore: use_build_context_synchronously
+            context,
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ));
       }
-      Navigator.pushReplacement(
-          // ignore: use_build_context_synchronously
-          context,
-          MaterialPageRoute(
-            builder: (context) => token != ""
-                ? const MainPage(
-                    currentIndex: 0,
-                  )
-                : const SignupPage(),
-          ));
     });
     super.initState();
   }

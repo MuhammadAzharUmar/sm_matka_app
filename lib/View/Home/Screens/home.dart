@@ -32,7 +32,12 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 0)).then((value) async {
-      user = context.read<UserCubit>().state;
+    await initFunctionHome();
+    });
+  }
+
+initFunctionHome()async{
+  user = context.read<UserCubit>().state;
       if (user.token=="") {
         SharedPreferences preferences = await SharedPreferences.getInstance();
       String token = preferences.getString("userToken") ?? "";
@@ -57,9 +62,7 @@ class _HomeState extends State<Home> {
       userStatus = context.read<UserStatusCubit>().state;
       await HttpRequests.mainGameListRequest(context: context, token: user.token);
 
-    });
-  }
-
+}
   @override
   Widget build(BuildContext context) {
     
@@ -156,8 +159,13 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   const SizedBox(height: 10,),
-                  const Expanded(
-                      child: MainGameListWidget())
+                   Expanded(
+                      child: MainGameListWidget(
+
+                        tryAgainFunction: () async{
+                        await  initFunctionHome();
+                        },
+                      ))
                 ],
               );
             }

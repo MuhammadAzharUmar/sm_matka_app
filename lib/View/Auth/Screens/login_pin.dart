@@ -70,8 +70,8 @@ class _LoginPinState extends State<LoginPin> {
                           height: 36,
                           width: 30,
                           decoration: BoxDecoration(
-                            border: Border.all(color: kWhiteColor),
-                            borderRadius: kSmallBorderRadius,
+                            border: Border.all(color: kWhiteColor,),
+                            borderRadius: kMediumBorderRadius,
                           ),
                         ),
                         controller: pinController,

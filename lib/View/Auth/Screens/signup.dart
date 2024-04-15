@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
 import 'package:sm_matka/View/Auth/Screens/login.dart';
@@ -52,6 +50,7 @@ class _SignupPageState extends State<SignupPage> {
                         height: 20,
                       ),
                       InputTextFieldWidget(
+                        keyboardType: TextInputType.name,
                         controller: nameController,
                         labelText: 'Enter Your Name',
                       ),

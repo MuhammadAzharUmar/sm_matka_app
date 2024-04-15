@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sm_matka/Models/app_details_model.dart';
+import 'package:sm_matka/Models/user_status_model.dart';
 import 'package:sm_matka/Models/usermodel.dart';
 import 'package:sm_matka/Utilities/snackbar_messages.dart';
 import 'package:sm_matka/View/Auth/Screens/change_password.dart';
@@ -12,7 +14,9 @@ import 'package:sm_matka/View/Settings/Screens/contact_us.dart';
 import 'package:sm_matka/View/Settings/Screens/game_rates.dart';
 import 'package:sm_matka/View/Settings/Screens/how_to_play.dart';
 import 'package:sm_matka/View/Settings/Widgets/launch_custom_urls.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_details_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/user_status_cubit.dart';
 
 class MenuItem {
   static List<Map<String, dynamic>> menuItem = [
@@ -85,6 +89,12 @@ class MenuItem {
       'onTap': (BuildContext context) async {
         SharedPreferences preferences = await SharedPreferences.getInstance();
         await preferences.setString("userToken", "");
+        BlocProvider.of<UserCubit>(context)
+            .updateAppUser(UserModel.fromJson(json: {}, token: ""));
+        BlocProvider.of<UserStatusCubit>(context)
+            .updateAppUserStatus(UserStatusModel.fromJson({}));
+        BlocProvider.of<AppDetailsCubit>(context)
+            .updateAppDetails(AppDetailsModel.fromJson({}));
         SnackBarMessage.centeredSuccessSnackbar(
             text: "Logout Successfully", context: context);
         Navigator.of(context).popUntil((route) => route.isFirst);

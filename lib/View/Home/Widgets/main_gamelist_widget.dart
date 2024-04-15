@@ -14,14 +14,15 @@ import 'package:vibration/vibration.dart';
 
 class MainGameListWidget extends StatefulWidget {
   const MainGameListWidget({
-    super.key,
+    super.key, required this.tryAgainFunction,
   });
-
+final VoidCallback tryAgainFunction;
   @override
   State<MainGameListWidget> createState() => _MainGameListWidgetState();
 }
 
 class _MainGameListWidgetState extends State<MainGameListWidget> {
+  
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserCubit, UserModel>(builder: (context, user) {
@@ -45,12 +46,14 @@ class _MainGameListWidgetState extends State<MainGameListWidget> {
               return Center(
                 child: InkWell(
                   onTap: () {
+
+                    widget.tryAgainFunction();
                     setState(() {});
                   },
                   child: Container(
                       alignment: Alignment.center,
                       height: 30,
-                      width: 30,
+                      width: 100,
                       child: Text(
                         "Try again",
                         style: kMediumCaptionTextStyle.copyWith(

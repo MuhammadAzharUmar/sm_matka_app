@@ -94,7 +94,11 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
             preferredSize: const Size(double.maxFinite, 56),
             child: FundAppBarWidget(
               title: widget.title,
-              points: userStatus.data.availablePoints,
+              points: (int.parse(userStatus.data.availablePoints) -
+                      gameBids
+                          .map((e) => int.parse(e.bidPoints))
+                          .fold(0, (prev, curr) => prev + curr))
+                  .toString(),
             ),
           ),
           body: Container(
@@ -182,7 +186,7 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                                   ),
                                 ),
                           InputSuggestionTextFieldWidget(
-                            keyboardType:TextInputType.number,
+                            keyboardType: TextInputType.number,
                             inputFormatter: GamesFieldsDataMap
                                     .gamesFieldsDataMap[widget.title]
                                 ["inputFormater"],
@@ -201,7 +205,7 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                           (widget.title == "Half Sangam" ||
                                   widget.title == "Full Sangam")
                               ? InputSuggestionTextFieldWidget(
-                                 keyboardType:TextInputType.number,
+                                  keyboardType: TextInputType.number,
                                   inputFormatter: GamesFieldsDataMap
                                           .gamesFieldsDataMap[widget.title]
                                       ["inputFormater"],
@@ -221,7 +225,7 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                                   height: 1,
                                 ),
                           InputTextFieldWidget(
-                             keyboardType:TextInputType.number,
+                            keyboardType: TextInputType.number,
                             controller: amountController,
                             labelText: GamesFieldsDataMap
                                     .gamesFieldsDataMap[widget.title]
@@ -243,15 +247,16 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                                               .contains(
                                             firstController.text.trim(),
                                           ) &&
-                                          (
-                                            widget.title != "Half Sangam"&&widget.title!="Full Sangam" ||
+                                          (widget.title != "Half Sangam" &&
+                                                  widget.title !=
+                                                      "Full Sangam" ||
                                               GamesFieldsDataMap
                                                   .gamesFieldsDataMap[
                                                       widget.title][
                                                       "first_field_title_allowed"]
-                                                  .contains(thirdController.text
-                                                      .trim(),))
-                                                      ) {
+                                                  .contains(
+                                                thirdController.text.trim(),
+                                              ))) {
                                         gameBids.add(
                                           GamesFieldsDataMap.getGameBid(
                                             first: firstController.text,
@@ -262,16 +267,13 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                                             data: widget.marketDetails,
                                           ),
                                         );
-                                        
                                       } else {
                                         SnackBarMessage.centeredSnackbar(
                                           text: "Incorrect value",
                                           context: context,
                                         );
                                       }
-                                      setState(() {
-                                        
-                                      });
+                                      setState(() {});
                                       // setState(() {
                                       //     firstController.clear();
                                       //     thirdController.clear();

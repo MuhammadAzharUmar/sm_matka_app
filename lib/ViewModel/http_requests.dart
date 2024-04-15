@@ -652,10 +652,11 @@ class HttpRequests {
           );
           return jsonData;
         } else {
-          return SnackBarMessage.centeredSnackbar(
+          SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
+          return {}; 
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
