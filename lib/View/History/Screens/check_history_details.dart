@@ -49,6 +49,7 @@ class _CheckHistoryDetailsState extends State<CheckHistoryDetails> {
       DateTime now = DateTime.now();
       fromDate = DateTime(now.year, now.month, now.day, 0, 0, 0);
     });
+
   }
 
   @override

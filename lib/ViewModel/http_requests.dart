@@ -1227,7 +1227,8 @@ class HttpRequests {
           );
           return jsonData;
         } else {
-          return SnackBarMessage.centeredSnackbar(
+          return
+           SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );

@@ -17,6 +17,7 @@ class HistoryList {
                   required startDate,
                   required toDate,
                   required token}) async {
+                 
                 return await HttpRequests.bidHistoryRequest(
                     context: context,
                     token: token,
