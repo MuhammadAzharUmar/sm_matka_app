@@ -21,6 +21,10 @@ class DatePickerButtonState extends State<DatePickerButton> {
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
+      selectableDayPredicate: (DateTime date) {
+        // Disable dates after today
+        return date.isBefore(DateTime.now().add(const Duration(hours: 1),),);
+      },
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),

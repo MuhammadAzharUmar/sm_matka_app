@@ -85,19 +85,37 @@ class _HomeState extends State<Home> {
               );
             } else if (appDetailsModel.hasError) {
               return Center(
-                child: InkWell(
-                  onTap: () {
-                    setState(() {});
+                child: RefreshIndicator(
+                  color: kBlue1Color,
+                  backgroundColor: kWhiteColor,
+                  onRefresh: () async {
+                    await Future.delayed(const Duration(seconds: 2))
+                        .then((value) {
+                      setState(() {
+                        initFunctionHome();
+                      });
+                    });
                   },
-                  child: Container(
-                      alignment: Alignment.center,
-                      height: 30,
-                      width: 100,
-                      child: Text(
-                        "Try again",
-                        style: kMediumCaptionTextStyle.copyWith(
-                            color: kBlue1Color, fontWeight: FontWeight.w600),
-                      )),
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: SizedBox(height: MediaQuery.of(context).size.height,
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {});
+                        },
+                        child: Container(
+                            alignment: Alignment.center,
+                            height: 30,
+                            width: 100,
+                            child: Text(
+                              "Try again",
+                              style: kMediumCaptionTextStyle.copyWith(
+                                  color: kBlue1Color,
+                                  fontWeight: FontWeight.w600),
+                            )),
+                      ),
+                    ),
+                  ),
                 ),
               );
             } else {
@@ -114,45 +132,68 @@ class _HomeState extends State<Home> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  CustomSliderWidget(
-                    crouselImages: crouselImageList,
-                    marqueeText: appDetailsModel.data!.data.bannerMarquee,
-                  ),
-                  FundWithdrawChatCallButtonWidget(
-                    contactDetails: appDetailsModel.data!.data.contactDetails,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      GaliDisawarGameBtmSheet.galiDisawarGameBtmSheet(
-                          context: context);
+                  RefreshIndicator(
+                    color: kBlue1Color,
+                    backgroundColor: kWhiteColor,
+                    onRefresh: () async {
+                      await Future.delayed(const Duration(seconds: 2))
+                          .then((value) {
+                        setState(() {
+                          initFunctionHome();
+                        });
+                      });
                     },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
-                      padding: const EdgeInsets.only(left: 40, right: 15),
-                      height: 46,
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          30,
-                        ),
-                        gradient: kblueGradient,
-                      ),
-                      child: Row(
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Expanded(
-                              child: Text(
-                            "GALI DISAWAR GAME",
-                            style: kSmallTextStyle.copyWith(
-                              color: kWhiteColor,
-                              fontWeight: FontWeight.w700,
+                          CustomSliderWidget(
+                            crouselImages: crouselImageList,
+                            marqueeText:
+                                appDetailsModel.data!.data.bannerMarquee,
+                          ),
+                          FundWithdrawChatCallButtonWidget(
+                            contactDetails:
+                                appDetailsModel.data!.data.contactDetails,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              GaliDisawarGameBtmSheet.galiDisawarGameBtmSheet(
+                                  context: context);
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              padding:
+                                  const EdgeInsets.only(left: 40, right: 15),
+                              height: 46,
+                              width: double.maxFinite,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                  30,
+                                ),
+                                gradient: kblueGradient,
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: Text(
+                                    "GALI DISAWAR GAME",
+                                    style: kSmallTextStyle.copyWith(
+                                      color: kWhiteColor,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  )),
+                                  const Icon(
+                                    Icons.arrow_circle_right,
+                                    color: kWhiteColor,
+                                    size: 24,
+                                  )
+                                ],
+                              ),
                             ),
-                          )),
-                          const Icon(
-                            Icons.arrow_circle_right,
-                            color: kWhiteColor,
-                            size: 24,
-                          )
+                          ),
                         ],
                       ),
                     ),

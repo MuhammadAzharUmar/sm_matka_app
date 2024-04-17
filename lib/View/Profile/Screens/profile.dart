@@ -116,27 +116,27 @@ class _ProfileState extends State<Profile> {
                         color: kBlue1Color, fontWeight: FontWeight.w600),
                   ),
                 ),
-                const Divider(
-                  height: 10,
-                  thickness: .5,
-                  color: kBlue1Color,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      userStatus.data.availablePoints,
-                      style: kMediumCaptionTextStyle.copyWith(
-                          color: kBlue1Color, fontWeight: FontWeight.w600),
-                    ),
-                    Text(
-                      "Balance",
-                      style: kMediumCaptionTextStyle.copyWith(
-                          color: kBlue1Color, fontWeight: FontWeight.w600),
-                    ),
-                  ],
-                ),
+                // const Divider(
+                //   height: 10,
+                //   thickness: .5,
+                //   color: kBlue1Color,
+                // ),
+                // Column(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   mainAxisSize: MainAxisSize.min,
+                //   children: [
+                //     Text(
+                //       userStatus.data.availablePoints,
+                //       style: kMediumCaptionTextStyle.copyWith(
+                //           color: kBlue1Color, fontWeight: FontWeight.w600),
+                //     ),
+                //     Text(
+                //       "Balance",
+                //       style: kMediumCaptionTextStyle.copyWith(
+                //           color: kBlue1Color, fontWeight: FontWeight.w600),
+                //     ),
+                //   ],
+                // ),
                 const Divider(
                   height: 10,
                   thickness: .5,

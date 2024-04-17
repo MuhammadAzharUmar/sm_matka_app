@@ -175,122 +175,151 @@ class _CheckHistoryDetailsState extends State<CheckHistoryDetails> {
                       );
                     } else if (snapshot.hasError) {
                       return Center(
-                        child: InkWell(
-                          onTap: () {
-                            setState(() {});
+                        child: RefreshIndicator(
+                          color: kBlue1Color,
+                          backgroundColor: kWhiteColor,
+                          onRefresh: () async {
+                            await Future.delayed(const Duration(seconds: 2))
+                                .then((value) {
+                              setState(() {});
+                            });
                           },
-                          child: Container(
+                          child: SingleChildScrollView(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            child: Container(
                               alignment: Alignment.center,
-                              height: 30,
-                              // width: 50,
-                              child: Text(
-                                "No Record Found",
-                                style: kMediumCaptionTextStyle.copyWith(
-                                    color: kBlue1Color,
-                                    fontWeight: FontWeight.w600),
-                              )),
+                              height: MediaQuery.of(context).size.height,
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {});
+                                },
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    height: 30,
+                                    // width: 50,
+                                    child: Text(
+                                      "No Record Found",
+                                      style: kMediumCaptionTextStyle.copyWith(
+                                          color: kBlue1Color,
+                                          fontWeight: FontWeight.w600),
+                                    )),
+                              ),
+                            ),
+                          ),
                         ),
                       );
                     } else {
-                      return ListView.builder(
-                        itemCount: snapshot.data!["data"].length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Card(
-                              elevation: 2,
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius: kMediumBorderRadius),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                                decoration: const BoxDecoration(
-                                    color: kWhiteColor,
+                      return RefreshIndicator(
+                        color: kBlue1Color,
+                        backgroundColor: kWhiteColor,
+                        onRefresh: () async {
+                          await Future.delayed(const Duration(seconds: 2))
+                              .then((value) {
+                            setState(() {});
+                          });
+                        },
+                        child: ListView.builder(
+                          itemCount: snapshot.data!["data"].length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Card(
+                                elevation: 2,
+                                shape: const RoundedRectangleBorder(
                                     borderRadius: kMediumBorderRadius),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "${snapshot.data!["data"][index]["game_name"]} (${convertToTitleCase(snapshot.data!["data"][index]["game_type"])})",
-                                      style: kSmallTextStyle.copyWith(
-                                        color: kBlue3Color,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    const Divider(
-                                      height: 20,
-                                      thickness: 1,
-                                      color: kBlue1Color,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "#${snapshot.data!["data"][index]["game_id"]}",
-                                          style:
-                                              kSmallCaptionTextStyle.copyWith(
-                                            color: kBlue3Color,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        Text(
-                                          "Points: ${snapshot.data!["data"][index]["bid_points"]}",
-                                          style:
-                                              kMediumCaptionTextStyle.copyWith(
-                                            color: kBlue3Color,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        // "Digit ${snapshot.data!["data"][index]["close_digit"]}",
-                                        getPannaOrDigit(
-                                            title: widget.title,
-                                            data: snapshot.data!["data"]
-                                                [index]),
-                                        style: kSmallCaptionTextStyle.copyWith(
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 10),
+                                  decoration: const BoxDecoration(
+                                      color: kWhiteColor,
+                                      borderRadius: kMediumBorderRadius),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "${snapshot.data!["data"][index]["game_name"]} (${convertToTitleCase(snapshot.data!["data"][index]["game_type"])})",
+                                        style: kSmallTextStyle.copyWith(
                                           color: kBlue3Color,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "${snapshot.data!["data"][index]["bidded_at"]}",
+                                      const Divider(
+                                        height: 20,
+                                        thickness: 1,
+                                        color: kBlue1Color,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "#${snapshot.data!["data"][index]["game_id"]}",
+                                            style:
+                                                kSmallCaptionTextStyle.copyWith(
+                                              color: kBlue3Color,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          Text(
+                                            "Points: ${snapshot.data!["data"][index]["bid_points"]}",
+                                            style: kMediumCaptionTextStyle
+                                                .copyWith(
+                                              color: kBlue3Color,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          // "Digit ${snapshot.data!["data"][index]["close_digit"]}",
+                                          getPannaOrDigit(
+                                              title: widget.title,
+                                              data: snapshot.data!["data"]
+                                                  [index]),
                                           style:
                                               kSmallCaptionTextStyle.copyWith(
-                                            color: Colors.grey.shade500,
-                                            fontWeight: FontWeight.w500,
+                                            color: kBlue3Color,
+                                            fontWeight: FontWeight.w600,
                                           ),
                                         ),
-                                        Text(
-                                          (widget.title != "Main Game Bid" ||
-                                                  widget.title ==
-                                                      "Main Game Win")
-                                              ? ""
-                                              : "Session: ${snapshot.data!["data"][index]["session"]}",
-                                          style:
-                                              kSmallCaptionTextStyle.copyWith(
-                                            color: Colors.grey.shade500,
-                                            fontWeight: FontWeight.w500,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "${snapshot.data!["data"][index]["bidded_at"]}",
+                                            style:
+                                                kSmallCaptionTextStyle.copyWith(
+                                              color: Colors.grey.shade500,
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                          Text(
+                                            (widget.title != "Main Game Bid" ||
+                                                    widget.title ==
+                                                        "Main Game Win")
+                                                ? ""
+                                                : "Session: ${snapshot.data!["data"][index]["session"]}",
+                                            style:
+                                                kSmallCaptionTextStyle.copyWith(
+                                              color: Colors.grey.shade500,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       );
                     }
                   },

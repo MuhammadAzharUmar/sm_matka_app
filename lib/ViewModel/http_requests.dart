@@ -509,6 +509,18 @@ class HttpRequests {
           );
           return appDetailsModel;
         } else {
+          if (jsonData["message"] == "Please Login First" ||
+              jsonData["code"] == "505" ||jsonData["code"]=="400"||
+              jsonData["message"] == "Invalid Access") {
+                SharedPreferences preferences =await SharedPreferences.getInstance();
+                await preferences.clear();
+            Navigator.of(context).popUntil((route) => route.isFirst);
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => const SignupPage(),
+              ),
+            );
+          }
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
             context: context,
