@@ -8,6 +8,7 @@ import 'package:sm_matka/Models/usermodel.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
+import 'package:sm_matka/View/Auth/Screens/signup.dart';
 import 'package:sm_matka/View/Home/Screens/GaliDisawarGames/Screens/gali_disawar_game_btm_sheet.dart';
 import 'package:sm_matka/View/Home/Widgets/crousel_slider.dart';
 import 'package:sm_matka/View/Home/Widgets/fund_withdraw_chat_call_button_widget.dart';
@@ -55,10 +56,13 @@ class _HomeState extends State<Home> {
         UserStatusModel userStatus = UserStatusModel.fromJson(statusdata);
         BlocProvider.of<UserStatusCubit>(context)
             .updateAppUserStatus(userStatus);
+      }else{
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SignupPage(),),);
       }
     }
     userStatus = context.read<UserStatusCubit>().state;
-    await HttpRequests.mainGameListRequest(context: context, token: user.token);
+    // await HttpRequests.mainGameListRequest(context: context, token: user.token);
   }
 
   @override
