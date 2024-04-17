@@ -221,6 +221,7 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
+          String loginToken=jsonData["data"]["token"];
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
@@ -228,7 +229,7 @@ class HttpRequests {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => LoginPin(
-                token: jsonData["data"]["token"],
+                token: loginToken,
               ),
             ),
           );
@@ -253,12 +254,12 @@ class HttpRequests {
   }
 
   static loginPinRequest(
-      {required String token,
+      {required String loginToken,
       required String pin,
       required BuildContext context}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     try {
-      var headers = {'token': token};
+      var headers = {'token': loginToken};
       var request =
           http.MultipartRequest('POST', Uri.parse('$baseUrl/login_pin'));
       request.fields.addAll({'pin': pin});
@@ -274,11 +275,11 @@ class HttpRequests {
             text: jsonData["message"].toString(),
             context: context,
           );
-          String token = jsonData["data"]["token"];
-          if (token != "" && token.isNotEmpty) {
-            await preferences.setString("userToken", jsonData["data"]["token"]);
+          String pinToken = jsonData["data"]["token"];
+          if (pinToken != "" && pinToken.isNotEmpty) {
+            await preferences.setString("userToken", pinToken);
             await HttpRequests.getUserDetailsRequest(
-                context: context, token: token);
+                context: context, token: pinToken);
 
             Navigator.of(context).popUntil(
               (route) => route.isFirst,

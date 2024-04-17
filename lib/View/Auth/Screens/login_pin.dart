@@ -91,7 +91,7 @@ class _LoginPinState extends State<LoginPin> {
                               title: "Proceed",
                               onPressed: () async {
                                 await HttpRequests.loginPinRequest(
-                                    token: widget.token,
+                                    loginToken: widget.token,
                                     pin: pinController.text,
                                     context: context);
                               },
