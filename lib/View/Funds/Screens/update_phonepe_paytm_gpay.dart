@@ -133,6 +133,7 @@ class _UpdatePhonepeGpayPaytmScreenState
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: InputTextFieldWidget(
+                            keyboardType: TextInputType.number,
                             controller: accountNoContoller,
                             labelText: "${widget.screenTitle} Number",
                           ),

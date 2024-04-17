@@ -70,6 +70,8 @@ class _AddFundPageState extends State<AddFundPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             InputTextFieldWidget(
+                              keyboardType: TextInputType.number,
+
                               controller: pointsController,
                               labelText: "Enter Points",
                             ),

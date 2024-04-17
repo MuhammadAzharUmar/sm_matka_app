@@ -5,8 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sm_matka/Models/user_status_model.dart';
 import 'package:sm_matka/Models/usermodel.dart';
 import 'package:sm_matka/Utilities/colors.dart';
+import 'package:sm_matka/View/Auth/Screens/login_pin.dart';
 import 'package:sm_matka/View/Auth/Screens/signup.dart';
-import 'package:sm_matka/View/Home/Screens/main_screen.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_status_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
@@ -47,8 +47,9 @@ class _SplashScreenState extends State<SplashScreen> {
             // ignore: use_build_context_synchronously
             context,
             MaterialPageRoute(
-              builder: (context) => const MainPage(
-                currentIndex: 0,
+              builder: (context) => LoginPin(
+                token: token,
+                // currentIndex: 0,
               ),
             ));
       } else {

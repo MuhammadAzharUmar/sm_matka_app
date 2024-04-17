@@ -257,6 +257,12 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                                                   .contains(
                                                 thirdController.text.trim(),
                                               ))) {
+                                                if (int.parse(userStatus.data.availablePoints) -
+                      (gameBids
+                          .map((e) => int.parse(e.bidPoints))
+                          .fold(0, (prev, curr) => prev + curr)+int.parse(amountController.text))>=0) {
+                                                  
+                                                
                                         gameBids.add(
                                           GamesFieldsDataMap.getGameBid(
                                             first: firstController.text,
@@ -266,7 +272,12 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                                             gameTitle: widget.title,
                                             data: widget.marketDetails,
                                           ),
+                                        );}else{
+                                          SnackBarMessage.centeredSnackbar(
+                                          text: "Insufficient Balance",
+                                          context: context,
                                         );
+                                        }
                                       } else {
                                         SnackBarMessage.centeredSnackbar(
                                           text: "Incorrect value",

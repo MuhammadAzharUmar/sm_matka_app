@@ -61,15 +61,15 @@ class _PaymentMethodDropdownWidgetState
               ),
               DropdownMenuItem(
                 value: 1,
-                child: Text("PhonePe (${user.data.phonepeMobileNo})"),
+                child: Text("PhonePe ${user.data.phonepeMobileNo}"),
               ),
               DropdownMenuItem(
                 value: 2,
-                child: Text("Google Pay (${user.data.gpayMobileNo})"),
+                child: Text("Google Pay ${user.data.gpayMobileNo}"),
               ),
               DropdownMenuItem(
                 value: 3,
-                child: Text("Paytm (${user.data.paytmMobileNo})"),
+                child: Text("Paytm ${user.data.paytmMobileNo}"),
               ),
             ],
             onChanged: (value) async {

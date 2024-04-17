@@ -69,6 +69,8 @@ class _BankDetailsUpdateScreenState extends State<BankDetailsUpdateScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           InputTextFieldWidget(
+                            keyboardType: TextInputType.name,
+
                             controller: accountHolderNameController,
                             labelText: "Account Holder Name",
                           ),

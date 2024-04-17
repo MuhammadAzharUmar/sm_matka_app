@@ -66,7 +66,7 @@ class HistoryList {
                   required startDate,
                   required toDate,
                   required token}) async {
-                return await HttpRequests.winHistoryRequest(
+                return await HttpRequests.starlineBidHistoryRequest(
                     context: context,
                     token: token,
                     fromDate: startDate,
@@ -90,7 +90,7 @@ class HistoryList {
                   required startDate,
                   required toDate,
                   required token}) async {
-                return await HttpRequests.winHistoryRequest(
+                return await HttpRequests.starlineWinHistoryRequest(
                     context: context,
                     token: token,
                     fromDate: startDate,
@@ -114,7 +114,7 @@ class HistoryList {
                   required startDate,
                   required toDate,
                   required token}) async {
-                return await HttpRequests.winHistoryRequest(
+                return await HttpRequests.galiDisawarBidHistoryRequest(
                     context: context,
                     token: token,
                     fromDate: startDate,
@@ -138,7 +138,7 @@ class HistoryList {
                   required startDate,
                   required toDate,
                   required token}) async {
-                return await HttpRequests.winHistoryRequest(
+                return await HttpRequests.galiDisawarWinHistoryRequest(
                     context: context,
                     token: token,
                     fromDate: startDate,

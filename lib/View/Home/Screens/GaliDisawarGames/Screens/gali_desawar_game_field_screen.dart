@@ -180,7 +180,19 @@ class _GaliDesawarGamesFieldScreenState
                                           .contains(
                                         firstController.text.trim(),
                                       )) {
-                                        gameBids.add(
+                                         if (int.parse(userStatus
+                                                    .data.availablePoints) -
+                                                (gameBids
+                                                        .map((e) => int.parse(
+                                                            e.bidPoints))
+                                                        .fold(
+                                                            0,
+                                                            (prev, curr) =>
+                                                                prev + curr) +
+                                                    int.parse(amountController
+                                                        .text)) >=
+                                            0) {
+                                            gameBids.add(
                                           GamesFieldsDataMap.getGaliDesawarBid(
                                             first: firstController.text,
                                             amount: amountController.text,
@@ -188,6 +200,14 @@ class _GaliDesawarGamesFieldScreenState
                                             data: widget.marketDetails,
                                           ),
                                         );
+                                          
+                                        } else {
+                                          SnackBarMessage.centeredSnackbar(
+                                            text: "Insufficient Balance",
+                                            context: context,
+                                          );
+                                        }
+                                      
                                       } else {
                                         SnackBarMessage.centeredSnackbar(
                                           text: "Incorrect value",

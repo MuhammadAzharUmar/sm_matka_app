@@ -49,7 +49,35 @@ class _CheckHistoryDetailsState extends State<CheckHistoryDetails> {
       DateTime now = DateTime.now();
       fromDate = DateTime(now.year, now.month, now.day, 0, 0, 0);
     });
+  }
 
+//function to get panna or digit
+  String getPannaOrDigit(
+      {required String title, required Map<String, dynamic> data}) {
+    if (title == "Main Game Bid" || title == "Main Game Win") {
+      if (data["open_digit"] != "") {
+        return "Digit ${data["open_digit"]}";
+      } else if (data["close_digit"] != "") {
+        return "Digit ${data["close_digit"]}";
+      } else if (data["open_panna"] != "") {
+        return "Panna ${data["open_panna"]}";
+      } else {
+        return "Panna ${data["close_panna"]}";
+      }
+    } else if (widget.title == "Starline Bid" ||
+        widget.title == "Starline Win") {
+      if (data["digit"] != "") {
+        return "Digit ${data["digit"]}";
+      } else {
+        return "Panna ${data["panna"]}";
+      }
+    } else {
+      if (data["left_digit"] != "") {
+        return "Digit ${data["left_digit"]}";
+      } else {
+        return "Digit ${data["right_digit"]}";
+      }
+    }
   }
 
   @override
@@ -220,7 +248,11 @@ class _CheckHistoryDetailsState extends State<CheckHistoryDetails> {
                                     Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        "Digit ${snapshot.data!["data"][index]["close_digit"]}",
+                                        // "Digit ${snapshot.data!["data"][index]["close_digit"]}",
+                                        getPannaOrDigit(
+                                            title: widget.title,
+                                            data: snapshot.data!["data"]
+                                                [index]),
                                         style: kSmallCaptionTextStyle.copyWith(
                                           color: kBlue3Color,
                                           fontWeight: FontWeight.w600,
@@ -240,7 +272,11 @@ class _CheckHistoryDetailsState extends State<CheckHistoryDetails> {
                                           ),
                                         ),
                                         Text(
-                                          "Session: ${snapshot.data!["data"][index]["session"]}",
+                                          (widget.title != "Main Game Bid" ||
+                                                  widget.title ==
+                                                      "Main Game Win")
+                                              ? ""
+                                              : "Session: ${snapshot.data!["data"][index]["session"]}",
                                           style:
                                               kSmallCaptionTextStyle.copyWith(
                                             color: Colors.grey.shade500,

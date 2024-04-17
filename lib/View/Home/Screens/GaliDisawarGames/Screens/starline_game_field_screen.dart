@@ -31,8 +31,7 @@ class StarlineGamesFieldScreen extends StatefulWidget {
       _StarlineGamesFieldScreenState();
 }
 
-class _StarlineGamesFieldScreenState
-    extends State<StarlineGamesFieldScreen> {
+class _StarlineGamesFieldScreenState extends State<StarlineGamesFieldScreen> {
   String formatDateTime(DateTime dateTime) {
     // Define abbreviated day names
     List<String> daysOfWeek = [
@@ -146,7 +145,7 @@ class _StarlineGamesFieldScreenState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           InputSuggestionTextFieldWidget(
-                             keyboardType:TextInputType.number,
+                            keyboardType: TextInputType.number,
                             inputFormatter: GamesFieldsDataMap
                                     .gamesFieldsDataMap[widget.title]
                                 ["inputFormater"],
@@ -159,7 +158,7 @@ class _StarlineGamesFieldScreenState
                                 ["first_field_title"],
                           ),
                           InputTextFieldWidget(
-                             keyboardType:TextInputType.number,
+                            keyboardType: TextInputType.number,
                             controller: amountController,
                             labelText: GamesFieldsDataMap
                                     .gamesFieldsDataMap[widget.title]
@@ -181,15 +180,33 @@ class _StarlineGamesFieldScreenState
                                           .contains(
                                         firstController.text.trim(),
                                       )) {
-                                        
-                                        gameBids.add(
-                                          GamesFieldsDataMap.getStarlineGameBid(
-                                            first: firstController.text,
-                                            amount: amountController.text,
-                                            gameTitle: widget.title,
-                                            data: widget.marketDetails,
-                                          ),
-                                        );
+                                        if (int.parse(userStatus
+                                                    .data.availablePoints) -
+                                                (gameBids
+                                                        .map((e) => int.parse(
+                                                            e.bidPoints))
+                                                        .fold(
+                                                            0,
+                                                            (prev, curr) =>
+                                                                prev + curr) +
+                                                    int.parse(amountController
+                                                        .text)) >=
+                                            0) {
+                                          gameBids.add(
+                                            GamesFieldsDataMap
+                                                .getStarlineGameBid(
+                                              first: firstController.text,
+                                              amount: amountController.text,
+                                              gameTitle: widget.title,
+                                              data: widget.marketDetails,
+                                            ),
+                                          );
+                                        } else {
+                                          SnackBarMessage.centeredSnackbar(
+                                            text: "Insufficient Balance",
+                                            context: context,
+                                          );
+                                        }
                                       } else {
                                         SnackBarMessage.centeredSnackbar(
                                           text: "Incorrect value",
@@ -277,17 +294,19 @@ class _StarlineGamesFieldScreenState
                           "bid_points": bid.bidPoints.toString(),
                           "digit": bid.digit.toString(),
                           "panna": bid.panna.toString(),
-                          
                         };
                         list.add(map);
                       }
                       if (list.isNotEmpty) {
-                        final jsonData = await HttpRequests.starlinePlaceBidRequest(
-                            context: context, token: user.token, list: list);
+                        final jsonData =
+                            await HttpRequests.starlinePlaceBidRequest(
+                                context: context,
+                                token: user.token,
+                                list: list);
                         if (jsonData.isNotEmpty && jsonData["code"] == "100") {
                           gameBids.clear();
                           firstController.clear();
-                          
+
                           amountController.clear();
                           setState(() {});
                           final jsonUserStatus =

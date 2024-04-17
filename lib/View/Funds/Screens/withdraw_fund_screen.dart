@@ -107,6 +107,8 @@ class _WithdrawFundScreenState extends State<WithdrawFundScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           InputTextFieldWidget(
+                            keyboardType: TextInputType.number,
+
                             controller: pointsController,
                             labelText: "Enter Points",
                           ),

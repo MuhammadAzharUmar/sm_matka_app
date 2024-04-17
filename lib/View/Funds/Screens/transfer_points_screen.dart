@@ -66,6 +66,8 @@ class _TransferPointsScreenState extends State<TransferPointsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           InputTextFieldWidget(
+                            keyboardType: TextInputType.number,
+
                             controller: mobileController,
                             labelText: "Mobile",
                           ),
@@ -123,6 +125,8 @@ class _TransferPointsScreenState extends State<TransferPointsScreen> {
                           ),
                           isVerified
                               ? InputTextFieldWidget(
+                                keyboardType: TextInputType.number,
+
                                   controller: pointsController,
                                   labelText: "Points",
                                 )

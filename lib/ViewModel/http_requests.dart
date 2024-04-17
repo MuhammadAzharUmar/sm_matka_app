@@ -12,6 +12,7 @@ import 'package:sm_matka/View/Auth/Screens/change_password.dart';
 import 'package:sm_matka/View/Auth/Screens/login.dart';
 import 'package:sm_matka/View/Auth/Screens/login_pin.dart';
 import 'package:sm_matka/View/Auth/Screens/otp_verification.dart';
+import 'package:sm_matka/View/Auth/Screens/signup.dart';
 import 'package:sm_matka/View/Home/Screens/main_screen.dart';
 
 class HttpRequests {
@@ -147,7 +148,8 @@ class HttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -167,7 +169,7 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-         SnackBarMessage.centeredSuccessSnackbar(
+          SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
@@ -201,7 +203,8 @@ class HttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -243,7 +246,8 @@ class HttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -274,8 +278,7 @@ class HttpRequests {
           if (token != "" && token.isNotEmpty) {
             await preferences.setString("userToken", jsonData["data"]["token"]);
             await HttpRequests.getUserDetailsRequest(
-                context: context,
-                token: token);
+                context: context, token: token);
 
             Navigator.of(context).popUntil(
               (route) => route.isFirst,
@@ -302,7 +305,8 @@ class HttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -346,7 +350,8 @@ class HttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -389,7 +394,8 @@ class HttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -434,7 +440,8 @@ class HttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -479,7 +486,8 @@ class HttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -514,7 +522,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -551,7 +560,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -590,7 +600,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -613,8 +624,21 @@ class HttpRequests {
             text: jsonData["message"].toString(),
             context: context,
           );
+        
           return jsonData;
         } else {
+          if (jsonData["message"] == "Please Login First" ||
+              jsonData["code"] == "505" ||jsonData["code"]=="400"||
+              jsonData["message"] == "Invalid Access") {
+                SharedPreferences preferences =await SharedPreferences.getInstance();
+                await preferences.clear();
+            Navigator.of(context).popUntil((route) => route.isFirst);
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => const SignupPage(),
+              ),
+            );
+          }
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
             context: context,
@@ -628,7 +652,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -650,13 +675,26 @@ class HttpRequests {
             text: jsonData["message"].toString(),
             context: context,
           );
+          
           return jsonData;
         } else {
-          SnackBarMessage.centeredSnackbar(
+          if (jsonData["message"] == "Please Login First" ||
+              jsonData["code"] == "400" ||jsonData["status"]=="error"||
+              jsonData["message"] == "Not Verified" ||jsonData["code"] == "505" ) {
+                SharedPreferences preferences =await SharedPreferences.getInstance();
+                await preferences.clear();
+            Navigator.of(context).popUntil((route) => route.isFirst);
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => const SignupPage(),
+              ),
+            );
+          }
+          return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
-          return {}; 
+          // return {};
         }
       } else {
         return SnackBarMessage.centeredSnackbar(
@@ -666,7 +704,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -708,7 +747,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -752,7 +792,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -793,7 +834,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -845,7 +887,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -888,7 +931,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -929,7 +973,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -975,7 +1020,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -1015,7 +1061,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -1056,7 +1103,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -1100,7 +1148,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -1147,7 +1196,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -1193,7 +1243,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -1227,8 +1278,7 @@ class HttpRequests {
           );
           return jsonData;
         } else {
-          return
-           SnackBarMessage.centeredSnackbar(
+          return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
@@ -1241,7 +1291,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -1280,7 +1331,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -1305,7 +1357,7 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-         SnackBarMessage.centeredSuccessSnackbar(
+          SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
@@ -1365,7 +1417,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -1388,7 +1441,7 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-         SnackBarMessage.centeredSuccessSnackbar(
+          SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
@@ -1454,7 +1507,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -1499,7 +1553,8 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!", context: context,
+        text: "Error!",
+        context: context,
       );
     }
   }
@@ -1525,7 +1580,7 @@ class HttpRequests {
           );
           return jsonData;
         } else {
-           SnackBarMessage.centeredSnackbar(
+          SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
@@ -1655,13 +1710,13 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-           SnackBarMessage.centeredSuccessSnackbar(
+          SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
         } else {
-           SnackBarMessage.centeredSnackbar(
+          SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );

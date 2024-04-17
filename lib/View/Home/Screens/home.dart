@@ -32,17 +32,16 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 0)).then((value) async {
-    await initFunctionHome();
+      await initFunctionHome();
     });
   }
 
-initFunctionHome()async{
-  user = context.read<UserCubit>().state;
-      if (user.token=="") {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
+  Future<void> initFunctionHome() async {
+    user = context.read<UserCubit>().state;
+    if (user.token == "") {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
       String token = preferences.getString("userToken") ?? "";
       if (token != "") {
-        
         final data = await HttpRequests.getUserDetailsRequest(
           context: context,
           token: token,
@@ -57,14 +56,13 @@ initFunctionHome()async{
         BlocProvider.of<UserStatusCubit>(context)
             .updateAppUserStatus(userStatus);
       }
-      }
-      userStatus = context.read<UserStatusCubit>().state;
-      await HttpRequests.mainGameListRequest(context: context, token: user.token);
+    }
+    userStatus = context.read<UserStatusCubit>().state;
+    await HttpRequests.mainGameListRequest(context: context, token: user.token);
+  }
 
-}
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size(double.maxFinite, 56),
@@ -107,12 +105,12 @@ initFunctionHome()async{
               BlocProvider.of<AppDetailsCubit>(context)
                   .updateAppDetails(appDetailsModel.data!);
 
-                  List<String> crouselImageList=[
-                      appDetailsModel.data!.data.bannerImage.bannerImg1,
-                      appDetailsModel.data!.data.bannerImage.bannerImg2,
-                      appDetailsModel.data!.data.bannerImage.bannerImg3,
-                    ];
-                    crouselImageList.removeWhere((element) => element=="");
+              List<String> crouselImageList = [
+                appDetailsModel.data!.data.bannerImage.bannerImg1,
+                appDetailsModel.data!.data.bannerImage.bannerImg2,
+                appDetailsModel.data!.data.bannerImage.bannerImg3,
+              ];
+              crouselImageList.removeWhere((element) => element == "");
               return Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -125,19 +123,21 @@ initFunctionHome()async{
                   ),
                   InkWell(
                     onTap: () {
-                      GaliDisawarGameBtmSheet.galiDisawarGameBtmSheet(context: context);
+                      GaliDisawarGameBtmSheet.galiDisawarGameBtmSheet(
+                          context: context);
                     },
                     child: Container(
-                      margin:
-                          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
                       padding: const EdgeInsets.only(left: 40, right: 15),
                       height: 46,
                       width: double.maxFinite,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            30,
-                          ),
-                          gradient: kblueGradient,),
+                        borderRadius: BorderRadius.circular(
+                          30,
+                        ),
+                        gradient: kblueGradient,
+                      ),
                       child: Row(
                         children: [
                           Expanded(
@@ -157,14 +157,29 @@ initFunctionHome()async{
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10,),
-                   Expanded(
-                      child: MainGameListWidget(
-
-                        tryAgainFunction: () async{
-                        await  initFunctionHome();
-                        },
-                      ))
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Expanded(
+                      child: RefreshIndicator(
+                    displacement: 100,
+                    backgroundColor: kBlue1Color,
+                    color: kWhiteColor,
+                    // edgeOffset: 10,
+                    strokeWidth: 3,
+                    onRefresh: () async {
+                      await Future.delayed(const Duration(seconds: 2))
+                          .then((value) {
+                        initFunctionHome();
+                        setState(() {});
+                      });
+                    },
+                    child: MainGameListWidget(
+                      tryAgainFunction: () async {
+                        await initFunctionHome();
+                      },
+                    ),
+                  ))
                 ],
               );
             }

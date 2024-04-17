@@ -63,7 +63,7 @@ class _InputSuggestionTextFieldWidgetState
               keyboardType: widget.keyboardType,
               controller: controller,
               focusNode: focusNode,
-              autofocus: true,
+              autofocus: false,
               cursorColor: kWhiteColor,
               cursorHeight: 26,
               inputFormatters: widget.inputFormatter,
