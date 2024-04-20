@@ -41,68 +41,81 @@ class _MainPageState extends State<MainPage> {
     return PopScope(
       onPopInvoked: (didPop) {
         if (!didPop) {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                contentPadding: const EdgeInsets.all(0),
-                insetPadding: const EdgeInsets.all(0),
-                content: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
-                  decoration: const BoxDecoration(
-                      color: kWhiteColor, borderRadius: kLargeBorderRadius),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "Exit App",
-                        style: kLargeTextStyle.copyWith(
-                            color: kBlue1Color, fontWeight: FontWeight.w900),
-                        textAlign: TextAlign.center,
+          if (currentIndex!=0) {
+            
+          
+          notchController.jumpTo(0);
+               pageController.animateToPage(
+                  0,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );} else {
+            
+               showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      contentPadding: const EdgeInsets.all(0),
+                      insetPadding: const EdgeInsets.all(0),
+                      content: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 25),
+                        decoration: const BoxDecoration(
+                            color: kWhiteColor,
+                            borderRadius: kLargeBorderRadius),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "Exit App",
+                              style: kLargeTextStyle.copyWith(
+                                  color: kBlue1Color,
+                                  fontWeight: FontWeight.w900),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "Are you sure,\nyou want to Exit the Game?",
+                              style: kSmallTextStyle.copyWith(
+                                  color: kBlue1Color,
+                                  fontWeight: FontWeight.w600),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: KLoginButton(
+                                      title: "No",
+                                      gradient: klightGreyGradient,
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      }),
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Expanded(
+                                  child: KLoginButton(
+                                      title: "Yes",
+                                      gradient: kblueGradient,
+                                      onPressed: () async {
+                                        SystemNavigator.pop();
+                                      }),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Are you sure,\nyou want to Exit the Game?",
-                        style: kSmallTextStyle.copyWith(
-                            color: kBlue1Color, fontWeight: FontWeight.w600),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: KLoginButton(
-                                title: "No",
-                                gradient: klightGreyGradient,
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                }),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Expanded(
-                            child: KLoginButton(
-                                title: "Yes",
-                                gradient: kblueGradient,
-                                onPressed: () async {
-                                  SystemNavigator.pop();
-                                }),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
-        }
+                    );
+                  },
+                );
+                }}
       },
       canPop: false,
       child: Scaffold(

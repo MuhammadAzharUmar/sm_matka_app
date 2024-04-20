@@ -17,6 +17,7 @@ import 'package:sm_matka/View/Home/Screens/Games/bid_tile_widget.dart';
 import 'package:sm_matka/View/Home/Screens/Games/games_field_data_map.dart';
 import 'package:sm_matka/View/Home/Screens/Games/input_suggestion_field_widget.dart';
 import 'package:sm_matka/View/Home/Screens/Games/open_close_button.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_status_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
@@ -146,7 +147,7 @@ class _GaliDesawarGamesFieldScreenState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           InputSuggestionTextFieldWidget(
-                             keyboardType:TextInputType.number,
+                            keyboardType: TextInputType.number,
                             inputFormatter: GamesFieldsDataMap
                                     .gamesFieldsDataMap[widget.title]
                                 ["inputFormater"],
@@ -158,7 +159,8 @@ class _GaliDesawarGamesFieldScreenState
                                     .gamesFieldsDataMap[widget.title]
                                 ["first_field_title"],
                           ),
-                          InputTextFieldWidget( keyboardType:TextInputType.number,
+                          InputTextFieldWidget(
+                            keyboardType: TextInputType.number,
                             controller: amountController,
                             labelText: GamesFieldsDataMap
                                     .gamesFieldsDataMap[widget.title]
@@ -174,13 +176,26 @@ class _GaliDesawarGamesFieldScreenState
                                   child: KLoginButton(
                                     title: "Add Bid",
                                     onPressed: () async {
+                                      if (int.parse(amountController.text
+                                                  .trim()) <
+                                              int.parse(userStatus
+                                                  .data.minimumBidAmount) ||
+                                          int.parse(amountController.text
+                                                  .trim()) >
+                                              int.parse(userStatus
+                                                  .data.maximumBidAmount)) {
+                                        return SnackBarMessage.centeredSnackbar(
+                                            text:
+                                                "Minimum bid amount is ${userStatus.data.minimumBidAmount} & Maximum bid amount is ${userStatus.data.maximumBidAmount}",
+                                            context: context);
+                                      }
                                       if (GamesFieldsDataMap
                                           .gamesFieldsDataMap[widget.title]
                                               ["first_field_title_allowed"]
                                           .contains(
                                         firstController.text.trim(),
                                       )) {
-                                         if (int.parse(userStatus
+                                        if (int.parse(userStatus
                                                     .data.availablePoints) -
                                                 (gameBids
                                                         .map((e) => int.parse(
@@ -192,25 +207,43 @@ class _GaliDesawarGamesFieldScreenState
                                                     int.parse(amountController
                                                         .text)) >=
                                             0) {
-                                            gameBids.add(
-                                          GamesFieldsDataMap.getGaliDesawarBid(
-                                            first: firstController.text,
-                                            amount: amountController.text,
-                                            gameTitle: widget.title,
-                                            data: widget.marketDetails,
-                                          ),
-                                        );
-                                          
+                                          gameBids.add(
+                                            GamesFieldsDataMap
+                                                .getGaliDesawarBid(
+                                              first: firstController.text,
+                                              amount: amountController.text,
+                                              gameTitle: widget.title,
+                                              data: widget.marketDetails,
+                                            ),
+                                          );
                                         } else {
                                           SnackBarMessage.centeredSnackbar(
                                             text: "Insufficient Balance",
                                             context: context,
                                           );
                                         }
-                                      
                                       } else {
+                                        String message = "";
+                                        if (!GamesFieldsDataMap
+                                            .gamesFieldsDataMap[widget.title]
+                                                ["first_field_title_allowed"]
+                                            .contains(
+                                          firstController.text.trim(),
+                                        )) {
+                                          message = GamesFieldsDataMap
+                                              .gamesFieldsDataMap[widget.title]
+                                                  ["first_field_title"]
+                                              .toString()
+                                              .replaceAll("Enter", "");
+                                        } else {
+                                          message = GamesFieldsDataMap
+                                              .gamesFieldsDataMap[widget.title]
+                                                  ["third_field_title"]
+                                              .toString()
+                                              .replaceAll("Enter", "");
+                                        }
                                         SnackBarMessage.centeredSnackbar(
-                                          text: "Incorrect value",
+                                          text: "Incorrect $message",
                                           context: context,
                                         );
                                       }
@@ -285,6 +318,7 @@ class _GaliDesawarGamesFieldScreenState
                     isLeft: false,
                     title: "Submit",
                     gradient: kblueGradient,
+                    loadingstate: AppLoadingStates.gameBidSubmitButton,
                     onPressed: () async {
                       List<Map<String, dynamic>> list = [];
                       for (var bid in gameBids) {
@@ -299,12 +333,18 @@ class _GaliDesawarGamesFieldScreenState
                         list.add(map);
                       }
                       if (list.isNotEmpty) {
-                        final jsonData = await HttpRequests.galiDisawarPlaceBidRequest(
-                            context: context, token: user.token, list: list);
+                        BlocProvider.of<AppLoadingCubit>(context)
+                            .updateAppLoadingState(
+                                AppLoadingStates.gameBidSubmitButton);
+                        final jsonData =
+                            await HttpRequests.galiDisawarPlaceBidRequest(
+                                context: context,
+                                token: user.token,
+                                list: list);
                         if (jsonData.isNotEmpty && jsonData["code"] == "100") {
                           gameBids.clear();
                           firstController.clear();
-                          
+
                           amountController.clear();
                           setState(() {});
                           final jsonUserStatus =
@@ -316,6 +356,9 @@ class _GaliDesawarGamesFieldScreenState
                             UserStatusModel.fromJson(jsonUserStatus),
                           );
                         }
+                        BlocProvider.of<AppLoadingCubit>(context)
+                            .updateAppLoadingState(
+                                AppLoadingStates.initialLoading);
                       }
                     },
                   ),

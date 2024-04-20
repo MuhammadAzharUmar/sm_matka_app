@@ -69,7 +69,7 @@ class MenuItem {
       'icon': Icons.star_border,
       'title': 'Rate App',
       'onTap': (BuildContext context) async {
-        await LaunchCustomUrls.launchURL(url: 'sm_matka');
+        await LaunchCustomUrls.launchURL(url: 'https://google.com');
       }
     },
     {
@@ -83,6 +83,7 @@ class MenuItem {
               token: user.token,
               mobile: user.data.mobile,
               caller: "Password",
+              navigateTo: "home",
             ),
           ),
         );

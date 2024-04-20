@@ -17,6 +17,7 @@ import 'package:sm_matka/View/Home/Screens/Games/game_bid_model.dart';
 import 'package:sm_matka/View/Home/Screens/Games/games_field_data_map.dart';
 import 'package:sm_matka/View/Home/Screens/Games/input_suggestion_field_widget.dart';
 import 'package:sm_matka/View/Home/Screens/Games/open_close_button.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_status_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
@@ -191,9 +192,17 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                                     .gamesFieldsDataMap[widget.title]
                                 ["inputFormater"],
                             controller: firstController,
-                            suggestions: GamesFieldsDataMap
-                                    .gamesFieldsDataMap[widget.title]
-                                ["first_field_title_allowed"],
+                            suggestions: (widget.title == "Half Sangam")
+                                ? isOpenSelected
+                                    ? GamesFieldsDataMap
+                                            .gamesFieldsDataMap[widget.title]
+                                        ["first_field_title_allowed"]
+                                    : GamesFieldsDataMap
+                                            .gamesFieldsDataMap[widget.title]
+                                        ["third_field_title_allowed"]
+                                : GamesFieldsDataMap
+                                        .gamesFieldsDataMap[widget.title]
+                                    ["first_field_title_allowed"],
                             labelText: GamesFieldsDataMap
                                     .gamesFieldsDataMap[widget.title]
                                 [(widget.title == "Half Sangam")
@@ -209,9 +218,19 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                                   inputFormatter: GamesFieldsDataMap
                                           .gamesFieldsDataMap[widget.title]
                                       ["inputFormater"],
-                                  suggestions: GamesFieldsDataMap
-                                          .gamesFieldsDataMap[widget.title]
-                                      ["first_field_title_allowed"],
+                                  suggestions: (widget.title == "Half Sangam")
+                                      ? isOpenSelected
+                                          ? GamesFieldsDataMap
+                                                      .gamesFieldsDataMap[
+                                                  widget.title]
+                                              ["third_field_title_allowed"]
+                                          : GamesFieldsDataMap
+                                                      .gamesFieldsDataMap[
+                                                  widget.title]
+                                              ["first_field_title_allowed"]
+                                      : GamesFieldsDataMap
+                                              .gamesFieldsDataMap[widget.title]
+                                          ["first_field_title_allowed"],
                                   controller: thirdController,
                                   labelText: GamesFieldsDataMap
                                           .gamesFieldsDataMap[widget.title]
@@ -241,49 +260,122 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                                   child: KLoginButton(
                                     title: "Add Bid",
                                     onPressed: () async {
+                                      if (int.parse(amountController.text
+                                                  .trim()) <
+                                              int.parse(userStatus
+                                                  .data.minimumBidAmount) ||
+                                          int.parse(amountController.text
+                                                  .trim()) >
+                                              int.parse(userStatus
+                                                  .data.maximumBidAmount)) {
+                                        return SnackBarMessage.centeredSnackbar(
+                                            text:
+                                                "Minimum bid amount is ${userStatus.data.minimumBidAmount} & Maximum bid amount is ${userStatus.data.maximumBidAmount}",
+                                            context: context);
+                                      }
                                       if (GamesFieldsDataMap
-                                              .gamesFieldsDataMap[widget.title]
-                                                  ["first_field_title_allowed"]
+                                              .gamesFieldsDataMap[widget
+                                                  .title][(widget.title ==
+                                                      "Half Sangam")
+                                                  ? isOpenSelected
+                                                      ? "first_field_title_allowed"
+                                                      : "third_field_title_allowed"
+                                                  : "first_field_title_allowed"]
                                               .contains(
                                             firstController.text.trim(),
                                           ) &&
-                                          (widget.title != "Half Sangam" &&
-                                                  widget.title !=
-                                                      "Full Sangam" ||
+                                          (widget.title != "Half Sangam" ||
                                               GamesFieldsDataMap
                                                   .gamesFieldsDataMap[
                                                       widget.title][
-                                                      "first_field_title_allowed"]
+                                                      isOpenSelected
+                                                          ? "third_field_title_allowed"
+                                                          : "first_field_title_allowed"]
+                                                  .contains(
+                                                thirdController.text.trim(),
+                                              )) &&
+                                          (widget.title != "Full Sangam" ||
+                                              GamesFieldsDataMap
+                                                  .gamesFieldsDataMap[
+                                                      widget.title]
+                                                      ["first_field_title_allowed"]
                                                   .contains(
                                                 thirdController.text.trim(),
                                               ))) {
-                                                if (int.parse(userStatus.data.availablePoints) -
-                      (gameBids
-                          .map((e) => int.parse(e.bidPoints))
-                          .fold(0, (prev, curr) => prev + curr)+int.parse(amountController.text))>=0) {
-                                                  
-                                                
-                                        gameBids.add(
-                                          GamesFieldsDataMap.getGameBid(
-                                            first: firstController.text,
-                                            second: thirdController.text,
-                                            amount: amountController.text,
-                                            isOpen: isOpenSelected,
-                                            gameTitle: widget.title,
-                                            data: widget.marketDetails,
-                                          ),
-                                        );}else{
+                                        if (int.parse(userStatus
+                                                    .data.availablePoints) -
+                                                (gameBids
+                                                        .map((e) => int.parse(
+                                                            e.bidPoints))
+                                                        .fold(
+                                                            0,
+                                                            (prev, curr) =>
+                                                                prev + curr) +
+                                                    int.parse(amountController
+                                                        .text)) >=
+                                            0) {
+                                          gameBids.add(
+                                            GamesFieldsDataMap.getGameBid(
+                                              first: firstController.text,
+                                              second: thirdController.text,
+                                              amount: amountController.text,
+                                              isOpen: isOpenSelected,
+                                              gameTitle: widget.title,
+                                              data: widget.marketDetails,
+                                            ),
+                                          );
+                                        } else {
                                           SnackBarMessage.centeredSnackbar(
-                                          text: "Insufficient Balance",
-                                          context: context,
-                                        );
+                                            text: "Insufficient Balance",
+                                            context: context,
+                                          );
                                         }
                                       } else {
+                                        String message = "";
+                                        // if (widget.title == "Half Sangam") {
+
+                                        // } else {
+                                        if (GamesFieldsDataMap
+                                            .gamesFieldsDataMap[widget
+                                                .title][(widget.title ==
+                                                    "Half Sangam")
+                                                ? isOpenSelected
+                                                    ? "first_field_title_allowed"
+                                                    : "third_field_title_allowed"
+                                                : "first_field_title_allowed"]
+                                            .contains(
+                                          firstController.text.trim(),
+                                        )) {
+                                          message = GamesFieldsDataMap
+                                              .gamesFieldsDataMap[widget
+                                                  .title][(widget.title ==
+                                                      "Half Sangam")
+                                                  ? isOpenSelected
+                                                      ? "third_field_title"
+                                                      : "third_field_title_close"
+                                                  : "first_field_title"]
+                                              .toString()
+                                              .replaceAll("Enter", "");
+                                        } else {
+                                          message = GamesFieldsDataMap
+                                              .gamesFieldsDataMap[widget
+                                                  .title][(widget.title ==
+                                                      "Half Sangam")
+                                                  ? isOpenSelected
+                                                      ? "first_field_title"
+                                                      : "first_field_title_close"
+                                                  : "first_field_title"]
+                                              .toString()
+                                              .replaceAll("Enter", "");
+                                        }
+                                        // }
+
                                         SnackBarMessage.centeredSnackbar(
-                                          text: "Incorrect value",
+                                          text: "Incorrect $message",
                                           context: context,
                                         );
                                       }
+
                                       setState(() {});
                                       // setState(() {
                                       //     firstController.clear();
@@ -353,7 +445,11 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                     isLeft: false,
                     title: "Submit",
                     gradient: kblueGradient,
+                    loadingstate: AppLoadingStates.gameBidSubmitButton,
                     onPressed: () async {
+                      BlocProvider.of<AppLoadingCubit>(context)
+                          .updateAppLoadingState(
+                              AppLoadingStates.gameBidSubmitButton);
                       List<Map<String, dynamic>> list = [];
                       for (var bid in gameBids) {
                         final map = {
@@ -387,6 +483,9 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                           );
                         }
                       }
+                      BlocProvider.of<AppLoadingCubit>(context)
+                          .updateAppLoadingState(
+                              AppLoadingStates.initialLoading);
                     },
                   ),
                 ),

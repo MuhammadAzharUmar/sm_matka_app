@@ -14,6 +14,7 @@ import 'package:sm_matka/View/Auth/Widgets/input_textfield_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/klogin_button.dart';
 import 'package:sm_matka/View/Funds/Widgets/fund_appbar_widget.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/app_details_cubit.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_status_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
@@ -101,7 +102,14 @@ class _TransferPointsScreenState extends State<TransferPointsScreen> {
                                       ),
                                 KLoginButton(
                                     title: "Verify",
+                                    loadingstate: AppLoadingStates.verifyOtpResendLoading,
                                     onPressed: () async {
+                                      if (mobileController.text!="") {
+                                         BlocProvider.of<AppLoadingCubit>(
+                                            context)
+                                        .updateAppLoadingState(
+                                            AppLoadingStates.verifyOtpResendLoading);
+                                      
                                       final jsonData = await HttpRequests
                                           .transferVerifyRequest(
                                         context: context,
@@ -115,6 +123,12 @@ class _TransferPointsScreenState extends State<TransferPointsScreen> {
                                           verifiedUserName =
                                               jsonData["data"]["name"];
                                         });
+                                         BlocProvider.of<AppLoadingCubit>(
+                                            context)
+                                        .updateAppLoadingState(
+                                            AppLoadingStates.initialLoading);
+                                      }}else{
+                                        SnackBarMessage.centeredSnackbar(text: "Please Select Mobile", context: context);
                                       }
                                     })
                               ],
@@ -147,7 +161,14 @@ class _TransferPointsScreenState extends State<TransferPointsScreen> {
                           Expanded(
                             child: KLoginButton(
                               title: "Submit",
+                              loadingstate: AppLoadingStates.transferSubmitButtonLoading,
                               onPressed: () async {
+                                if (pointsController.text!="") {
+                                  
+                                 BlocProvider.of<AppLoadingCubit>(
+                                            context)
+                                        .updateAppLoadingState(
+                                            AppLoadingStates.transferSubmitButtonLoading);
                                 final jsonData =
                                     await HttpRequests.transferPointsRequest(
                                   context: context,
@@ -168,11 +189,17 @@ class _TransferPointsScreenState extends State<TransferPointsScreen> {
                                   setState(() {
                                     isVerified = false;
                                     verifiedUserName = "";
-                                  });
+                                  }); BlocProvider.of<AppLoadingCubit>(
+                                            context)
+                                        .updateAppLoadingState(
+                                            AppLoadingStates.initialLoading);
                                   SnackBarMessage.simpleSnackBar(
                                     text: "Successfully Transferred",
                                     context: context,
                                   );
+                                  
+                                }}else{
+                                  SnackBarMessage.centeredSnackbar(text: "Please Enter Points", context: context);
                                 }
                               },
                               gradient: kblueGradient,

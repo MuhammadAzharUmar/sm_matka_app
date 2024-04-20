@@ -75,7 +75,9 @@ class GamesFieldsDataMap {
       "third_field_title": "Enter Close Panna",
       "third_field_title_close": "Enter Open Digit",
       "second_field_title": "Enter Amount",
-      "first_field_title_allowed": AllowedDigitsList.panna,
+      "first_field_title_allowed": AllowedDigitsList.singleDigits,
+      "third_field_title_allowed": AllowedDigitsList.panna,
+
       "inputFormater": [
         FilteringTextInputFormatter.digitsOnly,
         LengthLimitingTextInputFormatter(3)

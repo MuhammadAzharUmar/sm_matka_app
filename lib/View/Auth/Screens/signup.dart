@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
 import 'package:sm_matka/View/Auth/Screens/login.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
 import 'package:sm_matka/View/Auth/Widgets/admin_help_button_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_decorator_widget.dart';
@@ -24,7 +26,6 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-  
       backgroundColor: kWhiteColor,
       body: Container(
         decoration: const BoxDecoration(gradient: kCustomGradient),
@@ -76,7 +77,8 @@ class _SignupPageState extends State<SignupPage> {
                         labelText: 'Enter Security Pin',
                         isPassword: true,
                       ),
-                      SizedBox(height: 100,
+                      SizedBox(
+                        height: 100,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -85,7 +87,12 @@ class _SignupPageState extends State<SignupPage> {
                               child: KLoginButton(
                                 gradient: kblueGradient,
                                 title: "Signup",
+                                loadingstate:
+                                    AppLoadingStates.signupButtonLoading,
                                 onPressed: () async {
+                                  BlocProvider.of<AppLoadingCubit>(context)
+                                      .updateAppLoadingState(
+                                          AppLoadingStates.signupButtonLoading);
                                   await HttpRequests.signupRequest(
                                     name: nameController.text,
                                     mobile: mobileController.text,
@@ -93,6 +100,10 @@ class _SignupPageState extends State<SignupPage> {
                                     pin: pinController.text,
                                     context: context,
                                   );
+                                  // ignore: use_build_context_synchronously
+                                  BlocProvider.of<AppLoadingCubit>(context)
+                                      .updateAppLoadingState(
+                                          AppLoadingStates.initialLoading);
                                 },
                               ),
                             ),
@@ -100,6 +111,7 @@ class _SignupPageState extends State<SignupPage> {
                             Expanded(
                               child: KLoginButton(
                                   title: "Login",
+                                  
                                   gradient: null,
                                   onPressed: () {
                                     Navigator.of(context).pushReplacement(

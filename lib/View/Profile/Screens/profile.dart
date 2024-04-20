@@ -11,6 +11,7 @@ import 'package:sm_matka/Utilities/gradient.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
 import 'package:sm_matka/View/Auth/Widgets/klogin_button.dart';
 import 'package:sm_matka/View/Profile/Widgets/edit_textfield_widget.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_status_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
@@ -116,27 +117,6 @@ class _ProfileState extends State<Profile> {
                         color: kBlue1Color, fontWeight: FontWeight.w600),
                   ),
                 ),
-                // const Divider(
-                //   height: 10,
-                //   thickness: .5,
-                //   color: kBlue1Color,
-                // ),
-                // Column(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   mainAxisSize: MainAxisSize.min,
-                //   children: [
-                //     Text(
-                //       userStatus.data.availablePoints,
-                //       style: kMediumCaptionTextStyle.copyWith(
-                //           color: kBlue1Color, fontWeight: FontWeight.w600),
-                //     ),
-                //     Text(
-                //       "Balance",
-                //       style: kMediumCaptionTextStyle.copyWith(
-                //           color: kBlue1Color, fontWeight: FontWeight.w600),
-                //     ),
-                //   ],
-                // ),
                 const Divider(
                   height: 10,
                   thickness: .5,
@@ -189,11 +169,16 @@ class _ProfileState extends State<Profile> {
                             Expanded(
                               child: KLoginButton(
                                 title: "Submit Request",
+                                loadingstate:
+                                    AppLoadingStates.updateProfileButton,
                                 onPressed: () async {
                                   setState(() {
                                     isloading = true;
                                   });
                                   try {
+                                    BlocProvider.of<AppLoadingCubit>(context)
+                                        .updateAppLoadingState(AppLoadingStates
+                                            .updateProfileButton);
                                     await HttpRequests.updateProfileRequest(
                                       context: context,
                                       token: user.token,
@@ -206,26 +191,34 @@ class _ProfileState extends State<Profile> {
                                       context: context,
                                       token: user.token,
                                     );
-                                    Map<String, dynamic> userNewstatus =
-                                        await HttpRequests.getUserStatusRequest(
-                                      context: context,
-                                      token: user.token,
-                                    );
 
                                     UserCubit userCubit =
                                         context.read<UserCubit>();
-                                    UserStatusCubit userStatusCubit =
-                                        context.read<UserStatusCubit>();
                                     userCubit.updateAppUser(
                                       UserModel.fromJson(
                                         json: userNewDate,
                                         token: user.token,
                                       ),
                                     );
-                                    userStatusCubit.updateAppUserStatus(
-                                        UserStatusModel.fromJson(
-                                            userNewstatus));
+                                    BlocProvider.of<AppLoadingCubit>(context)
+                                        .updateAppLoadingState(
+                                            AppLoadingStates.initialLoading);
+
+                                    // Map<String, dynamic> userNewstatus =
+                                    //     await HttpRequests.getUserStatusRequest(
+                                    //   context: context,
+                                    //   token: user.token,
+                                    // );
+                                    // UserStatusCubit userStatusCubit =
+                                    //     context.read<UserStatusCubit>();
+                                    // userStatusCubit.updateAppUserStatus(
+                                    //     UserStatusModel.fromJson(
+                                    //         userNewstatus));
                                   } catch (e) {
+                                    BlocProvider.of<AppLoadingCubit>(context)
+                                        .updateAppLoadingState(
+                                            AppLoadingStates.initialLoading);
+
                                     if (kDebugMode) {
                                       print(e);
                                     }

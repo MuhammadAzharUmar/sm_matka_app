@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sm_matka/Models/app_details_model.dart';
 import 'package:sm_matka/Models/user_status_model.dart';
 import 'package:sm_matka/Models/usermodel.dart';
 import 'package:sm_matka/Utilities/colors.dart';
@@ -15,6 +16,7 @@ import 'package:sm_matka/View/Home/Widgets/fund_withdraw_chat_call_button_widget
 import 'package:sm_matka/View/Home/Widgets/home_appbar_widget.dart';
 import 'package:sm_matka/View/Home/Widgets/main_gamelist_widget.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/app_details_cubit.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_status_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
@@ -26,7 +28,11 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
+  // keep screen state alive
+  @override
+  bool get wantKeepAlive => true;
+  //
   UserModel user = UserModel.fromJson(json: {}, token: "");
   UserStatusModel userStatus = UserStatusModel.fromJson({});
   @override
@@ -56,17 +62,23 @@ class _HomeState extends State<Home> {
         UserStatusModel userStatus = UserStatusModel.fromJson(statusdata);
         BlocProvider.of<UserStatusCubit>(context)
             .updateAppUserStatus(userStatus);
-      }else{
+      } else {
         Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SignupPage(),),);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
+        );
       }
     }
     userStatus = context.read<UserStatusCubit>().state;
     // await HttpRequests.mainGameListRequest(context: context, token: user.token);
   }
 
+  List<String> crouselImageList = [];
   @override
   Widget build(BuildContext context) {
+    super.build(context); // Required for AutomaticKeepAliveClientMixin
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size(double.maxFinite, 56),
@@ -75,19 +87,30 @@ class _HomeState extends State<Home> {
       body: FutureBuilder(
           future: HttpRequests.appDetialsRequest(context: context),
           builder: (context, appDetailsModel) {
+            BlocProvider.of<AppLoadingCubit>(context).updateAppLoadingState(
+                AppLoadingStates.homePageAppDetailsApiLoading);
             if (appDetailsModel.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 30,
-                  width: 30,
-                  child: const CircularProgressIndicator(
-                    color: kBlue1Color,
-                    strokeWidth: 3,
+              return Stack(
+                children: [
+                  HomeAppDetailFutureWidget(
+                    crouselImageList: crouselImageList,
                   ),
-                ),
+                  Center(
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 30,
+                      width: 30,
+                      child: const CircularProgressIndicator(
+                        color: kBlue1Color,
+                        strokeWidth: 3,
+                      ),
+                    ),
+                  ),
+                ],
               );
             } else if (appDetailsModel.hasError) {
+              BlocProvider.of<AppLoadingCubit>(context)
+                  .updateAppLoadingState(AppLoadingStates.initialLoading);
               return Center(
                 child: RefreshIndicator(
                   color: kBlue1Color,
@@ -96,13 +119,14 @@ class _HomeState extends State<Home> {
                     await Future.delayed(const Duration(seconds: 2))
                         .then((value) {
                       setState(() {
-                        initFunctionHome();
+                        // initFunctionHome();
                       });
                     });
                   },
                   child: SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
-                    child: SizedBox(height: MediaQuery.of(context).size.height,
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height,
                       child: InkWell(
                         onTap: () {
                           setState(() {});
@@ -111,11 +135,17 @@ class _HomeState extends State<Home> {
                             alignment: Alignment.center,
                             height: 30,
                             width: 100,
-                            child: Text(
-                              "Try again",
-                              style: kMediumCaptionTextStyle.copyWith(
-                                  color: kBlue1Color,
-                                  fontWeight: FontWeight.w600),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Try again",
+                                  style: kMediumCaptionTextStyle.copyWith(
+                                      color: kBlue1Color,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                const Icon(Icons.refresh,size: 24,color: kBlue1Color,)
+                              ],
                             )),
                       ),
                     ),
@@ -123,112 +153,104 @@ class _HomeState extends State<Home> {
                 ),
               );
             } else {
+              BlocProvider.of<AppLoadingCubit>(context)
+                  .updateAppLoadingState(AppLoadingStates.initialLoading);
               // update appdetails in cubit
               BlocProvider.of<AppDetailsCubit>(context)
                   .updateAppDetails(appDetailsModel.data!);
-
-              List<String> crouselImageList = [
+              crouselImageList = [
                 appDetailsModel.data!.data.bannerImage.bannerImg1,
                 appDetailsModel.data!.data.bannerImage.bannerImg2,
                 appDetailsModel.data!.data.bannerImage.bannerImg3,
               ];
               crouselImageList.removeWhere((element) => element == "");
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  RefreshIndicator(
-                    color: kBlue1Color,
-                    backgroundColor: kWhiteColor,
-                    onRefresh: () async {
-                      await Future.delayed(const Duration(seconds: 2))
-                          .then((value) {
-                        setState(() {
-                          initFunctionHome();
-                        });
-                      });
-                    },
-                    child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CustomSliderWidget(
-                            crouselImages: crouselImageList,
-                            marqueeText:
-                                appDetailsModel.data!.data.bannerMarquee,
-                          ),
-                          FundWithdrawChatCallButtonWidget(
-                            contactDetails:
-                                appDetailsModel.data!.data.contactDetails,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              GaliDisawarGameBtmSheet.galiDisawarGameBtmSheet(
-                                  context: context);
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              padding:
-                                  const EdgeInsets.only(left: 40, right: 15),
-                              height: 46,
-                              width: double.maxFinite,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  30,
-                                ),
-                                gradient: kblueGradient,
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: Text(
-                                    "GALI DISAWAR GAME",
-                                    style: kSmallTextStyle.copyWith(
-                                      color: kWhiteColor,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  )),
-                                  const Icon(
-                                    Icons.arrow_circle_right,
-                                    color: kWhiteColor,
-                                    size: 24,
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Expanded(
-                      child: RefreshIndicator(
-                    displacement: 100,
-                    backgroundColor: kBlue1Color,
-                    color: kWhiteColor,
-                    // edgeOffset: 10,
-                    strokeWidth: 3,
-                    onRefresh: () async {
-                      await Future.delayed(const Duration(seconds: 2))
-                          .then((value) {
-                        initFunctionHome();
-                        setState(() {});
-                      });
-                    },
-                    child: MainGameListWidget(
-                      tryAgainFunction: () async {
-                        await initFunctionHome();
-                      },
-                    ),
-                  ))
-                ],
+              return HomeAppDetailFutureWidget(
+                crouselImageList: crouselImageList,
               );
             }
           }),
     );
+  }
+}
+
+class HomeAppDetailFutureWidget extends StatelessWidget {
+  const HomeAppDetailFutureWidget({
+    super.key,
+    required this.crouselImageList,
+  });
+
+  final List<String> crouselImageList;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AppDetailsCubit, AppDetailsModel>(
+        builder: (context, appDetailsModel) {
+      return appDetailsModel != AppDetailsModel.fromJson({})
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CustomSliderWidget(
+                        crouselImages: crouselImageList,
+                        marqueeText: appDetailsModel.data.bannerMarquee,
+                      ),
+                      FundWithdrawChatCallButtonWidget(
+                        contactDetails: appDetailsModel.data.contactDetails,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          GaliDisawarGameBtmSheet.galiDisawarGameBtmSheet(
+                              context: context);
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          padding: const EdgeInsets.only(left: 40, right: 15),
+                          height: 46,
+                          width: double.maxFinite,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              30,
+                            ),
+                            gradient: kblueGradient,
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: Text(
+                                "GALI DISAWAR GAME",
+                                style: kSmallTextStyle.copyWith(
+                                  color: kWhiteColor,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              )),
+                              const Icon(
+                                Icons.arrow_circle_right,
+                                color: kWhiteColor,
+                                size: 24,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Expanded(child: MainGameListWidget(
+                  tryAgainFunction: () async {
+                    // await initFunctionHome();
+                  },
+                ))
+              ],
+            )
+          : Container();
+    });
   }
 }

@@ -13,6 +13,7 @@ import 'package:sm_matka/Utilities/textstyles.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_textfield_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/klogin_button.dart';
 import 'package:sm_matka/View/Funds/Widgets/fund_appbar_widget.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_status_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
@@ -152,7 +153,14 @@ class _UpdatePhonepeGpayPaytmScreenState
                         Expanded(
                           child: KLoginButton(
                             title: "Submit",
+                            loadingstate: AppLoadingStates.updatePhonePeGPayPaytm,
                             onPressed: () async {
+                              if (accountNoContoller.text!="") {
+                                 BlocProvider.of<AppLoadingCubit>(
+                                            context)
+                                        .updateAppLoadingState(
+                                            AppLoadingStates.updatePhonePeGPayPaytm);
+                              
                               Map<String, dynamic> jsonData = {};
                               if (widget.screenTitle == "Phone Pe") {
                                 jsonData =
@@ -191,8 +199,14 @@ class _UpdatePhonepeGpayPaytmScreenState
                                   text: "Successfully Updated",
                                   context: context,
                                 );
+                                 BlocProvider.of<AppLoadingCubit>(
+                                            context)
+                                        .updateAppLoadingState(
+                                            AppLoadingStates.initialLoading);
                                 Future.delayed(const Duration(seconds: 1)).then(
                                     (value) => Navigator.of(context).pop());
+                              }}else{
+                                SnackBarMessage.centeredSnackbar(text: "Please Enter ${widget.screenTitle} Number", context: context);
                               }
                             },
                             gradient: kblueGradient,

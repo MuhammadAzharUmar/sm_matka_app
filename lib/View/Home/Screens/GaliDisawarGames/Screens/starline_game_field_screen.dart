@@ -17,6 +17,7 @@ import 'package:sm_matka/View/Home/Screens/Games/bid_tile_widget.dart';
 import 'package:sm_matka/View/Home/Screens/Games/games_field_data_map.dart';
 import 'package:sm_matka/View/Home/Screens/Games/input_suggestion_field_widget.dart';
 import 'package:sm_matka/View/Home/Screens/Games/open_close_button.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_status_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
@@ -174,6 +175,19 @@ class _StarlineGamesFieldScreenState extends State<StarlineGamesFieldScreen> {
                                   child: KLoginButton(
                                     title: "Add Bid",
                                     onPressed: () async {
+                                      if (int.parse(amountController.text
+                                                  .trim()) <
+                                              int.parse(userStatus
+                                                  .data.minimumBidAmount) ||
+                                          int.parse(amountController.text
+                                                  .trim()) >
+                                              int.parse(userStatus
+                                                  .data.maximumBidAmount)) {
+                                        return SnackBarMessage.centeredSnackbar(
+                                            text:
+                                                "Minimum bid amount is ${userStatus.data.minimumBidAmount} & Maximum bid amount is ${userStatus.data.maximumBidAmount}",
+                                            context: context);
+                                      }
                                       if (GamesFieldsDataMap
                                           .gamesFieldsDataMap[widget.title]
                                               ["first_field_title_allowed"]
@@ -208,8 +222,27 @@ class _StarlineGamesFieldScreenState extends State<StarlineGamesFieldScreen> {
                                           );
                                         }
                                       } else {
+                                        String message = "";
+                                        if (!GamesFieldsDataMap
+                                            .gamesFieldsDataMap[widget.title]
+                                                ["first_field_title_allowed"]
+                                            .contains(
+                                          firstController.text.trim(),
+                                        )) {
+                                          message = GamesFieldsDataMap
+                                              .gamesFieldsDataMap[widget.title]
+                                                  ["first_field_title"]
+                                              .toString()
+                                              .replaceAll("Enter", "");
+                                        } else {
+                                          message = GamesFieldsDataMap
+                                              .gamesFieldsDataMap[widget.title]
+                                                  ["third_field_title"]
+                                              .toString()
+                                              .replaceAll("Enter", "");
+                                        }
                                         SnackBarMessage.centeredSnackbar(
-                                          text: "Incorrect value",
+                                          text: "Incorrect $message",
                                           context: context,
                                         );
                                       }
@@ -284,6 +317,7 @@ class _StarlineGamesFieldScreenState extends State<StarlineGamesFieldScreen> {
                     isLeft: false,
                     title: "Submit",
                     gradient: kblueGradient,
+                    loadingstate: AppLoadingStates.gameBidSubmitButton,
                     onPressed: () async {
                       List<Map<String, dynamic>> list = [];
                       for (var bid in gameBids) {
@@ -298,6 +332,10 @@ class _StarlineGamesFieldScreenState extends State<StarlineGamesFieldScreen> {
                         list.add(map);
                       }
                       if (list.isNotEmpty) {
+                        BlocProvider.of<AppLoadingCubit>(context)
+                            .updateAppLoadingState(
+                                AppLoadingStates.gameBidSubmitButton);
+
                         final jsonData =
                             await HttpRequests.starlinePlaceBidRequest(
                                 context: context,
@@ -318,6 +356,9 @@ class _StarlineGamesFieldScreenState extends State<StarlineGamesFieldScreen> {
                             UserStatusModel.fromJson(jsonUserStatus),
                           );
                         }
+                        BlocProvider.of<AppLoadingCubit>(context)
+                            .updateAppLoadingState(
+                                AppLoadingStates.initialLoading);
                       }
                     },
                   ),

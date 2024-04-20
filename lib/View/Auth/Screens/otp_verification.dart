@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinput/pinput.dart';
 import 'package:sm_matka/Utilities/border_radius.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
+import 'package:sm_matka/Utilities/snackbar_messages.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
 import 'package:sm_matka/View/Auth/Widgets/admin_help_button_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_decorator_widget.dart';
@@ -119,14 +122,27 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                                   child: KLoginButton(
                                       gradient: kblueGradient,
                                       title: "Resend",
+                                      loadingstate: AppLoadingStates
+                                          .verifyOtpResendLoading,
                                       onPressed: () async {
                                         setState(() {
                                           _secondsLeft = 30;
                                         });
                                         _startTimer();
+                                        BlocProvider.of<AppLoadingCubit>(
+                                                context)
+                                            .updateAppLoadingState(
+                                                AppLoadingStates
+                                                    .verifyOtpResendLoading);
                                         await HttpRequests.resendOtpRequest(
                                             mobile: widget.phoneNumber,
                                             context: context);
+                                        BlocProvider.of<AppLoadingCubit>(
+                                        // ignore: use_build_context_synchronously
+                                                context)
+                                            .updateAppLoadingState(
+                                                AppLoadingStates
+                                                    .initialLoading);
                                       }),
                                 ),
                               ],
@@ -137,11 +153,19 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                                   child: KLoginButton(
                                     gradient: kblueGradient,
                                     title: "Verify",
+                                    loadingstate:
+                                        AppLoadingStates.verifyOtpResendLoading,
                                     onPressed: () async {
+                                      if (otpController.text!=""&&otpController.text.length==4) {
+                                        
+                                      
+                                      BlocProvider.of<AppLoadingCubit>(context)
+                                          .updateAppLoadingState(
+                                              AppLoadingStates
+                                                  .verifyOtpResendLoading);
                                       if (widget.forgotPasswordcaller ==
                                           "password") {
-                                        await HttpRequests
-                                            .verifyUserRequest(
+                                        await HttpRequests.verifyUserRequest(
                                           mobile: widget.phoneNumber,
                                           otp: otpController.text,
                                           caller: "Password",
@@ -149,8 +173,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                                         );
                                       } else if (widget.forgotPasswordcaller ==
                                           "pin") {
-                                        await HttpRequests
-                                            .verifyUserRequest(
+                                        await HttpRequests.verifyUserRequest(
                                           mobile: widget.phoneNumber,
                                           otp: otpController.text,
                                           caller: "Pin",
@@ -162,6 +185,12 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                                             otp: otpController.text,
                                             context: context);
                                       }
+                                      // ignore: use_build_context_synchronously
+                                      BlocProvider.of<AppLoadingCubit>(context)
+                                          .updateAppLoadingState(
+                                              AppLoadingStates.initialLoading);}else{
+                                                SnackBarMessage.centeredSnackbar(text: "Please Enter OTP", context: context);
+                                              }
                                     },
                                   ),
                                 ),

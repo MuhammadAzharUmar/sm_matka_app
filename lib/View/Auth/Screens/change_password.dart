@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
 import 'package:sm_matka/Utilities/snackbar_messages.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
 import 'package:sm_matka/View/Auth/Widgets/admin_help_button_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_decorator_widget.dart';
@@ -13,10 +15,12 @@ class ChangePasswordPage extends StatefulWidget {
       {super.key,
       required this.token,
       required this.mobile,
-      required this.caller});
+      required this.caller,
+      this.navigateTo});
   final String token;
   final String mobile;
   final String caller;
+  final String? navigateTo;
   @override
   State<ChangePasswordPage> createState() => _ChangePasswordPageState();
 }
@@ -65,31 +69,52 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       Row(
                         children: [
                           Expanded(
-                            child: KLoginButton(gradient: kblueGradient,
+                            child: KLoginButton(
+                              gradient: kblueGradient,
                               title: "Submit",
+                              loadingstate:
+                                  AppLoadingStates.changePasswordSubmit,
                               onPressed: () async {
-                                if (passwordController.text !=
-                                    confirmPasswordController.text) {
-                                  SnackBarMessage.centeredSnackbar(
-                                      text: "${widget.caller} mismatch",
-                                      context: context);
-                                } else {
-                                  if (widget.caller == "Password") {
-                                    await HttpRequests
-                                        .forgotPasswordVerifyRequest(
-                                      mobile: widget.mobile,
-                                      token: widget.token,
-                                      password: passwordController.text,
-                                      context: context,
-                                    );
+                                if (passwordController.text.trim() != "" &&
+                                    confirmPasswordController.text.trim() !=
+                                        "") {
+                                  if (passwordController.text !=
+                                      confirmPasswordController.text) {
+                                    SnackBarMessage.centeredSnackbar(
+                                        text: "${widget.caller} mismatch",
+                                        context: context);
                                   } else {
-                                    await HttpRequests.createPinRequest(
-                                      mobile: widget.mobile,
-                                      token: widget.token,
-                                      pin: passwordController.text,
-                                      context: context,
-                                    );
+                                    BlocProvider.of<AppLoadingCubit>(context)
+                                        .updateAppLoadingState(AppLoadingStates
+                                            .changePasswordSubmit);
+                                    if (widget.caller == "Password") {
+                                     
+                                      await HttpRequests
+                                          .forgotPasswordVerifyRequest(
+                                        navigateTo: widget.navigateTo!,
+                                        mobile: widget.mobile,
+                                        token: widget.token,
+                                        password: passwordController.text,
+                                        context: context,
+                                      );
+                                    } else {
+                                      await HttpRequests.createPinRequest(
+                                        mobile: widget.mobile,
+                                        token: widget.token,
+                                        pin: passwordController.text,
+                                        context: context,
+                                      );
+                                    }
+                                    BlocProvider.of<AppLoadingCubit>(
+                                            // ignore: use_build_context_synchronously
+                                            context)
+                                        .updateAppLoadingState(
+                                            AppLoadingStates.initialLoading);
                                   }
+                                } else {
+                                  SnackBarMessage.centeredSnackbar(
+                                      text: "Please Select Password",
+                                      context: context);
                                 }
                               },
                             ),

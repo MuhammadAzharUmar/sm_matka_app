@@ -15,7 +15,7 @@ class PaymentMethodDropdownWidget extends StatefulWidget {
   });
   final int dropDownValue;
   final String selectedDropDownValue;
-  final Function(String) onChange;
+  final Function(String,int) onChange;
 
   @override
   State<PaymentMethodDropdownWidget> createState() =>
@@ -71,6 +71,10 @@ class _PaymentMethodDropdownWidgetState
                 value: 3,
                 child: Text("Paytm ${user.data.paytmMobileNo}"),
               ),
+              DropdownMenuItem(
+                value: 4,
+                child: Text("Bank ${user.data.bankAccountNo}"),
+              ),
             ],
             onChanged: (value) async {
               dropdownvalue = value!.toInt();
@@ -80,19 +84,22 @@ class _PaymentMethodDropdownWidgetState
                   selectedValue = "Select Payment Method";
                   break;
                 case 1:
-                  selectedValue = "phonepe";
+                  selectedValue = "phonepe_mobile_no";
                   break;
                 case 2:
-                  selectedValue = "gpay";
+                  selectedValue = "gpay_mobile_no";
                   break;
                 case 3:
-                  selectedValue = "paytm";
+                  selectedValue = "paytm_mobile_no";
+                  break;
+                case 4:
+                  selectedValue = "bank_name";
                   break;
 
                 default:
                   selectedValue = 'Select payment method';
               }
-              await widget.onChange(selectedValue);
+              await widget.onChange(selectedValue,value);
             }),
       );
     });

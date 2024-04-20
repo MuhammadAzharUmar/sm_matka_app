@@ -5,7 +5,9 @@ import 'package:sm_matka/Utilities/border_radius.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
+import 'package:sm_matka/View/Auth/Widgets/klogin_button.dart';
 import 'package:sm_matka/View/History/Widgets/date_picker_button.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
 
 class CheckHistoryDetails extends StatefulWidget {
@@ -138,17 +140,39 @@ class _CheckHistoryDetailsState extends State<CheckHistoryDetails> {
                       ),
                     ],
                   ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      setState(() {});
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: kWhiteColor,
-                        foregroundColor: kBlue1Color,
-                        minimumSize: const Size(double.maxFinite, 36)),
-                    label: const Text("submit"),
-                    icon: const Icon(Icons.check_rounded),
-                  )
+                  SizedBox(height: 40,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: KLoginButton(
+                              title: "Submit",
+                              loadingstate: AppLoadingStates.historySubmitLoading,
+                              gradient: kblueGradient,
+                              onPressed: () {
+                                BlocProvider.of<AppLoadingCubit>(context)
+                                    .updateAppLoadingState(
+                                        AppLoadingStates.historySubmitLoading);
+                          
+                                setState(() {});
+                                BlocProvider.of<AppLoadingCubit>(context)
+                                    .updateAppLoadingState(
+                                        AppLoadingStates.initialLoading);
+                              }),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // ElevatedButton.icon(
+                  //   onPressed: () {
+                  //     setState(() {});
+                  //   },
+                  //   style: ElevatedButton.styleFrom(
+                  //       backgroundColor: kWhiteColor,
+                  //       foregroundColor: kBlue1Color,
+                  //       minimumSize: const Size(double.maxFinite, 36)),
+                  //   label: const Text("submit"),
+                  //   icon: const Icon(Icons.check_rounded),
+                  // )
                 ],
               ),
             ),

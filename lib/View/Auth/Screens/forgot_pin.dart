@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
+import 'package:sm_matka/Utilities/snackbar_messages.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
 import 'package:sm_matka/View/Auth/Widgets/admin_help_button_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_decorator_widget.dart';
@@ -51,11 +54,26 @@ class _ForgotPinPageState extends State<ForgotPinPage> {
                       Row(
                         children: [
                           Expanded(
-                            child: KLoginButton(gradient: kblueGradient,
+                            child: KLoginButton(
+                              gradient: kblueGradient,
+                              loadingstate: AppLoadingStates.forgotPinLoading,
                               title: "Submit",
                               onPressed: () async {
+                                if (mobileController.text!="") {
+                                  
+                                
+                                BlocProvider.of<AppLoadingCubit>(context)
+                                    .updateAppLoadingState(
+                                        AppLoadingStates.forgotPinLoading);
                                 await HttpRequests.forgotPinRequest(
-                                    mobile: mobileController.text, context: context);
+                                    mobile: mobileController.text,
+                                    context: context);
+                                // ignore: use_build_context_synchronously
+                                BlocProvider.of<AppLoadingCubit>(context)
+                                    .updateAppLoadingState(
+                                        AppLoadingStates.initialLoading);}else{
+                                          SnackBarMessage.centeredSnackbar(text: "Please Select Mobile", context: context);
+                                        }
                               },
                             ),
                           ),

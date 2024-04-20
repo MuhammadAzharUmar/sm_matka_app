@@ -1,11 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinput/pinput.dart';
 import 'package:sm_matka/Utilities/border_radius.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
+import 'package:sm_matka/Utilities/snackbar_messages.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
 import 'package:sm_matka/View/Auth/Screens/forgot_pin.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
 import 'package:sm_matka/View/Auth/Widgets/admin_help_button_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_decorator_widget.dart';
@@ -54,7 +57,7 @@ class _LoginPinState extends State<LoginPin> {
                         obscureText: true,
                         obscuringWidget: Container(
                           alignment: Alignment.center,
-                          decoration:const BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: kWhiteColor,
                             borderRadius: kSmallBorderRadius,
                           ),
@@ -70,7 +73,9 @@ class _LoginPinState extends State<LoginPin> {
                           height: 36,
                           width: 30,
                           decoration: BoxDecoration(
-                            border: Border.all(color: kWhiteColor,),
+                            border: Border.all(
+                              color: kWhiteColor,
+                            ),
                             borderRadius: kMediumBorderRadius,
                           ),
                         ),
@@ -87,13 +92,27 @@ class _LoginPinState extends State<LoginPin> {
                         children: [
                           Expanded(
                             child: KLoginButton(
+                              loadingstate: AppLoadingStates.pinLoginProceed,
                               gradient: kblueGradient,
                               title: "Proceed",
                               onPressed: () async {
+                                if (pinController.text!=""&&pinController.text.length==4) {
+                                  
+                                
+                                BlocProvider.of<AppLoadingCubit>(context)
+                                    .updateAppLoadingState(
+                                        AppLoadingStates.pinLoginProceed);
                                 await HttpRequests.loginPinRequest(
                                     loginToken: widget.token,
                                     pin: pinController.text,
                                     context: context);
+                                BlocProvider.of<AppLoadingCubit>(
+                                        // ignore: use_build_context_synchronously
+                                        context)
+                                    .updateAppLoadingState(
+                                        AppLoadingStates.initialLoading);}else{
+                                          SnackBarMessage.centeredSnackbar(text: "Please Select Pin", context: context);
+                                        }
                               },
                             ),
                           ),

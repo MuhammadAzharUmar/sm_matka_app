@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
+import 'package:sm_matka/Utilities/snackbar_messages.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
 import 'package:sm_matka/View/Auth/Screens/forgot_password.dart';
 import 'package:sm_matka/View/Auth/Screens/signup.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
 import 'package:sm_matka/View/Auth/Widgets/admin_help_button_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_decorator_widget.dart';
@@ -101,14 +104,34 @@ class _LoginPageState extends State<LoginPage> {
                           children: [
                             Expanded(
                               child: KLoginButton(
+                                loadingstate: AppLoadingStates.loginbuttonLoading,
                                 gradient: kblueGradient,
                                 title: "Login",
                                 onPressed: () async {
+                                  if (mobileController.text!="") {
+                                    if (passwordController.text!="") {
+                                      
+                                    
+                                  
+                                  BlocProvider.of<AppLoadingCubit>(context)
+                                    .updateAppLoadingState(
+                                        AppLoadingStates.loginbuttonLoading);
                                   await HttpRequests.loginRequest(
                                     mobile: mobileController.text.trim(),
                                     password: passwordController.text.trim(),
                                     context: context,
                                   );
+                                  // ignore: use_build_context_synchronously
+                                  BlocProvider.of<AppLoadingCubit>(context)
+                                    .updateAppLoadingState(
+                                        AppLoadingStates.initialLoading);
+                                        
+                                        }else{
+                                          SnackBarMessage.centeredSnackbar(text: "Please Select Password", context: context);
+                                        }
+                                        }else{
+                                          SnackBarMessage.centeredSnackbar(text: "Please Select Mobile", context: context);
+                                        }
                                 },
                               ),
                             ),

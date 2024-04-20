@@ -8,6 +8,7 @@ import 'package:sm_matka/Models/usermodel.dart';
 import 'package:sm_matka/Utilities/border_radius.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
+import 'package:sm_matka/Utilities/snackbar_messages.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_textfield_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/klogin_button.dart';
@@ -17,6 +18,7 @@ import 'package:sm_matka/View/Funds/Widgets/payment_method_dropdown_widget.dart'
 import 'package:sm_matka/View/Funds/Widgets/withdraw_fund_update_payment_method_widget.dart';
 import 'package:sm_matka/View/Funds/Widgets/withdraw_statement_widget.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/app_details_cubit.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_status_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
@@ -108,21 +110,19 @@ class _WithdrawFundScreenState extends State<WithdrawFundScreen> {
                         children: [
                           InputTextFieldWidget(
                             keyboardType: TextInputType.number,
-
                             controller: pointsController,
                             labelText: "Enter Points",
                           ),
                           PaymentMethodDropdownWidget(
                             dropDownValue: dropDownValue,
                             selectedDropDownValue: selectedPaymentMethod,
-                            onChange: (newMethod) {
+                            onChange: (newMethod, newDropdownvalue) {
                               setState(() {
-                                // dropDownValue=
+                                dropDownValue = newDropdownvalue;
                                 selectedPaymentMethod = newMethod;
                               });
                             },
                           ),
-                          
                           const SizedBox(
                             height: 10,
                           ),
@@ -140,17 +140,41 @@ class _WithdrawFundScreenState extends State<WithdrawFundScreen> {
                           Expanded(
                             child: KLoginButton(
                               title: "Submit Request",
+                              loadingstate:
+                                  AppLoadingStates.withdrawFundSubmitRequest,
                               onPressed: () async {
-                                // if (dropDownValue==0) {
-                                //   SnackBarMessage.centeredSnackbar(text: "please select payment method", context: context);
-                                // } else {
-                                await HttpRequests.withdrawRequest(
-                                    context: context,
-                                    token: user.token,
-                                    points: pointsController.text.trim(),
-                                    method: selectedPaymentMethod,
+                                if (pointsController.text!="") {
+                                  
+                                
+                                if (int.parse(pointsController.text.trim()) <
+                                    1000) {
+                                  SnackBarMessage.centeredSnackbar(
+                                      text: "Minimum Allowed Withdrawl is 1000",
+                                      context: context);
+                                } else {
+                                  if (dropDownValue == 0) {
+                                    SnackBarMessage.centeredSnackbar(
+                                        text: "Please select payment method ",
+                                        context: context);
+                                  } else {
+                                    BlocProvider.of<AppLoadingCubit>(
+                                            context)
+                                        .updateAppLoadingState(AppLoadingStates
+                                            .withdrawFundSubmitRequest);
+                                    await HttpRequests.withdrawRequest(
+                                      context: context,
+                                      token: user.token,
+                                      points: pointsController.text.trim(),
+                                      method: selectedPaymentMethod,
                                     );
-                                // }
+                                    BlocProvider.of<AppLoadingCubit>(
+                                            context)
+                                        .updateAppLoadingState(
+                                            AppLoadingStates.initialLoading);
+                                  }
+                                }}else{
+                                  SnackBarMessage.centeredSnackbar(text: "Please Select Points", context: context);
+                                }
                               },
                               gradient: kblueGradient,
                             ),

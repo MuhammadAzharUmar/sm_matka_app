@@ -5,6 +5,7 @@ import 'package:sm_matka/Models/user_status_model.dart';
 import 'package:sm_matka/Models/usermodel.dart';
 import 'package:sm_matka/View/Splash/splash.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/app_details_cubit.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_status_cubit.dart';
 
@@ -24,6 +25,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (BuildContext context) =>
+              AppLoadingCubit(AppLoadingStates.initialLoading),
+        ),
         BlocProvider(
           create: (BuildContext context) =>
               AppDetailsCubit(AppDetailsModel.fromJson({})),

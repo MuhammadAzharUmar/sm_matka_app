@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
+import 'package:sm_matka/Utilities/snackbar_messages.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
 import 'package:sm_matka/View/Auth/Widgets/admin_help_button_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_decorator_widget.dart';
@@ -56,9 +59,22 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           Expanded(
                             child: KLoginButton(gradient: kblueGradient,
                               title: "Submit",
+                              loadingstate: AppLoadingStates.forgotPasswordLoading,
                               onPressed: () async {
+                                if (mobileController.text.trim()!="") {
+                                  
+                                
+                                BlocProvider.of<AppLoadingCubit>(context)
+                                    .updateAppLoadingState(
+                                        AppLoadingStates.forgotPasswordLoading);
                                 await HttpRequests.forgotPasswordRequest(
                                     mobile: mobileController.text, context: context);
+                                    // ignore: use_build_context_synchronously
+                                    BlocProvider.of<AppLoadingCubit>(context)
+                                    .updateAppLoadingState(
+                                        AppLoadingStates.initialLoading);}else{
+                                          SnackBarMessage.centeredSnackbar(text: "Please Select Mobile", context: context);
+                                        }
                               },
                             ),
                           ),

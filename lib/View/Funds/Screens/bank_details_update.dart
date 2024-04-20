@@ -13,6 +13,7 @@ import 'package:sm_matka/View/Auth/Widgets/input_textfield_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/klogin_button.dart';
 import 'package:sm_matka/View/Funds/Widgets/fund_appbar_widget.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/app_details_cubit.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_status_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
@@ -108,6 +109,7 @@ class _BankDetailsUpdateScreenState extends State<BankDetailsUpdateScreen> {
                           Expanded(
                             child: KLoginButton(
                               title: "Submit",
+                              loadingstate: AppLoadingStates.bankDetailSubmitButton,
                               onPressed: () async {
                                 if (accountNoContoller.text.trim() !=
                                     confirmAccountNoController.text.trim()) {
@@ -116,6 +118,10 @@ class _BankDetailsUpdateScreenState extends State<BankDetailsUpdateScreen> {
                                           "Account number confirmation does not match",
                                       context: context);
                                 } else {
+                                  BlocProvider.of<AppLoadingCubit>(
+                                            context)
+                                        .updateAppLoadingState(
+                                            AppLoadingStates.bankDetailSubmitButton);
                                   final jsonData = await HttpRequests
                                       .updateBankDetailsRequest(
                                     context: context,
@@ -128,6 +134,7 @@ class _BankDetailsUpdateScreenState extends State<BankDetailsUpdateScreen> {
                                     branchAddress:
                                         branchAddressController.text.trim(),
                                   );
+                                  
                                   if (jsonData["code"] == "100" &&
                                       jsonData["status"] == "success") {
                                     final jsonNewUser = await HttpRequests
@@ -148,6 +155,10 @@ class _BankDetailsUpdateScreenState extends State<BankDetailsUpdateScreen> {
                                     Future.delayed(const Duration(seconds: 1)).then(
                                     (value) => Navigator.of(context).pop());
                                   }
+                                   BlocProvider.of<AppLoadingCubit>(
+                                            context)
+                                        .updateAppLoadingState(
+                                            AppLoadingStates.initialLoading);
                                 }
                               },
                               gradient: kblueGradient,

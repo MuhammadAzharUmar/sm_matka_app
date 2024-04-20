@@ -57,6 +57,16 @@ class HttpRequests {
             context: context,
           );
         }
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
+        );
+        throw response.reasonPhrase.toString();
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
@@ -65,7 +75,7 @@ class HttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -95,6 +105,16 @@ class HttpRequests {
             context: context,
           );
         }
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
+        );
+        throw response.reasonPhrase.toString();
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
@@ -103,7 +123,7 @@ class HttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
       if (kDebugMode) {
@@ -140,6 +160,16 @@ class HttpRequests {
             context: context,
           );
         }
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
+        );
+        throw response.reasonPhrase.toString();
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
@@ -148,7 +178,7 @@ class HttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -187,14 +217,17 @@ class HttpRequests {
             text: jsonData["message"].toString(),
             context: context,
           );
-
-          // just for testing purpose
-          // Navigator.of(context).push(
-          //   MaterialPageRoute(
-          //     builder: (context) =>  ChangePasswordPage(token: "",mobile: "123",caller: caller,),
-          //   ),
-          // );
         }
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
+        );
+        throw response.reasonPhrase.toString();
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
@@ -203,7 +236,7 @@ class HttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -221,7 +254,7 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         if (jsonData["status"] == "success") {
-          String loginToken=jsonData["data"]["token"];
+          String loginToken = jsonData["data"]["token"];
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
@@ -239,6 +272,16 @@ class HttpRequests {
             context: context,
           );
         }
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
+        );
+        throw response.reasonPhrase.toString();
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
@@ -247,7 +290,7 @@ class HttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -298,6 +341,16 @@ class HttpRequests {
             context: context,
           );
         }
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
+        );
+        throw response.reasonPhrase.toString();
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
@@ -306,7 +359,7 @@ class HttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -343,6 +396,16 @@ class HttpRequests {
             context: context,
           );
         }
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
+        );
+        throw response.reasonPhrase.toString();
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
@@ -351,7 +414,7 @@ class HttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -387,6 +450,16 @@ class HttpRequests {
             context: context,
           );
         }
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
+        );
+        throw response.reasonPhrase.toString();
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
@@ -395,7 +468,7 @@ class HttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -433,6 +506,16 @@ class HttpRequests {
             context: context,
           );
         }
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
+        );
+        throw response.reasonPhrase.toString();
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
@@ -441,7 +524,7 @@ class HttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -451,6 +534,7 @@ class HttpRequests {
       {required String mobile,
       required String token,
       required String password,
+      required String navigateTo,
       required BuildContext context}) async {
     try {
       var headers = {'token': token};
@@ -469,16 +553,33 @@ class HttpRequests {
             text: jsonData["message"].toString(),
             context: context,
           );
+          //update token
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          preferences.setString("userToken", jsonData["data"]["token"]);
 
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const LoginPage()),
-          );
+          if (navigateTo == "home") {
+            Navigator.of(context).pop();
+          } else {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const LoginPage()),
+            );
+          }
         } else {
           SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
         }
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
+        );
+        throw response.reasonPhrase.toString();
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
@@ -487,7 +588,7 @@ class HttpRequests {
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -511,10 +612,12 @@ class HttpRequests {
           return appDetailsModel;
         } else {
           if (jsonData["message"] == "Please Login First" ||
-              jsonData["code"] == "505" ||jsonData["code"]=="400"||
+              jsonData["code"] == "505" ||
+              jsonData["code"] == "400" ||
               jsonData["message"] == "Invalid Access") {
-                SharedPreferences preferences =await SharedPreferences.getInstance();
-                await preferences.clear();
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
+            await preferences.clear();
             Navigator.of(context).popUntil((route) => route.isFirst);
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
@@ -527,15 +630,22 @@ class HttpRequests {
             context: context,
           );
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -565,15 +675,22 @@ class HttpRequests {
             context: context,
           );
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -605,15 +722,22 @@ class HttpRequests {
 
           // return jsonData;
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -637,35 +761,45 @@ class HttpRequests {
             text: jsonData["message"].toString(),
             context: context,
           );
-        
+
           return jsonData;
         } else {
           if (jsonData["message"] == "Please Login First" ||
-              jsonData["code"] == "505" ||jsonData["code"]=="400"||
+              jsonData["code"] == "505" ||
+              jsonData["code"] == "400" ||
               jsonData["message"] == "Invalid Access") {
-                SharedPreferences preferences =await SharedPreferences.getInstance();
-                await preferences.clear();
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
+            await preferences.clear();
             Navigator.of(context).popUntil((route) => route.isFirst);
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) => const SignupPage(),
               ),
             );
+            return {};
           }
           return SnackBarMessage.centeredSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -688,14 +822,17 @@ class HttpRequests {
             text: jsonData["message"].toString(),
             context: context,
           );
-          
+
           return jsonData;
         } else {
           if (jsonData["message"] == "Please Login First" ||
-              jsonData["code"] == "400" ||jsonData["status"]=="error"||
-              jsonData["message"] == "Not Verified" ||jsonData["code"] == "505" ) {
-                SharedPreferences preferences =await SharedPreferences.getInstance();
-                await preferences.clear();
+              jsonData["code"] == "400" ||
+              jsonData["status"] == "error" ||
+              jsonData["message"] == "Not Verified" ||
+              jsonData["code"] == "505") {
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
+            await preferences.clear();
             Navigator.of(context).popUntil((route) => route.isFirst);
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
@@ -709,15 +846,22 @@ class HttpRequests {
           );
           // return {};
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -745,6 +889,7 @@ class HttpRequests {
             text: jsonData["message"].toString(),
             context: context,
           );
+
           return jsonData;
         } else {
           return SnackBarMessage.centeredSnackbar(
@@ -752,15 +897,22 @@ class HttpRequests {
             context: context,
           );
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -797,15 +949,22 @@ class HttpRequests {
             context: context,
           );
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -839,15 +998,22 @@ class HttpRequests {
             context: context,
           );
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -892,15 +1058,22 @@ class HttpRequests {
           );
           return {};
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -936,15 +1109,22 @@ class HttpRequests {
             context: context,
           );
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -978,15 +1158,22 @@ class HttpRequests {
             context: context,
           );
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -1025,15 +1212,22 @@ class HttpRequests {
           );
           return {};
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -1066,15 +1260,22 @@ class HttpRequests {
             context: context,
           );
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -1107,6 +1308,16 @@ class HttpRequests {
             context: context,
           );
         }
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
+        );
+        throw response.reasonPhrase.toString();
       } else {
         SnackBarMessage.centeredSnackbar(
           text: response.reasonPhrase.toString(),
@@ -1116,7 +1327,7 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -1153,15 +1364,22 @@ class HttpRequests {
             context: context,
           );
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -1201,15 +1419,22 @@ class HttpRequests {
           );
           return {};
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -1248,15 +1473,22 @@ class HttpRequests {
             context: context,
           );
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -1296,15 +1528,22 @@ class HttpRequests {
             context: context,
           );
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -1336,15 +1575,22 @@ class HttpRequests {
             context: context,
           );
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -1382,15 +1628,22 @@ class HttpRequests {
           );
           return {};
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -1422,15 +1675,22 @@ class HttpRequests {
             context: context,
           );
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -1450,6 +1710,8 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
@@ -1466,20 +1728,28 @@ class HttpRequests {
           );
           return {};
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
   }
 
+  ///************* */
   static Future<Map<String, dynamic>> starlineBidHistoryRequest({
     required BuildContext context,
     required String token,
@@ -1497,9 +1767,12 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
@@ -1507,20 +1780,24 @@ class HttpRequests {
           );
           return jsonData;
         } else {
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
-          );
+          throw jsonData["message"].toString();
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -1541,32 +1818,39 @@ class HttpRequests {
         'to_date': toDate,
       });
       request.headers.addAll(headers);
-
+//code status for error check
+      String errorCodeFromApi = "";
       http.StreamedResponse response = await request.send();
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
+
           return jsonData;
         } else {
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
-          );
+          throw jsonData["message"].toString();
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -1583,9 +1867,12 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
@@ -1593,21 +1880,29 @@ class HttpRequests {
           );
           return jsonData;
         } else {
-          SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
-          );
-          return {};
+          // SnackBarMessage.centeredSnackbar(
+          //   text: jsonData["message"].toString(),
+          //   context: context,
+          // );
+          // return {};
+          throw jsonData["message"].toString();
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -1626,9 +1921,12 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
@@ -1636,21 +1934,29 @@ class HttpRequests {
           );
           return jsonData;
         } else {
-          SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
-          );
-          return {};
+          // SnackBarMessage.centeredSnackbar(
+          //   text: jsonData["message"].toString(),
+          //   context: context,
+          // );
+          // return {};
+          throw jsonData["message"].toString();
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -1673,9 +1979,12 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
@@ -1683,20 +1992,28 @@ class HttpRequests {
           );
           return jsonData;
         } else {
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
-          );
+          // return SnackBarMessage.centeredSnackbar(
+          //   text: jsonData["message"].toString(),
+          //   context: context,
+          // );
+          throw jsonData["message"].toString();
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
@@ -1719,27 +2036,34 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
+
           return jsonData;
         } else {
-          SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
-          );
-          return {};
+          throw jsonData["message"].toString();
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
@@ -1761,9 +2085,12 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
@@ -1771,20 +2098,24 @@ class HttpRequests {
           );
           return jsonData;
         } else {
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
-          );
+          throw jsonData["message"].toString();
         }
-      } else {
-        return SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
+      } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignupPage(),
+          ),
         );
+        throw response.reasonPhrase.toString();
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "Error!",
+        text: "$e",
         context: context,
       );
     }
