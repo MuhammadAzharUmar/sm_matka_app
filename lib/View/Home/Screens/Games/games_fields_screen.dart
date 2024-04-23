@@ -260,7 +260,7 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                                   child: KLoginButton(
                                     title: "Add Bid",
                                     onPressed: () async {
-                                      if (int.parse(amountController.text
+                                      if (amountController.text==""||int.parse(amountController.text
                                                   .trim()) <
                                               int.parse(userStatus
                                                   .data.minimumBidAmount) ||
@@ -273,6 +273,7 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                                                 "Minimum bid amount is ${userStatus.data.minimumBidAmount} & Maximum bid amount is ${userStatus.data.maximumBidAmount}",
                                             context: context);
                                       }
+                                      
                                       if (GamesFieldsDataMap
                                               .gamesFieldsDataMap[widget
                                                   .title][(widget.title ==
@@ -468,6 +469,7 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                         final jsonData = await HttpRequests.placeBidRequest(
                             context: context, token: user.token, list: list);
                         if (jsonData.isNotEmpty && jsonData["code"] == "100") {
+                          
                           gameBids.clear();
                           firstController.clear();
                           thirdController.clear();
@@ -482,7 +484,9 @@ class _GamesFieldScreenState extends State<GamesFieldScreen> {
                             UserStatusModel.fromJson(jsonUserStatus),
                           );
                         }
+
                       }
+                      
                       BlocProvider.of<AppLoadingCubit>(context)
                           .updateAppLoadingState(
                               AppLoadingStates.initialLoading);

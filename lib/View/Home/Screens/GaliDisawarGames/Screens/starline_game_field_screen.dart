@@ -175,7 +175,7 @@ class _StarlineGamesFieldScreenState extends State<StarlineGamesFieldScreen> {
                                   child: KLoginButton(
                                     title: "Add Bid",
                                     onPressed: () async {
-                                      if (int.parse(amountController.text
+                                      if (amountController.text==""||int.parse(amountController.text
                                                   .trim()) <
                                               int.parse(userStatus
                                                   .data.minimumBidAmount) ||

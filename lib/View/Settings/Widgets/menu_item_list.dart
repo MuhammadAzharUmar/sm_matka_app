@@ -62,14 +62,20 @@ class MenuItem {
       'icon': Icons.share,
       'title': 'Share With Friends',
       'onTap': (BuildContext context) async {
-        await Share.share('app link will be shared');
+        final appdetails = context.read<AppDetailsCubit>().state;
+        final shareMsgLink =
+            '${appdetails.data.adminMessage}\nVia - ${appdetails.data.appLink}';
+        await Share.share(shareMsgLink);
       }
     },
     {
       'icon': Icons.star_border,
       'title': 'Rate App',
       'onTap': (BuildContext context) async {
-        await LaunchCustomUrls.launchURL(url: 'https://google.com');
+        final appdetails = context.read<AppDetailsCubit>().state;
+        await LaunchCustomUrls.launchURL(
+          url: appdetails.data.appLink,
+        );
       }
     },
     {
@@ -100,29 +106,31 @@ class MenuItem {
               contentPadding: const EdgeInsets.all(0),
               insetPadding: const EdgeInsets.all(0),
               content: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 25),
-                decoration:const BoxDecoration(color: kWhiteColor,borderRadius: kLargeBorderRadius),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+                decoration: const BoxDecoration(
+                    color: kWhiteColor, borderRadius: kLargeBorderRadius),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       "Logout",
                       style: kLargeTextStyle.copyWith(
-                        color: kBlue1Color,
-                        fontWeight: FontWeight.w900
-                      ),
+                          color: kBlue1Color, fontWeight: FontWeight.w900),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     Text(
                       "Are you sure,\nyou want to logout the game?",
                       style: kSmallTextStyle.copyWith(
-                        color: kBlue1Color,
-                        fontWeight: FontWeight.w600
-                      ),
+                          color: kBlue1Color, fontWeight: FontWeight.w600),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     Row(
                       children: [
                         Expanded(

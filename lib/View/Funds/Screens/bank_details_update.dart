@@ -33,10 +33,21 @@ class _BankDetailsUpdateScreenState extends State<BankDetailsUpdateScreen> {
   TextEditingController ifscCodeController = TextEditingController();
   TextEditingController bankNameController = TextEditingController();
   TextEditingController branchAddressController = TextEditingController();
-
+@override
+  void initState() {
+    super.initState();
+    UserModel user= context.read<UserCubit>().state;
+  accountHolderNameController.text =user.data.accountHolderName;
+   accountNoContoller.text = user.data.bankAccountNo;
+   confirmAccountNoController.text = user.data.bankAccountNo;
+   ifscCodeController.text = user.data.ifscCode;
+   bankNameController.text = user.data.bankName;
+   branchAddressController.text = user.data.branchAddress;
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserCubit, UserModel>(builder: (context, user) {
+
       return BlocBuilder<AppDetailsCubit, AppDetailsModel>(
           builder: (context, appdetailsModel) {
         return BlocBuilder<UserStatusCubit, UserStatusModel>(
@@ -134,7 +145,12 @@ class _BankDetailsUpdateScreenState extends State<BankDetailsUpdateScreen> {
                                     branchAddress:
                                         branchAddressController.text.trim(),
                                   );
-                                  
+                                  if (jsonData.isEmpty) {
+                                     BlocProvider.of<AppLoadingCubit>(
+                                            context)
+                                        .updateAppLoadingState(
+                                            AppLoadingStates.initialLoading);
+                                  }
                                   if (jsonData["code"] == "100" &&
                                       jsonData["status"] == "success") {
                                     final jsonNewUser = await HttpRequests

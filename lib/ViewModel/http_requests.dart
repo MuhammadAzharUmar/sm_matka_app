@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,9 +35,12 @@ class HttpRequests {
 
       http.StreamedResponse response = await request.send();
 
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
@@ -51,31 +55,27 @@ class HttpRequests {
               ),
             ),
           );
-        } else {
-          SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
-        );
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -91,39 +91,38 @@ class HttpRequests {
       request.fields.addAll({'mobile': mobile});
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
-        } else {
-          SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
-        );
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
       if (kDebugMode) {
@@ -141,9 +140,12 @@ class HttpRequests {
           http.MultipartRequest('POST', Uri.parse('$baseUrl/verify_otp'));
       request.fields.addAll({'mobile': mobile, 'otp': otp});
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
@@ -154,31 +156,27 @@ class HttpRequests {
               builder: (context) => const LoginPage(),
             ),
           );
-        } else {
-          SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
-        );
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -195,9 +193,12 @@ class HttpRequests {
           http.MultipartRequest('POST', Uri.parse('$baseUrl/verify_user'));
       request.fields.addAll({'mobile': mobile, 'otp': otp});
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
@@ -212,31 +213,27 @@ class HttpRequests {
               ),
             ),
           );
-        } else {
-          SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
-        );
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -250,9 +247,12 @@ class HttpRequests {
       var request = http.MultipartRequest('POST', Uri.parse('$baseUrl/login'));
       request.fields.addAll({'mobile': mobile, 'password': password});
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           String loginToken = jsonData["data"]["token"];
           SnackBarMessage.centeredSuccessSnackbar(
@@ -266,31 +266,27 @@ class HttpRequests {
               ),
             ),
           );
-        } else {
-          SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
-        );
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -301,6 +297,7 @@ class HttpRequests {
       required String pin,
       required BuildContext context}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.clear();
     try {
       var headers = {'token': loginToken};
       var request =
@@ -310,9 +307,12 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
@@ -321,45 +321,51 @@ class HttpRequests {
           String pinToken = jsonData["data"]["token"];
           if (pinToken != "" && pinToken.isNotEmpty) {
             await preferences.setString("userToken", pinToken);
-            await HttpRequests.getUserDetailsRequest(
-                context: context, token: pinToken);
-
+            await Future.delayed(const Duration(seconds: 1)).then((value) {
+              Navigator.of(context).popUntil(
+                (route) => route.isFirst,
+              );
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const MainPage(
+                    currentIndex: 0,
+                  ),
+                ),
+              );
+            });
+            // await HttpRequests.getUserDetailsRequest(
+            //     context: context, token: pinToken);
+          } else {
             Navigator.of(context).popUntil(
               (route) => route.isFirst,
             );
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                builder: (context) => const MainPage(
-                  currentIndex: 0,
-                ),
+                builder: (context) => const SignupPage(),
               ),
             );
           }
-        } else {
-          SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
-        );
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -373,9 +379,12 @@ class HttpRequests {
       request.fields.addAll({'mobile': mobile});
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
@@ -390,31 +399,27 @@ class HttpRequests {
               ),
             ),
           );
-        } else {
-          SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
-        );
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -427,9 +432,12 @@ class HttpRequests {
           http.MultipartRequest('POST', Uri.parse('$baseUrl/forgot_pin'));
       request.fields.addAll({'mobile': mobile});
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
@@ -444,31 +452,27 @@ class HttpRequests {
               ),
             ),
           );
-        } else {
-          SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
-        );
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -488,9 +492,12 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
@@ -500,31 +507,27 @@ class HttpRequests {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const LoginPage()),
           );
-        } else {
-          SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
-        );
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -545,9 +548,12 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
@@ -556,39 +562,36 @@ class HttpRequests {
           //update token
           SharedPreferences preferences = await SharedPreferences.getInstance();
           preferences.setString("userToken", jsonData["data"]["token"]);
-
-          if (navigateTo == "home") {
-            Navigator.of(context).pop();
-          } else {
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const LoginPage()),
-            );
-          }
-        } else {
-          SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+          await Future.delayed(const Duration(seconds: 1)).then((value) {
+            if (navigateTo == "home") {
+              Navigator.of(context).pop();
+            } else {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              );
+            }
+          });
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
-        );
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -600,52 +603,41 @@ class HttpRequests {
       var request = http.Request('POST', Uri.parse('$baseUrl/app_details'));
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         AppDetailsModel appDetailsModel = AppDetailsModel.fromJson(jsonData);
+
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return appDetailsModel;
-        } else {
-          if (jsonData["message"] == "Please Login First" ||
-              jsonData["code"] == "505" ||
-              jsonData["code"] == "400" ||
-              jsonData["message"] == "Invalid Access") {
-            SharedPreferences preferences =
-                await SharedPreferences.getInstance();
-            await preferences.clear();
-            Navigator.of(context).popUntil((route) => route.isFirst);
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => const SignupPage(),
-              ),
-            );
-          }
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -660,37 +652,39 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
-        } else {
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -705,39 +699,39 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
-        } else {
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
-
-          // return jsonData;
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -753,9 +747,13 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
+
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
@@ -763,43 +761,27 @@ class HttpRequests {
           );
 
           return jsonData;
-        } else {
-          if (jsonData["message"] == "Please Login First" ||
-              jsonData["code"] == "505" ||
-              jsonData["code"] == "400" ||
-              jsonData["message"] == "Invalid Access") {
-            SharedPreferences preferences =
-                await SharedPreferences.getInstance();
-            await preferences.clear();
-            Navigator.of(context).popUntil((route) => route.isFirst);
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => const SignupPage(),
-              ),
-            );
-            return {};
-          }
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -814,9 +796,12 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
@@ -824,44 +809,27 @@ class HttpRequests {
           );
 
           return jsonData;
-        } else {
-          if (jsonData["message"] == "Please Login First" ||
-              jsonData["code"] == "400" ||
-              jsonData["status"] == "error" ||
-              jsonData["message"] == "Not Verified" ||
-              jsonData["code"] == "505") {
-            SharedPreferences preferences =
-                await SharedPreferences.getInstance();
-            await preferences.clear();
-            Navigator.of(context).popUntil((route) => route.isFirst);
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => const SignupPage(),
-              ),
-            );
-          }
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
-          // return {};
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -881,9 +849,12 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
@@ -891,28 +862,27 @@ class HttpRequests {
           );
 
           return jsonData;
-        } else {
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -934,37 +904,39 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
-        } else {
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -983,37 +955,39 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
-        } else {
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -1042,38 +1016,39 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
-        } else {
-          SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
-          return {};
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -1094,37 +1069,39 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
-        } else {
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -1143,37 +1120,39 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
-        } else {
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -1196,38 +1175,39 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
-        } else {
-          SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
-          return {};
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -1245,37 +1225,39 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
-        } else {
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -1293,41 +1275,39 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
-        } else {
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        SnackBarMessage.centeredSnackbar(
-          text: response.reasonPhrase.toString(),
-          context: context,
-        );
-        return {};
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -1349,39 +1329,42 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
-        } else {
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
-      return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+      SnackBarMessage.centeredSnackbar(
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
+      return {};
     }
   }
 
@@ -1403,38 +1386,39 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
-        } else {
-          SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
-          return {};
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -1458,37 +1442,49 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
-        } else {
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
+      if (e
+              .toString()
+              .toLowerCase()
+              .contains("No Record Found".toLowerCase()) ||
+          e
+              .toString()
+              .toLowerCase()
+              .contains("Please Select Token".toLowerCase())) {
+        rethrow;
+      }
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -1512,9 +1508,12 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           // print(jsonData);
           SnackBarMessage.centeredSuccessSnackbar(
@@ -1522,28 +1521,37 @@ class HttpRequests {
             context: context,
           );
           return jsonData;
-        } else {
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
+      if (e
+              .toString()
+              .toLowerCase()
+              .contains("No Record Found".toLowerCase()) ||
+          e
+              .toString()
+              .toLowerCase()
+              .contains("Please Select Token".toLowerCase())) {
+        rethrow;
+      }
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -1560,37 +1568,49 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
-        } else {
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const LoginPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
+      if (e
+          .toString()
+          .toLowerCase()
+          .contains("Please Select Token".toLowerCase())||e
+          .toString()
+          .toLowerCase()
+          .contains("OK".toLowerCase())) {
+        rethrow;
+      }
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -1612,40 +1632,42 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
-        } else {
-          SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
-          return {};
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
-      return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+      SnackBarMessage.centeredSnackbar(
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
+      return {};
     }
   }
 
@@ -1660,37 +1682,39 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
-        } else {
-          return SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -1710,42 +1734,43 @@ class HttpRequests {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+
       //code status for error check
       String errorCodeFromApi = "";
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
-        } else {
-          SnackBarMessage.centeredSnackbar(
-            text: jsonData["message"].toString(),
-            context: context,
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
           );
-          return {};
+          throw response.reasonPhrase.toString();
+        } else {
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505) {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
-      return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+      SnackBarMessage.centeredSnackbar(
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
+      return {};
     }
   }
 
@@ -1769,6 +1794,7 @@ class HttpRequests {
       http.StreamedResponse response = await request.send();
       //code status for error check
       String errorCodeFromApi = "";
+
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
@@ -1779,25 +1805,37 @@ class HttpRequests {
             context: context,
           );
           return jsonData;
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
+          );
+          throw response.reasonPhrase.toString();
         } else {
-          throw jsonData["message"].toString();
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
+      if (e
+              .toString()
+              .toLowerCase()
+              .contains("No Record Found".toLowerCase()) ||
+          e
+              .toString()
+              .toLowerCase()
+              .contains("Please Select Token".toLowerCase())) {
+        rethrow;
+      }
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -1821,9 +1859,11 @@ class HttpRequests {
 //code status for error check
       String errorCodeFromApi = "";
       http.StreamedResponse response = await request.send();
+
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
@@ -1832,25 +1872,37 @@ class HttpRequests {
           );
 
           return jsonData;
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
+          );
+          throw response.reasonPhrase.toString();
         } else {
-          throw jsonData["message"].toString();
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
+      if (e
+              .toString()
+              .toLowerCase()
+              .contains("No Record Found".toLowerCase()) ||
+          e
+              .toString()
+              .toLowerCase()
+              .contains("Please Select Token".toLowerCase())) {
+        rethrow;
+      }
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -1872,6 +1924,7 @@ class HttpRequests {
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
@@ -1902,7 +1955,9 @@ class HttpRequests {
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -1927,6 +1982,7 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         errorCodeFromApi = jsonData["code"];
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
@@ -1955,10 +2011,13 @@ class HttpRequests {
         throw response.reasonPhrase.toString();
       }
     } catch (e) {
-      return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+      SnackBarMessage.centeredSnackbar(
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
+      return {};
     }
   }
 
@@ -1984,6 +2043,7 @@ class HttpRequests {
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
         errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
@@ -2012,8 +2072,20 @@ class HttpRequests {
         throw response.reasonPhrase.toString();
       }
     } catch (e) {
+      if (e
+              .toString()
+              .toLowerCase()
+              .contains("No Record Found".toLowerCase()) ||
+          e
+              .toString()
+              .toLowerCase()
+              .contains("Please Select Token".toLowerCase())) {
+        rethrow;
+      }
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }
@@ -2042,6 +2114,7 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         errorCodeFromApi = jsonData["code"];
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
@@ -2049,23 +2122,34 @@ class HttpRequests {
           );
 
           return jsonData;
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
+          );
+          throw response.reasonPhrase.toString();
         } else {
-          throw jsonData["message"].toString();
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
+      if (e
+              .toString()
+              .toLowerCase()
+              .contains("No Record Found".toLowerCase()) ||
+          e
+              .toString()
+              .toLowerCase()
+              .contains("Please Select Token".toLowerCase())) {
+        rethrow;
+      }
+
       return SnackBarMessage.centeredSnackbar(
         text: e.toString(),
         context: context,
@@ -2091,31 +2175,40 @@ class HttpRequests {
         var responseBody = await response.stream.bytesToString();
         var jsonData = json.decode(responseBody);
         errorCodeFromApi = jsonData["code"];
+        errorCodeFromApi = jsonData["code"];
         if (jsonData["status"] == "success") {
           SnackBarMessage.centeredSuccessSnackbar(
             text: jsonData["message"].toString(),
             context: context,
           );
           return jsonData;
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
+          );
+          throw response.reasonPhrase.toString();
         } else {
-          throw jsonData["message"].toString();
+          throw response.reasonPhrase.toString();
         }
-      } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
+      if (e
+          .toString()
+          .toLowerCase()
+          .contains("Please Select Token".toLowerCase())) {
+        rethrow;
+      }
       return SnackBarMessage.centeredSnackbar(
-        text: "$e",
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
         context: context,
       );
     }

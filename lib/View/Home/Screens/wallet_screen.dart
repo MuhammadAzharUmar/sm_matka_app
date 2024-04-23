@@ -27,6 +27,7 @@ class _WalletScreenState extends State<WalletScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<UserStatusCubit, UserStatusModel>(
         builder: (context, userStatus) {
+         
       return Scaffold(
         backgroundColor: kWhiteColor,
         appBar: AppBar(

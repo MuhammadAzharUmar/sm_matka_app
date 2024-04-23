@@ -45,6 +45,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
 
   Future<void> initFunctionHome() async {
     user = context.read<UserCubit>().state;
+    print("_______________${user.token}___________");
     if (user.token == "") {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       String token = preferences.getString("userToken") ?? "";
@@ -80,6 +81,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     super.build(context); // Required for AutomaticKeepAliveClientMixin
     return Scaffold(
+      backgroundColor: kWhiteColor,
       appBar: const PreferredSize(
         preferredSize: Size(double.maxFinite, 56),
         child: HomeAppBarWidget(),

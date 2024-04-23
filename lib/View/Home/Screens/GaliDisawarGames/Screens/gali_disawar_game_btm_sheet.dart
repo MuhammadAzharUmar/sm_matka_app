@@ -138,7 +138,7 @@ class GaliDisawarGameBtmSheet {
                             ),
                           ),
                           Text(
-                            "Play GALI DS",
+                            "PLAY GALI DS",
                             style: kSmallTextStyle.copyWith(color: kBlue1Color),
                           )
                         ],

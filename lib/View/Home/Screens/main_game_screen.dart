@@ -54,89 +54,193 @@ class _MainGameScreenState extends State<MainGameScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                GridView.builder(
-                  itemCount: widget.gameList.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount:
-                          MediaQuery.of(context).size.width * 1 >= 380 ? 3 : 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      mainAxisExtent: 140),
-                  itemBuilder: (context, index) {
-                    return Center(
-                      child: InkWell(
-                        onTap: () async {
-                          await widget.gameList[index]
-                              ["onTap"](context, widget.data);
-                        },
-                        child: Card(
-                          elevation: 2,
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: kSmallBorderRadius),
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              color: kWhiteColor,
-                              borderRadius: kSmallBorderRadius,
-                            ),
-                            child: Column(
-                              children: [
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                SizedBox(
-                                  height: 110,
-                                  width: 110,
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        alignment: Alignment.center,
-                                        height: 110,
-                                        width: 110,
-                                        child: Lottie.asset(
-                                          "assets/General/animation.json",
-                                          width: 110,
-                                          height: 110,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 110,
-                                        width: 110,
-                                        alignment: Alignment.center,
-                                        child: Image.asset(
-                                          widget.gameList[index]["img"],
-                                          width: 95,
-                                          height: 95,
-                                          fit: BoxFit.contain,
-                                        ),
-                                      ),
-                                      const Padding(
-                                        padding: EdgeInsets.all(5.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            Icon(
-                                              Icons.arrow_forward_ios_rounded,
-                                              size: 10,
-                                              color: kBlue1Color,
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
+                // GridView.builder(
+                //   itemCount: widget.gameList.length,
+                //   shrinkWrap: true,
+
+                //   physics: const NeverScrollableScrollPhysics(),
+                //   gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(
+
+                //       crossAxisCount: 2,
+                //         // widget.gameList.length<5?2:  MediaQuery.of(context).size.width * 1 >= 380 ? 3 : 2,
+                //       crossAxisSpacing: 10,
+                //       mainAxisSpacing: 10,
+                //       mainAxisExtent: 140),
+                //   itemBuilder: (context, index) {
+
+                //     return Container(
+                //       width: double.maxFinite,
+                //       alignment: Alignment.center,
+                //       child: InkWell(
+                //         onTap: () async {
+                //           await widget.gameList[index]
+                //               ["onTap"](context, widget.data);
+                //         },
+                //         child: Card(
+                //           elevation: 2,
+                //           shape: const RoundedRectangleBorder(
+                //               borderRadius: kSmallBorderRadius),
+                //           child: Container(
+                //             decoration: const BoxDecoration(
+                //               color: kWhiteColor,
+                //               borderRadius: kSmallBorderRadius,
+                //             ),
+                //             child: Column(
+                //               children: [
+                //                 const SizedBox(
+                //                   height: 10,
+                //                 ),
+                //                 Container(
+                //                   alignment: Alignment.center,
+                //                   height: 110,
+                //                   width: 150,
+                //                   child: Stack(
+                //                     children: [
+                //                       Center(
+                //                         child: Container(
+                //                           alignment: Alignment.center,
+                //                           height: 110,
+                //                           width: 110,
+                //                           child: Lottie.asset(
+                //                             "assets/General/animation.json",
+                //                             width: 110,
+                //                             height: 110,
+                //                             fit: BoxFit.cover,
+                //                           ),
+                //                         ),
+                //                       ),
+                //                       Center(
+                //                         child: Container(
+                //                           height: 110,
+                //                           width: 110,
+                //                           alignment: Alignment.center,
+                //                           child: Image.asset(
+                //                             widget.gameList[index]["img"],
+                //                             width: 95,
+                //                             height: 95,
+                //                             fit: BoxFit.contain,
+                //                           ),
+                //                         ),
+                //                       ),
+                //                        Container(width: 150,
+                //                       //  height: 50,
+                //                       //  color: kBlue1Color,
+                //                        alignment: Alignment.topRight,
+                //                         padding:const EdgeInsets.all(5.0),
+                //                         child:const Row(
+                //                           mainAxisAlignment:
+                //                               MainAxisAlignment.end,
+                //                           children: [
+                //                             Icon(
+                //                               Icons.arrow_forward_ios_rounded,
+                //                               size: 10,
+                //                               color: kBlue1Color,
+                //                             ),
+                //                           ],
+                //                         ),
+                //                       )
+                //                     ],
+                //                   ),
+                //                 ),
+                //               ],
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     );
+                //   },
+                // ),
+                Center(
+                  child: Wrap(
+                    runSpacing: 20,
+                    spacing: 20,
+                    alignment: WrapAlignment
+                        .center, // Change alignment property as needed
+                    children: List.generate(widget.gameList.length, (index) {
+                      // ignore: avoid_unnecessary_containers
+                      return Container(
+                        // width:index==widget.gameList.length-1? double.maxFinite:MediaQuery.of(context).size.width*.5,
+                        // alignment: Alignment.center,
+                        child: InkWell(
+                          onTap: () async {
+                            await widget.gameList[index]
+                                ["onTap"](context, widget.data);
+                          },
+                          child: Card(
+                            elevation: 2,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: kSmallBorderRadius),
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                color: kWhiteColor,
+                                borderRadius: kSmallBorderRadius,
+                              ),
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 10,
                                   ),
-                                ),
-                              ],
+                                  Container(
+                                    alignment: Alignment.center,
+                                    height: 130,
+                                    width: 150,
+                                    child: Stack(
+                                      children: [
+                                        Center(
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            height: 110,
+                                            width: 110,
+                                            child: Lottie.asset(
+                                              "assets/General/animation.json",
+                                              width: 110,
+                                              height: 110,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                        Center(
+                                          child: Container(
+                                            height: 110,
+                                            width: 110,
+                                            alignment: Alignment.center,
+                                            child: Image.asset(
+                                              widget.gameList[index]["img"],
+                                              width: 95,
+                                              height: 95,
+                                              fit: BoxFit.contain,
+                                            ),
+                                          ),
+                                        ),
+                                         Container(width: 150,
+                                        //  height: 50,
+                                        //  color: kBlue1Color,
+                                         alignment: Alignment.topRight,
+                                          padding:const EdgeInsets.all(5.0),
+                                          child:const Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Icon(
+                                                Icons.arrow_forward_ios_rounded,
+                                                size: 10,
+                                                color: kBlue1Color,
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                ),
+                      );
+                    }),
+                  ),
+                )
               ],
             ),
           ),

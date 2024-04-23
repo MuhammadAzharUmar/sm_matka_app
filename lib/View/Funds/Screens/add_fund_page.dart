@@ -6,12 +6,14 @@ import 'package:sm_matka/Models/user_status_model.dart';
 import 'package:sm_matka/Utilities/border_radius.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
+import 'package:sm_matka/Utilities/snackbar_messages.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
 import 'package:sm_matka/View/Auth/Widgets/input_textfield_widget.dart';
 import 'package:sm_matka/View/Auth/Widgets/klogin_button.dart';
 import 'package:sm_matka/View/Funds/Widgets/add_enterpoints_widget.dart';
 import 'package:sm_matka/View/Funds/Widgets/add_fund_notice_widget.dart';
 import 'package:sm_matka/View/Funds/Widgets/addfund_method_index.dart';
+import 'package:sm_matka/View/Funds/Widgets/flutter_pay_upi_function.dart';
 import 'package:sm_matka/View/Funds/Widgets/fund_appbar_widget.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/app_details_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_status_cubit.dart';
@@ -71,7 +73,6 @@ class _AddFundPageState extends State<AddFundPage> {
                           children: [
                             InputTextFieldWidget(
                               keyboardType: TextInputType.number,
-
                               controller: pointsController,
                               labelText: "Enter Points",
                             ),
@@ -150,6 +151,31 @@ class _AddFundPageState extends State<AddFundPage> {
                                 onPressed: () async {
                                   if (kDebugMode) {
                                     print("Adding Fund");
+                                  }
+                                  if (pointsController.text != "") {
+                                    if (selectedMethod == 1 ||
+                                        selectedMethod == 2 ||
+                                        selectedMethod == 3) {
+                                      FlutterPayUpiFunction.initiatePayment(
+                                          selectedMethod == 1
+                                              ? "gpay"
+                                              : selectedMethod == 2
+                                                  ? "phonepe"
+                                                  : "paytm",
+                                          userStatus.data.upiName,
+                                          userStatus.data.upiPaymentId,
+                                          pointsController.text.trim(),
+                                          context,
+                                          );
+                                    } else {
+                                      SnackBarMessage.centeredSnackbar(
+                                          text: "Please Select Payment Method",
+                                          context: context);
+                                    }
+                                  } else {
+                                    SnackBarMessage.centeredSnackbar(
+                                        text: "Please Select Points",
+                                        context: context);
                                   }
                                 },
                                 gradient: kblueGradient,

@@ -68,8 +68,14 @@ class _TransferPointsScreenState extends State<TransferPointsScreen> {
                         children: [
                           InputTextFieldWidget(
                             keyboardType: TextInputType.number,
-
                             controller: mobileController,
+                            onChange: (value) {
+                              if (value != "") {
+                                setState(() {
+                                  isVerified = false;
+                                });
+                              }
+                            },
                             labelText: "Mobile",
                           ),
                           SizedBox(
@@ -100,37 +106,47 @@ class _TransferPointsScreenState extends State<TransferPointsScreen> {
                                     : Container(
                                         height: 10,
                                       ),
-                                KLoginButton(
-                                    title: "Verify",
-                                    loadingstate: AppLoadingStates.verifyOtpResendLoading,
-                                    onPressed: () async {
-                                      if (mobileController.text!="") {
-                                         BlocProvider.of<AppLoadingCubit>(
-                                            context)
-                                        .updateAppLoadingState(
-                                            AppLoadingStates.verifyOtpResendLoading);
-                                      
-                                      final jsonData = await HttpRequests
-                                          .transferVerifyRequest(
-                                        context: context,
-                                        token: user.token,
-                                        userNumer: mobileController.text.trim(),
-                                      );
-                                      if (jsonData["code"] == "100" &&
-                                          jsonData["status"] == "success") {
-                                        setState(() {
-                                          isVerified = true;
-                                          verifiedUserName =
-                                              jsonData["data"]["name"];
-                                        });
-                                         BlocProvider.of<AppLoadingCubit>(
-                                            context)
-                                        .updateAppLoadingState(
-                                            AppLoadingStates.initialLoading);
-                                      }}else{
-                                        SnackBarMessage.centeredSnackbar(text: "Please Select Mobile", context: context);
-                                      }
-                                    })
+                                isVerified
+                                    ? Container()
+                                    : KLoginButton(
+                                        title: "Verify",
+                                        loadingstate: AppLoadingStates
+                                            .verifyOtpResendLoading,
+                                        onPressed: () async {
+                                          if (mobileController.text != "") {
+                                            BlocProvider.of<AppLoadingCubit>(
+                                                    context)
+                                                .updateAppLoadingState(
+                                                    AppLoadingStates
+                                                        .verifyOtpResendLoading);
+
+                                            final jsonData = await HttpRequests
+                                                .transferVerifyRequest(
+                                              context: context,
+                                              token: user.token,
+                                              userNumer:
+                                                  mobileController.text.trim(),
+                                            );
+                                            if (jsonData["code"] == "100" &&
+                                                jsonData["status"] ==
+                                                    "success") {
+                                              setState(() {
+                                                isVerified = true;
+                                                verifiedUserName =
+                                                    jsonData["data"]["name"];
+                                              });
+                                            }
+                                            BlocProvider.of<AppLoadingCubit>(
+                                                    context)
+                                                .updateAppLoadingState(
+                                                    AppLoadingStates
+                                                        .initialLoading);
+                                          } else {
+                                            SnackBarMessage.centeredSnackbar(
+                                                text: "Please Select Mobile",
+                                                context: context);
+                                          }
+                                        })
                               ],
                             ),
                           ),
@@ -139,8 +155,7 @@ class _TransferPointsScreenState extends State<TransferPointsScreen> {
                           ),
                           isVerified
                               ? InputTextFieldWidget(
-                                keyboardType: TextInputType.number,
-
+                                  keyboardType: TextInputType.number,
                                   controller: pointsController,
                                   labelText: "Points",
                                 )
@@ -152,62 +167,73 @@ class _TransferPointsScreenState extends State<TransferPointsScreen> {
                     ),
 
                     //button
-                    Container(
-                      alignment: Alignment.center,
-                      width: double.maxFinite,
-                      height: 50,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: KLoginButton(
-                              title: "Submit",
-                              loadingstate: AppLoadingStates.transferSubmitButtonLoading,
-                              onPressed: () async {
-                                if (pointsController.text!="") {
-                                  
-                                 BlocProvider.of<AppLoadingCubit>(
-                                            context)
-                                        .updateAppLoadingState(
-                                            AppLoadingStates.transferSubmitButtonLoading);
-                                final jsonData =
-                                    await HttpRequests.transferPointsRequest(
-                                  context: context,
-                                  token: user.token,
-                                  points: pointsController.text.trim(),
-                                  userNumber: mobileController.text.trim(),
-                                );
-                                if (jsonData["code"] == "100" &&
-                                    jsonData["status"] == "success") {
-                                  final jsonNewStatus =
-                                      await HttpRequests.getUserStatusRequest(
-                                          context: context, token: user.token);
-                                  context
-                                      .read<UserStatusCubit>()
-                                      .updateAppUserStatus(
-                                          UserStatusModel.fromJson(
-                                              jsonNewStatus));
-                                  setState(() {
-                                    isVerified = false;
-                                    verifiedUserName = "";
-                                  }); BlocProvider.of<AppLoadingCubit>(
-                                            context)
-                                        .updateAppLoadingState(
-                                            AppLoadingStates.initialLoading);
-                                  SnackBarMessage.simpleSnackBar(
-                                    text: "Successfully Transferred",
-                                    context: context,
-                                  );
-                                  
-                                }}else{
-                                  SnackBarMessage.centeredSnackbar(text: "Please Enter Points", context: context);
-                                }
-                              },
-                              gradient: kblueGradient,
+                    !isVerified
+                        ? Container()
+                        : Container(
+                            alignment: Alignment.center,
+                            width: double.maxFinite,
+                            height: 50,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: KLoginButton(
+                                    title: "Submit",
+                                    loadingstate: AppLoadingStates
+                                        .transferSubmitButtonLoading,
+                                    onPressed: () async {
+                                      if (pointsController.text != "") {
+                                        BlocProvider.of<AppLoadingCubit>(
+                                                context)
+                                            .updateAppLoadingState(
+                                                AppLoadingStates
+                                                    .transferSubmitButtonLoading);
+                                        final jsonData = await HttpRequests
+                                            .transferPointsRequest(
+                                          context: context,
+                                          token: user.token,
+                                          points: pointsController.text.trim(),
+                                          userNumber:
+                                              mobileController.text.trim(),
+                                        );
+                                        if (jsonData["code"] == "100" &&
+                                            jsonData["status"] == "success") {
+                                          final jsonNewStatus =
+                                              await HttpRequests
+                                                  .getUserStatusRequest(
+                                                      context: context,
+                                                      token: user.token);
+                                          context
+                                              .read<UserStatusCubit>()
+                                              .updateAppUserStatus(
+                                                  UserStatusModel.fromJson(
+                                                      jsonNewStatus));
+                                          setState(() {
+                                            isVerified = false;
+                                            verifiedUserName = "";
+                                          });
+                                          BlocProvider.of<AppLoadingCubit>(
+                                                  context)
+                                              .updateAppLoadingState(
+                                                  AppLoadingStates
+                                                      .initialLoading);
+                                          SnackBarMessage
+                                              .centeredSuccessSnackbar(
+                                            text: "Successfully Transferred",
+                                            context: context,
+                                          );
+                                        }
+                                      } else {
+                                        SnackBarMessage.centeredSnackbar(
+                                            text: "Please Enter Points",
+                                            context: context);
+                                      }
+                                    },
+                                    gradient: kblueGradient,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
                     const Divider(
                       height: 1,
                       thickness: .5,

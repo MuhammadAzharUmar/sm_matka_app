@@ -7,7 +7,7 @@ class SnackBarMessage {
   static simpleSnackBar({required String text, required BuildContext context}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        duration:const Duration(seconds: 1),
+        duration: const Duration(seconds: 1),
         content: Text(
           text,
           style: kMediumTextStyle.copyWith(color: kWhiteColor),
@@ -23,7 +23,7 @@ class SnackBarMessage {
       SnackBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        duration:const Duration(seconds: 1),
+        duration: const Duration(seconds: 2),
         content: Center(
           child: Container(
             alignment: Alignment.center,
@@ -43,13 +43,14 @@ class SnackBarMessage {
       ),
     );
   }
+
   static centeredSuccessSnackbar(
       {required String text, required BuildContext context}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        duration:const Duration(seconds: 1),
+        duration: const Duration(seconds: 1),
         content: Center(
           child: Container(
             alignment: Alignment.center,

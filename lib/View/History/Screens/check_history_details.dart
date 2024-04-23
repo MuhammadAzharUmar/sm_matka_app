@@ -212,7 +212,7 @@ class _CheckHistoryDetailsState extends State<CheckHistoryDetails> {
                             physics: const AlwaysScrollableScrollPhysics(),
                             child: Container(
                               alignment: Alignment.center,
-                              height: MediaQuery.of(context).size.height,
+                              height: MediaQuery.of(context).size.height*.5,
                               child: InkWell(
                                 onTap: () {
                                   setState(() {});

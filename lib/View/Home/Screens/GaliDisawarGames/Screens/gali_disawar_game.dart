@@ -235,7 +235,7 @@ class GaliDesawarMainWidget extends StatelessWidget {
               children: [
                 Expanded(
                     child: KLoginButton(
-                  title: "Bid Histoy",
+                  title: "Bid History",
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -264,7 +264,7 @@ class GaliDesawarMainWidget extends StatelessWidget {
                 ),
                 Expanded(
                     child: KLoginButton(
-                  title: "Win Histoy",
+                  title: "Win History",
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(

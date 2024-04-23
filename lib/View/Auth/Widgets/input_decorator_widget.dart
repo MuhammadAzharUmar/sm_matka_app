@@ -63,7 +63,9 @@ class InputDecoratorWidget extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Text(
                     title,
-                    style: kMediumCaptionTextStyle.copyWith(color: k2ndColor),
+                    style: kLargeTextStyle.copyWith(color: k2ndColor,fontWeight: FontWeight.w800,shadows: [
+                    const  BoxShadow(color: kBlue1Color,offset: Offset(2, 2),blurRadius: 5,spreadRadius: 5)
+                    ]),
                   ),
                 ),
             Container(
