@@ -39,16 +39,19 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 0)).then((value) async {
+      BlocProvider.of<AppLoadingCubit>(context)
+          .updateAppLoadingState(AppLoadingStates.homePageInitDataLoading);
       await initFunctionHome();
+      BlocProvider.of<AppLoadingCubit>(context)
+          .updateAppLoadingState(AppLoadingStates.initialLoading);
     });
   }
 
   Future<void> initFunctionHome() async {
     user = context.read<UserCubit>().state;
-    print("_______________${user.token}___________");
     if (user.token == "") {
       SharedPreferences preferences = await SharedPreferences.getInstance();
-      String token = preferences.getString("userToken") ?? "";
+      String token = "${preferences.getString("userToken")}";
       if (token != "") {
         final data = await HttpRequests.getUserDetailsRequest(
           context: context,
@@ -146,7 +149,11 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                                       color: kBlue1Color,
                                       fontWeight: FontWeight.w600),
                                 ),
-                                const Icon(Icons.refresh,size: 24,color: kBlue1Color,)
+                                const Icon(
+                                  Icons.refresh,
+                                  size: 24,
+                                  color: kBlue1Color,
+                                )
                               ],
                             )),
                       ),
@@ -245,11 +252,27 @@ class HomeAppDetailFutureWidget extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                Expanded(child: MainGameListWidget(
-                  tryAgainFunction: () async {
-                    // await initFunctionHome();
-                  },
-                ))
+                Expanded(child: BlocBuilder<AppLoadingCubit, AppLoadingStates>(
+                    builder: (context, loadingState) {
+                  return loadingState ==
+                          AppLoadingStates.homePageInitDataLoading
+                      ? Center(
+                          child: Container(
+                            height: 30,
+                            width: 30,
+                            alignment: Alignment.center,
+                            child: const CircularProgressIndicator(
+                              color: kWhiteColor,
+                              strokeWidth: 3,
+                            ),
+                          ),
+                        )
+                      : MainGameListWidget(
+                          tryAgainFunction: () async {
+                            // await initFunctionHome();
+                          },
+                        );
+                }))
               ],
             )
           : Container();

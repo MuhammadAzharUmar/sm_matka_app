@@ -72,7 +72,7 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
                     });
                   },
                   icon: Icon(
-                    obsecureText ? Icons.visibility : Icons.visibility_off,
+                    obsecureText ? Icons.visibility_off : Icons.visibility,
                     color: kWhiteColor,
                   ))
               : null,

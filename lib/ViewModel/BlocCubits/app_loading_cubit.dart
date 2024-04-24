@@ -16,6 +16,7 @@ enum AppLoadingStates {
   forgotPinLoading,
   updatePhonePeGPayPaytm,
   transferSubmitButtonLoading,
+  homePageInitDataLoading,
 
 
 }

@@ -5,9 +5,11 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sm_matka/Models/app_details_model.dart';
+import 'package:sm_matka/Models/usermodel.dart';
 import 'package:sm_matka/Utilities/snackbar_messages.dart';
 import 'package:sm_matka/View/Auth/Screens/change_password.dart';
 import 'package:sm_matka/View/Auth/Screens/login.dart';
@@ -15,6 +17,7 @@ import 'package:sm_matka/View/Auth/Screens/login_pin.dart';
 import 'package:sm_matka/View/Auth/Screens/otp_verification.dart';
 import 'package:sm_matka/View/Auth/Screens/signup.dart';
 import 'package:sm_matka/View/Home/Screens/main_screen.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
 
 class HttpRequests {
   static String baseUrl = "https://smweb.demo-snp.com/api/Api";
@@ -244,6 +247,9 @@ class HttpRequests {
       required String password,
       required BuildContext context}) async {
     try {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          BlocProvider.of<UserCubit>(context).updateAppUser(UserModel.fromJson(json: {}, token: ""));
       var request = http.MultipartRequest('POST', Uri.parse('$baseUrl/login'));
       request.fields.addAll({'mobile': mobile, 'password': password});
       http.StreamedResponse response = await request.send();
@@ -275,7 +281,7 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
           throw response.reasonPhrase.toString();
         }
@@ -297,7 +303,6 @@ class HttpRequests {
       required String pin,
       required BuildContext context}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    await preferences.clear();
     try {
       var headers = {'token': loginToken};
       var request =
@@ -318,10 +323,11 @@ class HttpRequests {
             text: jsonData["message"].toString(),
             context: context,
           );
-          String pinToken = jsonData["data"]["token"];
+          String pinToken = jsonData["data"]["token"].toString();
+          // print("pin token 1= $pinToken ______________________________");
           if (pinToken != "" && pinToken.isNotEmpty) {
             await preferences.setString("userToken", pinToken);
-            await Future.delayed(const Duration(seconds: 1)).then((value) {
+            await Future.delayed(const Duration(milliseconds: 500)).then((value) {
               Navigator.of(context).popUntil(
                 (route) => route.isFirst,
               );
@@ -333,15 +339,14 @@ class HttpRequests {
                 ),
               );
             });
-            // await HttpRequests.getUserDetailsRequest(
-            //     context: context, token: pinToken);
           } else {
+            await preferences.clear();
             Navigator.of(context).popUntil(
               (route) => route.isFirst,
             );
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                builder: (context) => const SignupPage(),
+                builder: (context) => const LoginPage(),
               ),
             );
           }
@@ -778,12 +783,13 @@ class HttpRequests {
         throw response.reasonPhrase!;
       }
     } catch (e) {
-      return SnackBarMessage.centeredSnackbar(
+       SnackBarMessage.centeredSnackbar(
         text: e is SocketException
             ? "Please check your internet connection and try again."
             : "$e",
         context: context,
       );
+      return {};
     }
   }
 
@@ -826,12 +832,13 @@ class HttpRequests {
         throw response.reasonPhrase!;
       }
     } catch (e) {
-      return SnackBarMessage.centeredSnackbar(
+       SnackBarMessage.centeredSnackbar(
         text: e is SocketException
             ? "Please check your internet connection and try again."
             : "$e",
         context: context,
       );
+      return {};
     }
   }
 
@@ -1590,7 +1597,7 @@ class HttpRequests {
               builder: (context) => const LoginPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
           throw response.reasonPhrase.toString();
         }
