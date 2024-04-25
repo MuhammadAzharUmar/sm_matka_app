@@ -19,8 +19,6 @@ class _SplashScreenState extends State<SplashScreen> {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       String token = preferences.getString("userToken") ?? "";
       if (token != "") {
-        
-       
         // final data = await HttpRequests.getUserDetailsRequest(
         //   // ignore: use_build_context_synchronously
         //   context: context,
@@ -28,7 +26,8 @@ class _SplashScreenState extends State<SplashScreen> {
         // );
         // UserModel user = UserModel.fromJson(json: data, token: token);
         // ignore: use_build_context_synchronously
-        // BlocProvider.of<UserCubit>(context).updateAppUser(UserModel.fromJson(json: {}, token: ""));
+        // BlocProvider.of<UserCubit>(context)
+        //     .updateAppUser(UserModel.fromJson(json: {}, token: ""));
         // final statusdata = await HttpRequests.getUserStatusRequest(
         //   // ignore: use_build_context_synchronously
         //   context: context,

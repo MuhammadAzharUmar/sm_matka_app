@@ -39,17 +39,17 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 0)).then((value) async {
-      BlocProvider.of<AppLoadingCubit>(context)
-          .updateAppLoadingState(AppLoadingStates.homePageInitDataLoading);
+      
       await initFunctionHome();
-      BlocProvider.of<AppLoadingCubit>(context)
-          .updateAppLoadingState(AppLoadingStates.initialLoading);
+      
     });
   }
 
   Future<void> initFunctionHome() async {
     user = context.read<UserCubit>().state;
     if (user.token == "") {
+      BlocProvider.of<AppLoadingCubit>(context)
+          .updateAppLoadingState(AppLoadingStates.homePageInitDataLoading);
       SharedPreferences preferences = await SharedPreferences.getInstance();
       String token = "${preferences.getString("userToken")}";
       if (token != "") {
@@ -74,6 +74,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
           ),
         );
       }
+      BlocProvider.of<AppLoadingCubit>(context)
+          .updateAppLoadingState(AppLoadingStates.initialLoading);
     }
     userStatus = context.read<UserStatusCubit>().state;
     // await HttpRequests.mainGameListRequest(context: context, token: user.token);
@@ -254,6 +256,7 @@ class HomeAppDetailFutureWidget extends StatelessWidget {
                 ),
                 Expanded(child: BlocBuilder<AppLoadingCubit, AppLoadingStates>(
                     builder: (context, loadingState) {
+                      
                   return loadingState ==
                           AppLoadingStates.homePageInitDataLoading
                       ? Center(

@@ -69,9 +69,10 @@ class _SignupPageState extends State<SignupPage> {
                         isPassword: true,
                       ),
                       InputTextFieldWidget(
+                        
                         keyboardType: TextInputType.number,
                         inputFormatter: [
-                          LengthLimitingTextInputFormatter(10),
+                          LengthLimitingTextInputFormatter(4),
                         ],
                         controller: pinController,
                         labelText: 'Enter Security Pin',

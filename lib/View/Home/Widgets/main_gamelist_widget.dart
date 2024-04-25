@@ -34,7 +34,6 @@ class _MainGameListWidgetState extends State<MainGameListWidget> {
         });
       },
       child: BlocBuilder<UserCubit, UserModel>(builder: (context, user) {
-        
         return  FutureBuilder<Map<String, dynamic>>(
             future: HttpRequests.mainGameListRequest(
                 context: context, token: user.token),

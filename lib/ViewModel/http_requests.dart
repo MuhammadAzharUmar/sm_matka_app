@@ -5,19 +5,17 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sm_matka/Models/app_details_model.dart';
-import 'package:sm_matka/Models/usermodel.dart';
 import 'package:sm_matka/Utilities/snackbar_messages.dart';
 import 'package:sm_matka/View/Auth/Screens/change_password.dart';
 import 'package:sm_matka/View/Auth/Screens/login.dart';
 import 'package:sm_matka/View/Auth/Screens/login_pin.dart';
 import 'package:sm_matka/View/Auth/Screens/otp_verification.dart';
 import 'package:sm_matka/View/Auth/Screens/signup.dart';
+import 'package:sm_matka/View/Home/Screens/home_init_function.dart';
 import 'package:sm_matka/View/Home/Screens/main_screen.dart';
-import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
 
 class HttpRequests {
   static String baseUrl = "https://smweb.demo-snp.com/api/Api";
@@ -247,9 +245,7 @@ class HttpRequests {
       required String password,
       required BuildContext context}) async {
     try {
-      SharedPreferences preferences = await SharedPreferences.getInstance();
-          await preferences.clear();
-          BlocProvider.of<UserCubit>(context).updateAppUser(UserModel.fromJson(json: {}, token: ""));
+
       var request = http.MultipartRequest('POST', Uri.parse('$baseUrl/login'));
       request.fields.addAll({'mobile': mobile, 'password': password});
       http.StreamedResponse response = await request.send();
@@ -327,6 +323,7 @@ class HttpRequests {
           // print("pin token 1= $pinToken ______________________________");
           if (pinToken != "" && pinToken.isNotEmpty) {
             await preferences.setString("userToken", pinToken);
+            await HomeInitFunction.initFunctionHome(context: context);
             await Future.delayed(const Duration(milliseconds: 500)).then((value) {
               Navigator.of(context).popUntil(
                 (route) => route.isFirst,
