@@ -65,9 +65,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -112,9 +112,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -166,9 +166,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -223,9 +223,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -245,7 +245,6 @@ class HttpRequests {
       required String password,
       required BuildContext context}) async {
     try {
-
       var request = http.MultipartRequest('POST', Uri.parse('$baseUrl/login'));
       request.fields.addAll({'mobile': mobile, 'password': password});
       http.StreamedResponse response = await request.send();
@@ -279,7 +278,7 @@ class HttpRequests {
           );
           throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -324,7 +323,8 @@ class HttpRequests {
           if (pinToken != "" && pinToken.isNotEmpty) {
             await preferences.setString("userToken", pinToken);
             await HomeInitFunction.initFunctionHome(context: context);
-            await Future.delayed(const Duration(milliseconds: 500)).then((value) {
+            await Future.delayed(const Duration(milliseconds: 500))
+                .then((value) {
               Navigator.of(context).popUntil(
                 (route) => route.isFirst,
               );
@@ -356,9 +356,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -410,9 +410,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -463,9 +463,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -518,9 +518,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -582,9 +582,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -628,9 +628,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -675,9 +675,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -722,9 +722,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -772,15 +772,15 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
       }
     } catch (e) {
-       SnackBarMessage.centeredSnackbar(
+      SnackBarMessage.centeredSnackbar(
         text: e is SocketException
             ? "Please check your internet connection and try again."
             : "$e",
@@ -821,15 +821,15 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
       }
     } catch (e) {
-       SnackBarMessage.centeredSnackbar(
+      SnackBarMessage.centeredSnackbar(
         text: e is SocketException
             ? "Please check your internet connection and try again."
             : "$e",
@@ -875,9 +875,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -929,9 +929,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -980,9 +980,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -1041,9 +1041,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -1094,9 +1094,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -1145,9 +1145,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -1200,9 +1200,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -1250,9 +1250,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -1300,9 +1300,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -1354,9 +1354,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -1411,9 +1411,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -1467,9 +1467,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -1534,9 +1534,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -1596,19 +1596,17 @@ class HttpRequests {
           );
           throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
       }
     } catch (e) {
       if (e
-          .toString()
-          .toLowerCase()
-          .contains("Please Select Token".toLowerCase())||e
-          .toString()
-          .toLowerCase()
-          .contains("OK".toLowerCase())) {
+              .toString()
+              .toLowerCase()
+              .contains("Please Select Token".toLowerCase()) ||
+          e.toString().toLowerCase().contains("OK".toLowerCase())) {
         rethrow;
       }
       return SnackBarMessage.centeredSnackbar(
@@ -1657,9 +1655,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -1707,9 +1705,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -1760,9 +1758,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -1818,9 +1816,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -1885,9 +1883,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -1936,26 +1934,21 @@ class HttpRequests {
             context: context,
           );
           return jsonData;
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
+          );
+          throw jsonData["message"].toString();
         } else {
-          // SnackBarMessage.centeredSnackbar(
-          //   text: jsonData["message"].toString(),
-          //   context: context,
-          // );
-          // return {};
           throw jsonData["message"].toString();
         }
-      } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       return SnackBarMessage.centeredSnackbar(
@@ -1993,26 +1986,21 @@ class HttpRequests {
             context: context,
           );
           return jsonData;
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
+          );
+          throw jsonData["message"].toString();
         } else {
-          // SnackBarMessage.centeredSnackbar(
-          //   text: jsonData["message"].toString(),
-          //   context: context,
-          // );
-          // return {};
           throw jsonData["message"].toString();
         }
-      } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       SnackBarMessage.centeredSnackbar(
@@ -2055,25 +2043,21 @@ class HttpRequests {
             context: context,
           );
           return jsonData;
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
+          );
+          throw jsonData["message"].toString();
         } else {
-          // return SnackBarMessage.centeredSnackbar(
-          //   text: jsonData["message"].toString(),
-          //   context: context,
-          // );
           throw jsonData["message"].toString();
         }
-      } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
-        );
-        throw response.reasonPhrase.toString();
       } else {
-        throw response.reasonPhrase.toString();
+        throw response.reasonPhrase!;
       }
     } catch (e) {
       if (e
@@ -2135,9 +2119,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
@@ -2195,9 +2179,9 @@ class HttpRequests {
               builder: (context) => const SignupPage(),
             ),
           );
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         } else {
-          throw response.reasonPhrase.toString();
+          throw jsonData["message"].toString();
         }
       } else {
         throw response.reasonPhrase!;
