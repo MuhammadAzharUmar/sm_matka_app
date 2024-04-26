@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sm_matka/Utilities/colors.dart';
+import 'package:sm_matka/View/Auth/Screens/login.dart';
 import 'package:sm_matka/View/Auth/Screens/login_pin.dart';
-import 'package:sm_matka/View/Auth/Screens/signup.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
             // ignore: use_build_context_synchronously
             context,
             MaterialPageRoute(
-              builder: (context) => const SignupPage(),
+              builder: (context) => const LoginPage(),
             ));
       }
     });
