@@ -13,7 +13,7 @@ import 'package:sm_matka/Utilities/gradient.dart';
 import 'package:sm_matka/Utilities/snackbar_messages.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
 import 'package:sm_matka/View/Auth/Screens/change_password.dart';
-import 'package:sm_matka/View/Auth/Screens/signup.dart';
+import 'package:sm_matka/View/Auth/Screens/login.dart';
 import 'package:sm_matka/View/Auth/Widgets/klogin_button.dart';
 import 'package:sm_matka/View/Settings/Screens/contact_us.dart';
 import 'package:sm_matka/View/Settings/Screens/game_rates.dart';
@@ -168,7 +168,7 @@ class MenuItem {
                                     .popUntil((route) => route.isFirst);
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                    builder: (context) => const SignupPage(),
+                                    builder: (context) => const LoginPage(),
                                   ),
                                 );
                               }),
