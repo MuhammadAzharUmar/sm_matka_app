@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sm_matka/Models/app_details_model.dart';
 import 'package:sm_matka/Models/user_status_model.dart';
@@ -67,6 +68,9 @@ class _TransferPointsScreenState extends State<TransferPointsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           InputTextFieldWidget(
+                            inputFormatter: [
+                          LengthLimitingTextInputFormatter(10),
+                        ],
                             keyboardType: TextInputType.number,
                             controller: mobileController,
                             onChange: (value) {

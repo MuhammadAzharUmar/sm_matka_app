@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sm_matka/Models/user_status_model.dart';
@@ -134,6 +135,9 @@ class _UpdatePhonepeGpayPaytmScreenState
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: InputTextFieldWidget(
+                            inputFormatter: [
+                          LengthLimitingTextInputFormatter(10),
+                        ],
                             keyboardType: TextInputType.number,
                             controller: accountNoContoller,
                             labelText: "${widget.screenTitle} Number",

@@ -6,6 +6,7 @@ import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/snackbar_messages.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
 import 'package:sm_matka/View/Home/Screens/game_chart_screen.dart';
+import 'package:sm_matka/View/Home/Screens/home_init_function.dart';
 import 'package:sm_matka/View/Home/Screens/main_game_screen.dart';
 import 'package:sm_matka/View/Home/Widgets/main_game_list.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
@@ -29,7 +30,8 @@ class _MainGameListWidgetState extends State<MainGameListWidget> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        await Future.delayed(const Duration(seconds: 2)).then((value) {
+        await Future.delayed(const Duration(seconds: 1)).then((value) async{
+          await HomeInitFunction.refreshAppDetailsFunction(context: context);
           setState(() {});
         });
       },

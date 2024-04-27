@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +8,7 @@ import 'package:sm_matka/Models/usermodel.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
 import 'package:sm_matka/View/Funds/Widgets/add_fund_notice_widget.dart';
+import 'package:sm_matka/View/Home/Screens/home_init_function.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/app_details_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';
@@ -26,6 +29,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
         isloading = true;
       });
       try {
+        await HomeInitFunction.refreshAppDetailsFunction(context: context);
+
         UserModel currentUser = context.read<UserCubit>().state;
         final jsonData = await HttpRequests.readNotificationRequest(
             context: context, token: currentUser.token);
@@ -54,7 +59,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(true);
               },
               icon: const Icon(
                 Icons.arrow_back_ios_new_rounded,
@@ -79,34 +84,43 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   alignment: Alignment.center,
                   child: const CircularProgressIndicator(
                     color: kBlue1Color,
-                    strokeWidth: 1,
+                    strokeWidth: 2,
                   ),
                 ),
               )
             : Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: Column(
-                  children: [
-                    AddFundNoticeWidget(
-                      addfundNotice: appDetailsModel.data.appNotice,
-                      caller: "appNotice",
+                child: RefreshIndicator(
+                  onRefresh: ()async {
+                    await HomeInitFunction.refreshAppDetailsFunction(context: context);
+                    
+                  },
+                  child: SingleChildScrollView(
+                    physics:const AlwaysScrollableScrollPhysics(),
+                    child: Column(
+                      children: [
+                        AddFundNoticeWidget(
+                          addfundNotice: appDetailsModel.data.appNotice,
+                          caller: "appNotice",
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        AddFundNoticeWidget(
+                          addfundNotice: appDetailsModel.data.addFundNotice,
+                          caller: "add",
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        AddFundNoticeWidget(
+                          addfundNotice: appDetailsModel.data.withdrawNotice,
+                          caller: "withdraw",
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    AddFundNoticeWidget(
-                      addfundNotice: appDetailsModel.data.addFundNotice,
-                      caller: "add",
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    AddFundNoticeWidget(
-                      addfundNotice: appDetailsModel.data.withdrawNotice,
-                      caller: "withdraw",
-                    ),
-                  ],
+                  ),
                 ),
               ),
       );

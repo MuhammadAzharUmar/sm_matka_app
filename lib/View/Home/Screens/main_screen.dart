@@ -9,6 +9,7 @@ import 'package:sm_matka/View/Auth/Widgets/klogin_button.dart';
 import 'package:sm_matka/View/Funds/Screens/funds.dart';
 import 'package:sm_matka/View/History/Screens/history.dart';
 import 'package:sm_matka/View/Home/Screens/home.dart';
+import 'package:sm_matka/View/Home/Screens/home_init_function.dart';
 import 'package:sm_matka/View/Home/Widgets/bottom_nav_bar.dart';
 import 'package:sm_matka/View/Profile/Screens/profile.dart';
 import 'package:sm_matka/View/Settings/Screens/settings.dart';
@@ -39,7 +40,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      onPopInvoked: (didPop) {
+      onPopInvoked: (didPop) async{
         if (!didPop) {
           if (currentIndex!=0) {
             
@@ -49,7 +50,11 @@ class _MainPageState extends State<MainPage> {
                   0,
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
-                );} else {
+                );
+                     await HomeInitFunction.refreshAppDetailsFunction(context: context);
+
+                
+                } else {
             
                showDialog(
                   context: context,
