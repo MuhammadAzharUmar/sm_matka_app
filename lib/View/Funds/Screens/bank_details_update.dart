@@ -87,10 +87,12 @@ class _BankDetailsUpdateScreenState extends State<BankDetailsUpdateScreen> {
                             labelText: "Account Holder Name",
                           ),
                           InputTextFieldWidget(
+                            keyboardType: TextInputType.number,
                             controller: accountNoContoller,
                             labelText: "Account Number",
                           ),
                           InputTextFieldWidget(
+                            keyboardType: TextInputType.number,
                             controller: confirmAccountNoController,
                             labelText: "Confirm Account Number",
                           ),
