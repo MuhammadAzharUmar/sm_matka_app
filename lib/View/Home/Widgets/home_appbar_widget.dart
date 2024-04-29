@@ -4,7 +4,7 @@ import 'package:sm_matka/Models/user_status_model.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/gradient.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
-import 'package:sm_matka/View/Home/Screens/home_init_function.dart';
+import 'package:sm_matka/View/Home/Widgets/home_init_function.dart';
 import 'package:sm_matka/View/Home/Screens/notification_screen.dart';
 import 'package:sm_matka/View/Home/Screens/wallet_screen.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_status_cubit.dart';

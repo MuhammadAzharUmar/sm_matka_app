@@ -8,7 +8,7 @@ import 'package:sm_matka/Models/usermodel.dart';
 import 'package:sm_matka/Utilities/colors.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
 import 'package:sm_matka/View/Funds/Widgets/add_fund_notice_widget.dart';
-import 'package:sm_matka/View/Home/Screens/home_init_function.dart';
+import 'package:sm_matka/View/Home/Widgets/home_init_function.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/app_details_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
 import 'package:sm_matka/ViewModel/http_requests.dart';

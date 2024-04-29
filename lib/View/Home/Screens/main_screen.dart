@@ -9,7 +9,7 @@ import 'package:sm_matka/View/Auth/Widgets/klogin_button.dart';
 import 'package:sm_matka/View/Funds/Screens/funds.dart';
 import 'package:sm_matka/View/History/Screens/history.dart';
 import 'package:sm_matka/View/Home/Screens/home.dart';
-import 'package:sm_matka/View/Home/Screens/home_init_function.dart';
+import 'package:sm_matka/View/Home/Widgets/home_init_function.dart';
 import 'package:sm_matka/View/Home/Widgets/bottom_nav_bar.dart';
 import 'package:sm_matka/View/Profile/Screens/profile.dart';
 import 'package:sm_matka/View/Settings/Screens/settings.dart';

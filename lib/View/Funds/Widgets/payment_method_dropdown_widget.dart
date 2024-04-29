@@ -15,7 +15,7 @@ class PaymentMethodDropdownWidget extends StatefulWidget {
   });
   final int dropDownValue;
   final String selectedDropDownValue;
-  final Function(String,int) onChange;
+  final Function(String, int) onChange;
 
   @override
   State<PaymentMethodDropdownWidget> createState() =>
@@ -59,22 +59,26 @@ class _PaymentMethodDropdownWidgetState
                 value: 0,
                 child: Text("Select Payment Method"),
               ),
-              DropdownMenuItem(
-                value: 1,
-                child: Text("PhonePe ${user.data.phonepeMobileNo}"),
-              ),
-              DropdownMenuItem(
-                value: 2,
-                child: Text("Google Pay ${user.data.gpayMobileNo}"),
-              ),
-              DropdownMenuItem(
-                value: 3,
-                child: Text("Paytm ${user.data.paytmMobileNo}"),
-              ),
-              DropdownMenuItem(
-                value: 4,
-                child: Text("Bank ${user.data.bankAccountNo}"),
-              ),
+              if (user.data.phonepeMobileNo.isNotEmpty)
+                DropdownMenuItem(
+                  value: 1,
+                  child: Text("PhonePe ${user.data.phonepeMobileNo}"),
+                ),
+              if (user.data.gpayMobileNo.isNotEmpty)
+                DropdownMenuItem(
+                  value: 2,
+                  child: Text("Google Pay ${user.data.gpayMobileNo}"),
+                ),
+              if (user.data.paytmMobileNo.isNotEmpty)
+                DropdownMenuItem(
+                  value: 3,
+                  child: Text("Paytm ${user.data.paytmMobileNo}"),
+                ),
+              if (user.data.bankAccountNo.isNotEmpty)
+                DropdownMenuItem(
+                  value: 4,
+                  child: Text("Bank ${user.data.bankAccountNo}"),
+                ),
             ],
             onChanged: (value) async {
               dropdownvalue = value!.toInt();
@@ -99,7 +103,7 @@ class _PaymentMethodDropdownWidgetState
                 default:
                   selectedValue = 'Select payment method';
               }
-              await widget.onChange(selectedValue,value);
+              await widget.onChange(selectedValue, value);
             }),
       );
     });

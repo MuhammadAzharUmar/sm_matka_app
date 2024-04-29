@@ -11,7 +11,7 @@ import 'package:sm_matka/Utilities/gradient.dart';
 import 'package:sm_matka/Utilities/textstyles.dart';
 import 'package:sm_matka/View/Auth/Screens/signup.dart';
 import 'package:sm_matka/View/Home/Screens/GaliDisawarGames/Screens/gali_disawar_game_btm_sheet.dart';
-import 'package:sm_matka/View/Home/Screens/home_init_function.dart';
+import 'package:sm_matka/View/Home/Widgets/home_init_function.dart';
 import 'package:sm_matka/View/Home/Widgets/crousel_slider.dart';
 import 'package:sm_matka/View/Home/Widgets/fund_withdraw_chat_call_button_widget.dart';
 import 'package:sm_matka/View/Home/Widgets/home_appbar_widget.dart';

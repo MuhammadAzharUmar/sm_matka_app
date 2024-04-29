@@ -14,7 +14,7 @@ import 'package:sm_matka/View/Auth/Screens/login.dart';
 import 'package:sm_matka/View/Auth/Screens/login_pin.dart';
 import 'package:sm_matka/View/Auth/Screens/otp_verification.dart';
 import 'package:sm_matka/View/Auth/Screens/signup.dart';
-import 'package:sm_matka/View/Home/Screens/home_init_function.dart';
+import 'package:sm_matka/View/Home/Widgets/home_init_function.dart';
 import 'package:sm_matka/View/Home/Screens/main_screen.dart';
 
 class HttpRequests {

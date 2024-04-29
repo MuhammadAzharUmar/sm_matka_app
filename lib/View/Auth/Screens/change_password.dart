@@ -60,11 +60,14 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         isPassword: true,
                         controller: passwordController,
                         labelText: 'Enter ${widget.caller}',
+                        keyboardType: widget.caller=="Pin"?TextInputType.number:TextInputType.text,
                       ),
                       InputTextFieldWidget(
                         isPassword: true,
                         controller: confirmPasswordController,
                         labelText: 'Enter Confirm ${widget.caller}',
+                                                keyboardType: widget.caller=="Pin"?TextInputType.number:TextInputType.text,
+
                       ),
                       Row(
                         children: [
