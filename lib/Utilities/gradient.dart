@@ -25,6 +25,17 @@ const klightGreyGradient = LinearGradient(
     k1stColor,
   ],
 );
+final kWhiteGreyGradient = LinearGradient(
+  begin: Alignment.topLeft,
+  end: Alignment.bottomRight,
+  colors: [
+    kWhiteColor,
+    kWhiteColor.withOpacity(.8),
+    kWhiteColor.withOpacity(.6),
+    kWhiteColor.withOpacity(.4),
+    kWhiteColor.withOpacity(.2),
+  ],
+);
 const kblueGradient = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,

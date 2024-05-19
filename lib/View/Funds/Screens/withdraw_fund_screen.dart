@@ -56,7 +56,7 @@ class _WithdrawFundScreenState extends State<WithdrawFundScreen> {
                 child: Column(
                   children: [
                     AddFundNoticeWidget(
-                      caller: "withdraw",
+                      heading: "Withdraw Fund Notice",
                       addfundNotice: appdetailsModel.data.withdrawNotice,
                     ),
                     Card(

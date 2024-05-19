@@ -1,0 +1,1266 @@
+{
+	"info": {
+		"_postman_id": "3bca5837-a475-4e81-be9e-185ca442c88f",
+		"name": "sm Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33163609",
+		"_collection_link": "https://searchnplays.postman.co/workspace/SNP-BackEnd~e011b355-b826-4f6b-a6c8-1ef2a3087cc5/collection/9714895-3bca5837-a475-4e81-be9e-185ca442c88f?action=share&source=collection_link&creator=33163609"
+	},
+	"item": [
+		{
+			"name": "app_details",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/app_details",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"app_details"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "full_name",
+							"value": "SR ",
+							"type": "text"
+						},
+						{
+							"key": "mobile",
+							"value": "9468890533",
+							"type": "text"
+						},
+						{
+							"key": "pin",
+							"value": "1234",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "pass",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/signup",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verify_user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "mobile",
+							"value": "9468890533",
+							"type": "text"
+						},
+						{
+							"key": "otp",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/verify_user",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"verify_user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "mobile",
+							"value": "9468890533",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "pass",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login_pin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "bH0q8OVWZNkDvJxW",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "pin",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/login_pin",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"login_pin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "forgot_password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "mobile",
+							"value": "9468890533",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/forgot_password",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"forgot_password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verify_otp",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "mobile",
+							"value": "9468890533",
+							"type": "text"
+						},
+						{
+							"key": "otp",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/verify_otp",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"verify_otp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "resend_otp",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "mobile",
+							"value": "9468890533",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/resend_otp",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"resend_otp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "forgot_password_verify",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "mobile",
+							"value": "9468890533",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "pass",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/forgot_password_verify",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"forgot_password_verify"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "forgot_pin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "mobile",
+							"value": "9468890533",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/forgot_pin",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"forgot_pin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_pin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "PJ7dJseAMHNBtN3Q",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "mobile",
+							"value": "9468890533",
+							"type": "text"
+						},
+						{
+							"key": "pin",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/create_pin",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"create_pin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user_status",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/user_status",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user_status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_user_details",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "vko9CPBYvBFi4h3b",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/get_user_details",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"get_user_details"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "how_to_play",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/how_to_play",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"how_to_play"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "game_rate_list",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "T954dPqT32Q3Xv85",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/game_rate_list",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"game_rate_list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_phonepe",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "vko9CPBYvBFi4h3b",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "phonepe",
+							"value": "9468890533",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/update_phonepe",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"update_phonepe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_bank_details",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "WaW9vVyfSTtrw6jv",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "account_holder_name",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "account_no",
+							"value": "88686876gusg",
+							"type": "text"
+						},
+						{
+							"key": "ifsc_code",
+							"value": "57568q768qccs",
+							"type": "text"
+						},
+						{
+							"key": "bank_name",
+							"value": "sbi",
+							"type": "text"
+						},
+						{
+							"key": "branch_address",
+							"value": "borkhera",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/update_bank_details",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"update_bank_details"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_gpay",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "vko9CPBYvBFi4h3b",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "gpay",
+							"value": "9468890533",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/update_gpay",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"update_gpay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_paytm",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "vko9CPBYvBFi4h3b",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "paytm",
+							"value": "9468890533",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/update_paytm",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"update_paytm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_profile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "vko9CPBYvBFi4h3b",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "user@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Kumar",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/update_profile",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"update_profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add_fund",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "ho1JqEXdNsKPbFUe",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "points",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "trans_status",
+							"value": "successful",
+							"type": "text"
+						},
+						{
+							"key": "trans_id",
+							"value": "3resdn34yw8er",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/add_fund",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"add_fund"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "withdraw",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "vko9CPBYvBFi4h3b",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "points",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "method",
+							"value": "",
+							"description": "bank_name,paytm_mobile_no,phonepe_mobile_no,gpay_mobile_no",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/withdraw",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"withdraw"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "withdraw_statement",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "FQ2MtqRk1AC6Ptiq",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/withdraw_statement",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"withdraw_statement"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "wallet_statement",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "T954dPqT32Q3Xv85",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/wallet_statement",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"wallet_statement"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "transfer_verify",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "md01Ou2VCJwShjXq",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_number",
+							"value": "9571000925",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/transfer_verify",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"transfer_verify"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "transfer_points",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "vko9CPBYvBFi4h3b",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "points",
+							"value": "100",
+							"type": "text"
+						},
+						{
+							"key": "user_number",
+							"value": "9571000925",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/transfer_points",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"transfer_points"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "win_history",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "T954dPqT32Q3Xv85",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "from_date",
+							"value": "2011-08-01 00:00:00",
+							"type": "text"
+						},
+						{
+							"key": "to_date",
+							"value": "2021-10-01 23:59:59",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/win_history",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"win_history"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bid_history",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "T954dPqT32Q3Xv85",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "from_date",
+							"value": "2011-08-01 00:00:00",
+							"type": "text"
+						},
+						{
+							"key": "to_date",
+							"value": "2021-10-01 23:59:59",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/bid_history",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"bid_history"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "main_game_list",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/main_game_list",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"main_game_list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "place_bid",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "UucqwIMHWlijWIpO",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "game_bids",
+							"value": "{\n  \"bids\": [\n    {\n      \"game_id\": \"3\",\n      \"game_type\" : \"single_digit\",\n      \"session\" : \"Open\",\n      \"bid_points\" : \"10\",\n      \"open_digit\" : \"9\",\n      \"close_digit\" : \"\",\n      \"open_panna\" : \"\",\n      \"close_panna\" : \"\"\n    },\n    {\n      \"game_id\": \"3\",\n      \"game_type\" : \"single_digit\",\n      \"session\" : \"Open\",\n      \"bid_points\" : \"10\",\n      \"open_digit\" : \"8\",\n      \"close_digit\" : \"\",\n      \"open_panna\" : \"\",\n      \"close_panna\" : \"\"\n    },\n    {\n      \"game_id\": \"3\",\n      \"game_type\" : \"single_digit\",\n      \"session\" : \"Open\",\n      \"bid_points\" : \"40\",\n      \"open_digit\" : \"5\",\n      \"close_digit\" : \"\",\n      \"open_panna\" : \"\",\n      \"close_panna\" : \"\"\n    }\n  ]\n}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/place_bid",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"place_bid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "starline_game",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/starline_game",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"starline_game"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "starline_place_bid",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "UucqwIMHWlijWIpO",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "game_bids",
+							"value": "{\n  \"bids\": [\n    {\n      \"game_id\": \"3\",\n      \"game_type\" : \"single_digit\",\n      \"session\" : \"Open\",\n      \"bid_points\" : \"10\",\n      \"digit\" : \"9\",\n      \"panna\" : \"\"\n    },\n    {\n      \"game_id\": \"3\",\n      \"game_type\" : \"single_digit\",\n      \"session\" : \"Open\",\n      \"bid_points\" : \"10\",\n      \"digit\" : \"8\",\n      \"panna\" : \"\"\n    },\n    {\n      \"game_id\": \"3\",\n      \"game_type\" : \"single_digit\",\n      \"session\" : \"Open\",\n      \"bid_points\" : \"40\",\n      \"digit\" : \"5\",\n      \"panna\" : \"\"\n    }\n  ]\n}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/starline_place_bid",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"starline_place_bid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "starline_bid_history",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "UucqwIMHWlijWIpO",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "from_date",
+							"value": "2011-08-01 00:00:00",
+							"type": "text"
+						},
+						{
+							"key": "to_date",
+							"value": "2021-10-01 23:59:59",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/starline_bid_history",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"starline_bid_history"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "starline_win_history",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "UucqwIMHWlijWIpO",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "from_date",
+							"value": "2011-08-01 00:00:00",
+							"type": "text"
+						},
+						{
+							"key": "to_date",
+							"value": "2021-10-01 23:59:59",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/starline_win_history",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"starline_win_history"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "gali_disawar_game",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "kwgGGSk9d4InJxI6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/gali_disawar_game",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gali_disawar_game"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "gali_disawar_place_bid",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "kwgGGSk9d4InJxI6",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "game_bids",
+							"value": "{\n  \"bids\": [\n    {\n      \"game_id\": \"3\",\n      \"game_type\" : \"left_digit\",\n      \"session\" : \"Open\",\n      \"bid_points\" : \"10\",\n      \"left_digit\" : \"9\",\n      \"right_digit\" : \"\"\n    },\n    {\n      \"game_id\": \"3\",\n      \"game_type\" : \"left_digit\",\n      \"session\" : \"Open\",\n      \"bid_points\" : \"10\",\n      \"left_digit\" : \"8\",\n      \"right_digit\" : \"\"\n    },\n    {\n      \"game_id\": \"3\",\n      \"game_type\" : \"left_digit\",\n      \"session\" : \"Open\",\n      \"bid_points\" : \"40\",\n      \"left_digit\" : \"5\",\n      \"right_digit\" : \"\"\n    }\n  ]\n}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/gali_disawar_place_bid",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gali_disawar_place_bid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "gali_disawar_bid_history",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "UucqwIMHWlijWIpO",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "from_date",
+							"value": "2011-08-01 00:00:00",
+							"type": "text"
+						},
+						{
+							"key": "to_date",
+							"value": "2021-10-01 23:59:59",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/gali_disawar_bid_history",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gali_disawar_bid_history"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "gali_disawar_win_history",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "kwgGGSk9d4InJxI6",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "from_date",
+							"value": "2011-08-01 00:00:00",
+							"type": "text"
+						},
+						{
+							"key": "to_date",
+							"value": "2021-10-01 23:59:59",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/gali_disawar_win_history",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"gali_disawar_win_history"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "read_notification",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "Uu4sXEkenjDMHSRh",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "readnoti",
+							"value": "true",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/read_notification",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"read_notification"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

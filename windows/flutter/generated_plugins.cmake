@@ -3,7 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  flutter_pay_upi
+  file_selector_windows
   share_plus
   smart_auth
   url_launcher_windows

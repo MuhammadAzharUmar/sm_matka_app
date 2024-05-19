@@ -9,12 +9,14 @@ class InputTextFieldWidget extends StatefulWidget {
     required this.controller,
     required this.labelText,
     this.isPassword = false,
+    this.readOnly = false,
     this.inputFormatter=const [],  this.keyboardType=TextInputType.text, this.onChange,
   });
 
   final TextEditingController controller;
   final String labelText;
   final bool isPassword;
+  final bool readOnly;
   final List<TextInputFormatter>? inputFormatter;
   final TextInputType keyboardType;
   final Function(String)? onChange;
@@ -39,6 +41,7 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child:
        TextFormField(
+        readOnly: widget.readOnly,
         onChanged: widget.onChange,
         keyboardType: widget.keyboardType,
         inputFormatters:widget.inputFormatter,

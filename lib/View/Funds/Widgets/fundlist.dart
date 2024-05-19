@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sm_matka/View/Funds/Screens/add_fund_page.dart';
+import 'package:sm_matka/View/Funds/Screens/AddFundScreens/add_fund_page.dart';
 import 'package:sm_matka/View/Funds/Screens/bank_details_update.dart';
 import 'package:sm_matka/View/Funds/Screens/transfer_points_screen.dart';
 import 'package:sm_matka/View/Funds/Screens/update_phonepe_paytm_gpay.dart';

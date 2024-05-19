@@ -17,6 +17,9 @@ enum AppLoadingStates {
   updatePhonePeGPayPaytm,
   transferSubmitButtonLoading,
   homePageInitDataLoading,
+  paymentConfigSubmitLoading,
+  paymentSubmitButtonLoading,
+  uploadScreenshotLoading,
 
 
 }

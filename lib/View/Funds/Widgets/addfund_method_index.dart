@@ -65,13 +65,15 @@ class AddFundMethodWidget extends StatelessWidget {
                 )
               : null,
         ),
-        const Divider(
-          height: 1,
-          thickness: .5,
-          color: kBlue1Color,
-          indent: 20,
-          endIndent: 20,
-        )
+        index == 2
+            ? Container()
+            : const Divider(
+                height: 1,
+                thickness: .5,
+                color: kBlue1Color,
+                indent: 20,
+                endIndent: 20,
+              )
       ],
     );
   }

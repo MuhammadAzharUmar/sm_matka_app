@@ -7,10 +7,10 @@ import 'package:sm_matka/Utilities/textstyles.dart';
 
 class AddFundNoticeWidget extends StatelessWidget {
   const AddFundNoticeWidget({
-    super.key, required this.addfundNotice,this.caller="add",
+    super.key, required this.addfundNotice, required this.heading,
   });
 final String addfundNotice;
-final String caller;
+final String heading;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -31,7 +31,7 @@ final String caller;
               height: 20,
             ),
             Text(
-             caller=="add"? "Add Fund Notice":caller=="appNotice"?"App Notice": "Withdraw Fund Notice",
+             heading,
               style: kMediumTextStyle.copyWith(
                 color: kBlue1Color,
                 fontWeight: FontWeight.w600,

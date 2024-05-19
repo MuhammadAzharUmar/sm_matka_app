@@ -102,21 +102,21 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       children: [
                         AddFundNoticeWidget(
                           addfundNotice: appDetailsModel.data.appNotice,
-                          caller: "appNotice",
+                          heading: "App Notice",
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         AddFundNoticeWidget(
                           addfundNotice: appDetailsModel.data.addFundNotice,
-                          caller: "add",
+                          heading: "Add Fund Notice",
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         AddFundNoticeWidget(
                           addfundNotice: appDetailsModel.data.withdrawNotice,
-                          caller: "withdraw",
+                          heading: "Withdraw Fund Notice",
                         ),
                       ],
                     ),

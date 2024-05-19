@@ -1776,7 +1776,6 @@ class HttpRequests {
     }
   }
 
-  ///************* */
   static Future<Map<String, dynamic>> starlineBidHistoryRequest({
     required BuildContext context,
     required String token,
@@ -2155,6 +2154,411 @@ class HttpRequests {
           'POST', Uri.parse('$baseUrl/read_notification'));
       request.fields.addAll({'readnoti': 'true'});
       request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
+        errorCodeFromApi = jsonData["code"];
+        if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
+          return jsonData;
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
+          );
+          throw jsonData["message"].toString();
+        } else {
+          throw jsonData["message"].toString();
+        }
+      } else {
+        throw response.reasonPhrase!;
+      }
+    } catch (e) {
+      if (e
+          .toString()
+          .toLowerCase()
+          .contains("Please Select Token".toLowerCase())) {
+        rethrow;
+      }
+      return SnackBarMessage.centeredSnackbar(
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
+        context: context,
+      );
+    }
+  }
+
+/* payment configuration api  */
+  static Future<Map<String, dynamic>> paymentConfigRequest({
+    required BuildContext context,
+    required String token,
+  }) async {
+    try {
+      var headers = {'token': token};
+      var request = http.Request(
+        'POST',
+        Uri.parse(
+          'http://development.smapidev.co.in/api/Api/payment_config',
+        ),
+      );
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
+        errorCodeFromApi = jsonData["code"];
+        if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
+          return jsonData;
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
+          );
+          throw jsonData["message"].toString();
+        } else {
+          throw jsonData["message"].toString();
+        }
+      } else {
+        throw response.reasonPhrase!;
+      }
+    } catch (e) {
+      if (e
+          .toString()
+          .toLowerCase()
+          .contains("Please Select Token".toLowerCase())) {
+        rethrow;
+      }
+      return SnackBarMessage.centeredSnackbar(
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
+        context: context,
+      );
+    }
+  }
+
+  static Future<Map<String, dynamic>> indicpayPayemntRequest({
+    required BuildContext context,
+    required String token,
+    required String amount,
+    required String authorization,
+  }) async {
+    try {
+      var headers = {'token': token, 'Authorization': 'Basic Og=='};
+      var request = http.MultipartRequest(
+          'POST',
+          Uri.parse(
+              'http://development.smapidev.co.in/api/Api/payment_request'));
+      request.fields.addAll({'amount': amount, 'method_name': 'indicpay'});
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
+        errorCodeFromApi = jsonData["code"];
+        if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
+          return jsonData;
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
+          );
+          throw jsonData["message"].toString();
+        } else {
+          throw jsonData["message"].toString();
+        }
+      } else {
+        throw response.reasonPhrase!;
+      }
+    } catch (e) {
+      if (e
+          .toString()
+          .toLowerCase()
+          .contains("Please Select Token".toLowerCase())) {
+        rethrow;
+      }
+      return SnackBarMessage.centeredSnackbar(
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
+        context: context,
+      );
+    }
+  }
+
+  static Future<Map<String, dynamic>> paysantsPayemntRequest({
+    required BuildContext context,
+    required String token,
+    required String amount,
+    required String authorization,
+  }) async {
+    try {
+      var headers = {'token': token, 'Authorization': 'Basic Og=='};
+      var request = http.MultipartRequest(
+          'POST',
+          Uri.parse(
+              'http://development.smapidev.co.in/api/Api/payment_request'));
+      request.fields.addAll({'amount': amount, 'method_name': 'pay_sants'});
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        var jsonData = json.decode(responseBody);
+              if (kDebugMode) {
+                print("===============================\n$jsonData\n====================================");
+              }
+
+        errorCodeFromApi = jsonData["code"];
+        errorCodeFromApi = jsonData["code"];
+        if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
+          return jsonData;
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
+          );
+          throw jsonData["message"].toString();
+        } else {
+          throw jsonData["message"].toString();
+        }
+      } else {
+        throw response.reasonPhrase!;
+      }
+    } catch (e) {
+      if (e
+          .toString()
+          .toLowerCase()
+          .contains("Please Select Token".toLowerCase())) {
+        rethrow;
+      }
+      return SnackBarMessage.centeredSnackbar(
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
+        context: context,
+      );
+    }
+  }
+
+  static Future<Map<String, dynamic>> payemntReceiveRequest({
+    required BuildContext context,
+    required String token,
+    required String amount,
+    required String authorization,
+    required String status,
+    required String method,
+    required String transcationId,
+    required String methodDetails,
+    required String screenshot,
+  }) async {
+    try {
+      var headers = {'token': token, 'Authorization': 'Basic Og=='};
+      var request = http.MultipartRequest(
+          'POST',
+          Uri.parse(
+              'http://development.smapidev.co.in/api/Api/payment_receive'));
+      request.fields.addAll({
+        'amount': amount,
+        'method_name': method,
+        'transaction_id': transcationId,
+        'status': status,
+        'method_details': methodDetails,
+        'screenshot': '',
+      });
+//
+
+      if (screenshot != '' && screenshot.isNotEmpty) {
+        var file = File(screenshot);
+        if (await file.exists()) {
+          Uint8List fileBytes = await file.readAsBytes();
+
+          request.files.add(http.MultipartFile.fromBytes(
+            'screenshot',
+            fileBytes,
+            filename: file.path.split('/').last,
+          ));
+        } else {
+          if (kDebugMode) {
+            print('File does not exist at path: $screenshot');
+          }
+        }
+      } else {
+        request.files.add(http.MultipartFile.fromString(
+          'screenshot',
+          '',
+        ));
+      }
+      //
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
+
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+
+        var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
+        errorCodeFromApi = jsonData["code"];
+        if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
+          return jsonData;
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
+          );
+          throw jsonData["message"].toString();
+        } else {
+          throw jsonData["message"].toString();
+        }
+      } else {
+        throw response.reasonPhrase!;
+      }
+    } catch (e) {
+      if (e
+          .toString()
+          .toLowerCase()
+          .contains("Please Select Token".toLowerCase())) {
+        rethrow;
+      }
+      return SnackBarMessage.centeredSnackbar(
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
+        context: context,
+      );
+    }
+  }
+
+  static Future<Map<String, dynamic>> paysantsStatusRequest({
+    required BuildContext context,
+    required String token,
+    required String amount,
+    required String authorization,
+  }) async {
+    try {
+      var headers = {
+        'Authorization': 'Bearer 2Jxbn6iaodPhEVJ74zbADEQMxKksmrxrTvq0tu1M'
+      };
+      var request = http.MultipartRequest(
+          'POST', Uri.parse('https://payment.paysants.in/api/get/transaction'));
+      request.fields.addAll({'order_id': 'SPORDQ7PQ1713685550MFPU2U'});
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      //code status for error check
+      String errorCodeFromApi = "";
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        var jsonData = json.decode(responseBody);
+        errorCodeFromApi = jsonData["code"];
+        errorCodeFromApi = jsonData["code"];
+        if (jsonData["status"] == "success") {
+          SnackBarMessage.centeredSuccessSnackbar(
+            text: jsonData["message"].toString(),
+            context: context,
+          );
+          return jsonData;
+        } else if (response.statusCode == 505 || errorCodeFromApi == "505") {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          await preferences.clear();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const SignupPage(),
+            ),
+          );
+          throw jsonData["message"].toString();
+        } else {
+          throw jsonData["message"].toString();
+        }
+      } else {
+        throw response.reasonPhrase!;
+      }
+    } catch (e) {
+      if (e
+          .toString()
+          .toLowerCase()
+          .contains("Please Select Token".toLowerCase())) {
+        rethrow;
+      }
+      return SnackBarMessage.centeredSnackbar(
+        text: e is SocketException
+            ? "Please check your internet connection and try again."
+            : "$e",
+        context: context,
+      );
+    }
+  }
+
+  static Future<Map<String, dynamic>> indicpayStatusRequest({
+    required BuildContext context,
+    required String token,
+    required String amount,
+    required String authorization,
+  }) async {
+    try {
+      var request = http.Request(
+          'GET',
+          Uri.parse(
+              'https://indicpay.in/api/newc/checkstatus?txnid=6624b89101750'));
 
       http.StreamedResponse response = await request.send();
       //code status for error check

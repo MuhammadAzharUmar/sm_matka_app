@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sm_matka/Models/app_details_model.dart';
+import 'package:sm_matka/Models/payment_config_model.dart';
 import 'package:sm_matka/Models/user_status_model.dart';
 import 'package:sm_matka/Models/usermodel.dart';
 import 'package:sm_matka/View/Splash/splash.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/add_fund_method_active_index_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/app_details_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/app_loading_cubit.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/payment_config_cubit.dart';
+import 'package:sm_matka/ViewModel/BlocCubits/upi_payment_method_active_index_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_cubit.dart';
 import 'package:sm_matka/ViewModel/BlocCubits/user_status_cubit.dart';
 
@@ -44,6 +48,19 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
         ),
+        BlocProvider(
+          create: (BuildContext context) => PaymentConfigCubit(
+            PaymentConfigModel.fromJson(
+              {},
+            ),
+          ),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => ActiveFundMethodActiveIndexCubit(),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => UPIpaymentMethodActiveIndexCubit(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -56,6 +73,7 @@ class _MyAppState extends State<MyApp> {
             child: child!,
           );
         },
+        // home: const AddFundMethodPage(),
         home: const SplashScreen(),
       ),
     );

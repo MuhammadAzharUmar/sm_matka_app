@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sm_matka/Models/app_details_model.dart';
-import 'package:sm_matka/View/Funds/Screens/add_fund_page.dart';
+import 'package:sm_matka/View/Funds/Screens/AddFundScreens/add_fund_page.dart';
 import 'package:sm_matka/View/Funds/Screens/withdraw_fund_screen.dart';
 import 'package:sm_matka/View/Settings/Widgets/launch_custom_urls.dart';
 
